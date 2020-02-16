@@ -1,5 +1,7 @@
 site_name: Auto Home Stack
+repo_url: https://github.com/alexkratzer/autohomestack
 nav:
     - Home:                 index.md
+    - plc program:          plc_program.md
     - node red:             node_red.md
     - usage mkdocs:         usage_mkdocs.md
