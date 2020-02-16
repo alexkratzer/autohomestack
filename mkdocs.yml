@@ -1,7 +1,32 @@
 site_name: Auto Home Stack
 repo_url: https://github.com/alexkratzer/autohomestack
+site_url: 'https://alexkratzer.github.io/autohomestack/'
+
+site_author: 'alexander kratzer'
+
 nav:
     - Home:                 index.md
-    - plc program:          plc_program.md
-    - node red:             node_red.md
-    - usage mkdocs:         usage_mkdocs.md
+    - control:              'control_system.md'
+    - processing:           processing_level.md
+    - field:                field_level.md
+    
+    - About:
+        - References:           'references.md'
+        - hints:                hints.md
+        - plantuml code:        images/readme_plantuml.md
+
+
+
+markdown_extensions:
+    - toc:
+        permalink: true
+    - admonition
+#    - plantuml-markdown:
+#        server: https://localhost:8080
+#        # server: https://plantuml.com/plantuml
+#        cachedir: /tmp                            # set a non-empty value to enable caching
+#        format: png                               # default diagram image format
+#        classes: class1,class2                    # default diagram classes
+#        title: UML diagram                        # default title (tooltip) for diagram images
+#        alt: UML diagram image                    # default `alt` attribute for diagram images
+#        priority: 30                              # plugin priority; the higher, the sooner will be applied (default 30)
