@@ -1,1 +1,5 @@
 site_name: Auto Home Stack
+nav:
+    - Home:                 index.md
+    - node red:             node_red.md
+    - usage mkdocs:         usage_mkdocs.md
