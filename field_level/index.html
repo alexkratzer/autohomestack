@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>plc program - Auto Home Stack</title>
+        <title>field - Auto Home Stack</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -49,14 +49,17 @@
                             <li >
                                 <a href="..">Home</a>
                             </li>
+                            <li >
+                                <a href="../control_system/">control</a>
+                            </li>
+                            <li >
+                                <a href="../processing_level/">processing</a>
+                            </li>
                             <li class="active">
-                                <a href="./">plc program</a>
+                                <a href="./">field</a>
                             </li>
                             <li >
-                                <a href="../node_red/">node red</a>
-                            </li>
-                            <li >
-                                <a href="../usage_mkdocs/">usage mkdocs</a>
+                                <a href="../hints/">hints</a>
                             </li>
                         </ul>
 
@@ -67,17 +70,17 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="..">
+                                <a rel="next" href="../processing_level/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../node_red/">
+                                <a rel="prev" href="../hints/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/plc_program.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/field_level.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -87,11 +90,17 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#field-level">field level</a></li>
+            <li><a href="#data-logger">data logger</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-</div>
+<h1 id="field-level">field level</h1>
+<h2 id="data-logger">data logger</h2>
+<p>during the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
+<p>and after implementing this interface at the plc and i kept it for data logging.</p>
+<p>meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p></div>
         </div>
 
         <footer class="col-md-12">

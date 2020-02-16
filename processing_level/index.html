@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>processing - Auto Home Stack</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">Auto Home Stack</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">Home</a>
+                            </li>
+                            <li >
+                                <a href="../control_system/">control</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">processing</a>
+                            </li>
+                            <li >
+                                <a href="../field_level/">field</a>
+                            </li>
+                            <li >
+                                <a href="../hints/">hints</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../control_system/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../field_level/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/processing_level.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#processing-level">Processing level</a></li>
+            <li><a href="#simatic-plc-programm">Simatic PLC programm</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="processing-level">Processing level</h1>
+<p>The core components of my home automation solution consist of Siemens Simatic 1200 series CPUs. These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.</p>
+<p>The picture shows a sub-distributor during the construction phase. Right beside the multimeter you can see a 1214C CPU with 3x DI/DO expansion modules.</p>
+<p><img alt="Unterverteiler_Bauphase" src="../images/Unterverteiler_Bauphase.JPG" /></p>
+<p>The CPUs are programmed with SCL (Structured Control Language). The syntax is similar to Pascal. In the following I describe the user program in excerpts.</p>
+<h2 id="simatic-plc-programm">Simatic PLC programm</h2>
+<h3 id="aktor-interface">aktor interface</h3>
+<p>My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.</p>
+<p>For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.</p>
+<p><img alt="TIA_multiinstanz" src="../images/TIA_multiinstanz.PNG" /></p>
+<p>Here is an example of the light building block. This is called several times in a superimposed "control" block.</p>
+<p><strong><em>ash became light</em></strong></p>
+<pre><code class="javascript">IF #turn_on THEN
+    #switch_signal := true;
+END_IF;
+
+#Tturn_off(IN:=#turn_off, PT:=t#5s, Q=&gt;#tmp_turn_off_hold);
+
+IF #param.&quot;auto-off_lux_enable&quot; THEN
+    #&quot;Tauto-off-lux&quot;(IN := &quot;sense_lux_stairs_og&quot; &gt; #param.&quot;auto-off_lux&quot;,
+                    PT := t#10s,
+                    Q =&gt; #tmp_turn_off_lux
+    );
+END_IF;
+</code></pre>
+
+<p>Since the interior of the house took place over the winter, I realized the light building block first.</p>
+<p>The module has one input to change the output signal and one input to switch it on and one input to switch it off.</p>
+<p>The output switches directly the coupling relay which controls the physical light.</p>
+<p>In the "inner life" of the module there is a delay to prevent the rear switching on/off (I implemented this function because of a stress test of my kids). </p>
+<p>In addition there is a timer which switches off the light after a configured time and the possibility to also switch off the light if a brightness value is exceeded.</p>
+<p><strong><em>and getting dark again</em></strong></p>
+<p>The blind building block was a little trickier. Because I can't evaluate the signal of the physical end stop in the control I measured the time of the up and down movement.</p>
+<p>The target position and the target angle of the slats (each in 0 - 100%) are transferred to an extra "blind motor" module.</p>
+<p>In this module, the time of the actual position and the actual angle is continuously normalized and the target values are approached in a state machine. </p>
+<p>In addition, I have locked a simultaneous up and down signal at the outputs at different positions.</p>
+<pre><code class="javascript">// normierung der position/zeit zwischen 0 - 100 
+#cur_data.position := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.position_in_time, MAX := #DRIVING_TIME_POSITION) * #DIGIT_SCALA);
+#cur_data.angle := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.angle_in_time, MAX := #DRIVING_TIME_ANGLE) * #DIGIT_SCALA);
+END_IF;
+</code></pre>
+
+<p>The blind module has the following features:</p>
+<ul>
+<li>
+<p>When the up/down button is pressed briefly, the blind moves to the respective end position (i.e. completely up or completely down).</p>
+</li>
+<li>
+<p>If the blind is moving and the up/down button is pressed again, the motor stops.</p>
+</li>
+<li>
+<p>If a button is pressed for a longer period of time (&gt; 300ms have become established), the motor moves until the button is released again.</p>
+</li>
+<li>
+<p>Automatic startup when a parameterized wind speed is exceeded (measured by the weather station)</p>
+</li>
+<li>
+<p>Time-controlled approach of a position and an angle (I have planned 10 events so far but needed a maximum of 4)</p>
+</li>
+<li>
+<p>still on the TO-DO list: event-based approaching of an angle due to solar radiation and room temperature</p>
+</li>
+</ul>
+<p><strong><em>heating module</em></strong></p>
+<p>The heating module is kept simpler again.</p>
+<p>Due to the relatively sluggish wall heating, I have not yet implemented an exact regulation of the heating circuits.</p>
+<p>In order to avoid a constant toggling the servomotors switch off only with 0,5 degrees over target.</p>
+<p>In addition, an interval can be parameterized if the temperature falls below the target value and the time of day during which the module is to be active.</p>
+<p>For IBS purposes (and e.g. vacation time), the PC-Tool can also be used to switch to manual mode (defined on or off).</p>
+<p><strong><em>TO-DO Current</em></strong></p>
+<p>I have not yet realized the socket module. Currently I only switch the sockets in the children's room.</p>
+<p>Since here however a bedside lamp is switched I also used the light component for it.</p>
+<h3 id="sensor-interface">sensor interface</h3>
+<p><strong><em>wetter station</em></strong></p>
+<p>For the weather station I decided for the P03/3-Modbus from Elsner.</p>
+<p><img alt="wetterstation" src="../images/wetterstation.png" /></p>
+<p>With it I can get the weather data: Brightness (east, south and west sun), wind speed, temperature and precipitation.</p>
+<p>With the Modbus variant I want to keep the possibility open to connect several participants (in special room sensors) to the control system via the bus system.</p>
+<p><strong><em>heating with ETA</em></strong></p>
+<p><img alt="eta_thump" src="../images/eta_thump.png" /></p>
+<p>My heating consists of the 20qm solar collectors and the "romantic" stove in the living room as well as an ETA SH20 twin.</p>
+<p>During the installation I saw that a maintenance interface is attached to the display.</p>
+<p>On inquiry with the manufacturer I got the RS232 protocol and thus the possibility by a CM1241 to access it.</p>
+<p>Here the protocoll:</p>
+<ol>
+<li>Byte startsign: alwas ’{’ == hex 0x7B</li>
+<li>Byte Servicekennung</li>
+<li>Byte Servicekennung</li>
+<li>Byte Anzahl der Nutzdatenbytes</li>
+<li>Byte Prüfsumme: alle Nutzdatenbytes addiert, modulo 256</li>
+<li>ab 6. Byte Nutzdaten</li>
+</ol>
+<p>last Byte stoppsign alwas ’}’ == hex 0x7D</p>
+<p>settings of serial interface:</p>
+<p>19200 Baud, 1 Startbit, 8 Datenbits, 1 Stoppbit, NoParity, NoHandshake</p>
+<p>Herewith I inform the heating control that it should send out the actual values cyclically:</p>
+<pre><code class="javascript">#SEND_PTP_start(REQ := #cmd.eta_start,
+                &quot;PORT&quot; := #CP_Adress,
+                BUFFER := #frame_start);
+#cmd.eta_start := FALSE;
+
+#SEND_PTP_cmd(REQ:=#cmd.eta_cmd,
+              &quot;PORT&quot;:=#CP_Adress,
+              BUFFER:=#frame_cmd);
+</code></pre>
+
+<h3 id="communication">communication</h3>
+<p>For external communication each CPU contains a net_interface block.</p>
+<p>Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.</p>
+<p>Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
