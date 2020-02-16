@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="alexander kratzer">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/field_level/">
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>field - Auto Home Stack</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
@@ -58,8 +58,22 @@
                             <li class="active">
                                 <a href="./">field</a>
                             </li>
-                            <li >
-                                <a href="../hints/">hints</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../references/">References</a>
+</li>
+                                    
+<li >
+    <a href="../hints/">hints</a>
+</li>
+                                    
+<li >
+    <a href="../images/readme_plantuml/">plantuml code</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -75,7 +89,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../hints/">
+                                <a rel="prev" href="../references/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -96,11 +110,13 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="field-level">field level</h1>
-<h2 id="data-logger">data logger</h2>
-<p>during the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
-<p>and after implementing this interface at the plc and i kept it for data logging.</p>
-<p>meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p></div>
+<h1 id="field-level">field level<a class="headerlink" href="#field-level" title="Permanent link">&para;</a></h1>
+<h2 id="data-logger">data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
+<p>During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
+<p>And after implementing this interface at the plc and i kept it for data logging.</p>
+<p>Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p>
+<p>The main script provides a IP listener for every configuret plc connection.</p>
+<p>Messages from the remote clients will be parsed and stored in a db.</p></div>
         </div>
 
         <footer class="col-md-12">

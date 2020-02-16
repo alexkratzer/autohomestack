@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="None">
-        
-        
+        <meta name="author" content="alexander kratzer">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/">
         <link rel="shortcut icon" href="img/favicon.ico">
         <title>Auto Home Stack</title>
         <link href="css/bootstrap-custom.min.css" rel="stylesheet">
@@ -58,8 +58,22 @@
                             <li >
                                 <a href="field_level/">field</a>
                             </li>
-                            <li >
-                                <a href="hints/">hints</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="references/">References</a>
+</li>
+                                    
+<li >
+    <a href="hints/">hints</a>
+</li>
+                                    
+<li >
+    <a href="images/readme_plantuml/">plantuml code</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -90,53 +104,74 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#auto-home-stack">Auto home stack</a></li>
+        <li class="main active"><a href="#another-self-built-home-automation-system">another self-built home automation system</a></li>
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#requirements">Requirements</a></li>
-            <li><a href="#components-of-the-auto-home-stack">Components of the auto home stack</a></li>
+            <li><a href="#components">Components</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="auto-home-stack">Auto home stack</h1>
-<p>another self-built home automation system</p>
-<h2 id="introduction">Introduction</h2>
-<p>My requirement was a robust, self-sufficient control system with which I could not depend on a proprietary system from a single manufacturer but could expand with hardware / software from different manufacturers.</p>
+<h1 id="another-self-built-home-automation-system">another self-built <strong><em>home automation system</em></strong><a class="headerlink" href="#another-self-built-home-automation-system" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>My main focus was a robust, self-sufficient control system with which I could not depend on a proprietary system from a single manufacturer but could expand with hardware / software from different manufacturers.</p>
 <p>Here my choice fell on Simatic CPUs. The sensors and actuators are wired to these and they process the control program.</p>
 <p>Via the LAN interface, the CPUs communicate with a NAS running a data logger script. Here various data are stored in a mySQL database for later evaluation.</p>
 <p>As a central control system I use NodeRed which provides a webserver for operation (and a lot of help during development).</p>
 <p><img alt="AutoHome_uebersicht" src="images/AutoHome_uebersicht.png" /></p>
 <p>-|-</p>
-<h2 id="requirements">Requirements</h2>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>requirement</th>
-<th>feature</th>
+<th>type</th>
+<th>desc</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>r</td>
-<td>f</td>
+<td>robustnes</td>
+<td>When switching on (e.g. after a power failure) the system itself should start up and be active</td>
+</tr>
+<tr>
+<td>robustnes</td>
+<td>Services / applications on servers should be monitored automatically and restarted if necessary</td>
+</tr>
+<tr>
+<td>robustnes</td>
+<td>Backups of databases and other artifacts should be created automatically.</td>
+</tr>
+<tr>
+<td>interoperability</td>
+<td>The different components of the system shall provide apis to exchange information and communicate with internal and external applications and systems.</td>
+</tr>
+<tr>
+<td>interoperability</td>
+<td>The system shall be open to different transport protocols and publishing / describing interfaces.</td>
+</tr>
+<tr>
+<td>interoperability</td>
+<td>For integrating iot devices the system provides shall provide a MQTT broker. That allows easy w-lan connecting of esp based devices</td>
+</tr>
+<tr>
+<td>interoperability</td>
+<td>The PLC shall communicate to sensors / actors hardwired, via modbus, analog voltage signals, ...</td>
+</tr>
+<tr>
+<td>interoperability</td>
+<td>The data formats, transport protocols and interfaces shall be derived from central managed masterdata</td>
 </tr>
 </tbody>
 </table>
-<h3 id="robustnes">Robustnes</h3>
-<p>R: When switching on (e.g. after a power failure) the system itself should start up and be active.</p>
-<p>R: Services / applications on servers should be monitored automatically and restarted if necessary.</p>
-<p>R: Backups of databases and other artifacts should be created automatically.</p>
-<h3 id="interoperability">Interoperability</h3>
-<p>R: The different components of the system shall provide apis to exchange information and communicate with internal and external applications and systems.</p>
-<p>R: The system shall be open to different transport protocols and publishing / describing interfaces.</p>
-<p>F: For integrating iot devices the system provides a MQTT broker. That allows easy w-lan connecting of esp based devices.</p>
-<p>F: The PLC are communicating to sensors / actors hardwired, via modbus, analog voltage signals, ...</p>
-<p>R: The data formats, transport protocols and interfaces shall be derived from central managed masterdata</p>
-<h2 id="components-of-the-auto-home-stack">Components of the auto home stack</h2>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <p><img alt="auto home stack" src="https://www.plantuml.com/plantuml/png/0/RLB1Rjim3BtxAuZax00jq0m3WgBPrkoqKmux54QWM6fin1OrYfwR3VdtKPRjn4ju8z-Z-1wf5y-AkAch9F77qZf5geOSQuVMM8Q_2KXiqF9Nh91WZ7sbycC7hfcft3TiBgmB66hRye-vDCB3fzksI7bukaMigWNvHbXgs2hhuGTQx6XVPCQ1iB5wb3PVhZ-_RZOHHjA69gglD1DXEtKqVvHOBfDpad39bG7LC4A1CbvM97rtrhFban1bUOz9Ob4Rc3NU49IM3RshtCpY-jufc9XfuyZaYetkwo7UDB8r32u7Hgmoc7ydTUhWStANi4hJPsYqsxagZupMx26lIX4aw6Bn30Mp2qRo2XlTtt0K1MtRnhxrpsq6uRMn8eCKroZLM3mFlbJXPpSFQSLgL-7X89wLlqx_8zQ_c7ipme6-HLRrsr3MjLO-ukJANPX8HdU0fQG3X01fuqIMFE6BFIhIsV3aa0VLdVMXGrPreqfi1PwDMQ37ZVO5Iv1IUIWuZ98Dxpu-iW5OIMrGsgKQMokrqLv_bOuuQRxUr2gTOZ4vPOE_2MQy2pTjtE9gp9itrYFTxr173j0gO1T83YdnOgoMt_eF" title="auto home stack" /></p>
 <p><a href="images/readme_plantuml/">source</a></p>
 <p>here another view of the main components</p>
-<p><img alt="AutoHome_Blockschaltbild" src="images/AutoHome_Blockschaltbild.png" /></p></div>
+<p><img alt="AutoHome_Blockschaltbild" src="images/AutoHome_Blockschaltbild.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>of course i am not liable for any damage caused by replicas ;-)</p>
+</div></div>
         </div>
 
         <footer class="col-md-12">
@@ -219,5 +254,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2020-02-16 19:11:51
+Build Date UTC : 2020-02-16 21:35:33
 -->

@@ -5,13 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
+        <meta name="author" content="alexander kratzer">
         
-        
-        <link rel="shortcut icon" href="/img/favicon.ico">
+        <link rel="shortcut icon" href="/autohomestack/img/favicon.ico">
         <title>Auto Home Stack</title>
-        <link href="/css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="/css/font-awesome.min.css" rel="stylesheet">
-        <link href="/css/base.css" rel="stylesheet">
+        <link href="/autohomestack/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="/autohomestack/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/autohomestack/css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="/js/jquery-1.10.2.min.js" defer></script>
-        <script src="/js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="/autohomestack/js/jquery-1.10.2.min.js" defer></script>
+        <script src="/autohomestack/js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/.">Auto Home Stack</a>
+                    <a class="navbar-brand" href="/autohomestack/.">Auto Home Stack</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,19 +47,33 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="/.">Home</a>
+                                <a href="/autohomestack/.">Home</a>
                             </li>
                             <li >
-                                <a href="/control_system/">control</a>
+                                <a href="/autohomestack/control_system/">control</a>
                             </li>
                             <li >
-                                <a href="/processing_level/">processing</a>
+                                <a href="/autohomestack/processing_level/">processing</a>
                             </li>
                             <li >
-                                <a href="/field_level/">field</a>
+                                <a href="/autohomestack/field_level/">field</a>
                             </li>
-                            <li >
-                                <a href="/hints/">hints</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="/autohomestack/references/">References</a>
+</li>
+                                    
+<li >
+    <a href="/autohomestack/hints/">hints</a>
+</li>
+                                    
+<li >
+    <a href="/autohomestack/images/readme_plantuml/">plantuml code</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -94,11 +108,11 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "/",
+            var base_url = "/autohomestack/",
                 shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
-        <script src="/js/base.js" defer></script>
-        <script src="/search/main.js" defer></script>
+        <script src="/autohomestack/js/base.js" defer></script>
+        <script src="/autohomestack/search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">

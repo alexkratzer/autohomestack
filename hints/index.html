@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="alexander kratzer">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/hints/">
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>hints - Auto Home Stack</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
@@ -58,8 +58,22 @@
                             <li >
                                 <a href="../field_level/">field</a>
                             </li>
-                            <li class="active">
-                                <a href="./">hints</a>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../references/">References</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">hints</a>
+</li>
+                                    
+<li >
+    <a href="../images/readme_plantuml/">plantuml code</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -70,12 +84,12 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../field_level/">
+                                <a rel="next" href="../references/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="disabled">
-                                <a rel="prev" >
+                            <li >
+                                <a rel="prev" href="../images/readme_plantuml/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -98,22 +112,22 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="usage-mkdocs">usage MkDocs</h1>
+<h1 id="usage-mkdocs">usage MkDocs<a class="headerlink" href="#usage-mkdocs" title="Permanent link">&para;</a></h1>
 <p>For full documentation visit <a href="https://mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
 <li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
 <li><code>mkdocs build</code> - Build the documentation site.</li>
 <li><code>mkdocs help</code> - Print this help message.</li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
+<h2 id="project-layout">Project layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h2>
 <pre><code>mkdocs.yml    # The configuration file.
 docs/
     index.md  # The documentation homepage.
     ...       # Other markdown pages, images and other files.
 </code></pre>
-<h2 id="custom-cmd">custom cmd</h2>
+<h2 id="custom-cmd">custom cmd<a class="headerlink" href="#custom-cmd" title="Permanent link">&para;</a></h2>
 <p><code>mkdocs gh-deploy</code> - execute local at root to make and deploy for github</p></div>
         </div>
 
