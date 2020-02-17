@@ -104,19 +104,57 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#field-level">field level</a></li>
-            <li><a href="#data-logger">data logger</a></li>
+        <li class="main active"><a href="#field-level">Field level</a></li>
+            <li><a href="#iot-multisensor">IoT multisensor</a></li>
+            <li><a href="#data-logger">Data logger</a></li>
+            <li><a href="#wetter-station">Wetter station</a></li>
+            <li><a href="#the-heating-system">The heating system</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="field-level">field level<a class="headerlink" href="#field-level" title="Permanent link">&para;</a></h1>
-<h2 id="data-logger">data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
+<h1 id="field-level">Field level<a class="headerlink" href="#field-level" title="Permanent link">&para;</a></h1>
+<h2 id="iot-multisensor">IoT multisensor<a class="headerlink" href="#iot-multisensor" title="Permanent link">&para;</a></h2>
+<p>TODO esp 8266 description</p>
+<p>requirements</p>
+<p>upload stl file</p>
+<h2 id="data-logger">Data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
 <p>During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
 <p>And after implementing this interface at the plc and i kept it for data logging.</p>
 <p>Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p>
 <p>The main script provides a IP listener for every configuret plc connection.</p>
-<p>Messages from the remote clients will be parsed and stored in a db.</p></div>
+<p>Messages from the remote clients will be parsed and stored in a db.</p>
+<h2 id="wetter-station">Wetter station<a class="headerlink" href="#wetter-station" title="Permanent link">&para;</a></h2>
+<p>For the weather station I decided for the P03/3-Modbus from Elsner.</p>
+<p><img alt="wetterstation" src="../images/wetterstation.png" /></p>
+<p>With it I can get the weather data: Brightness (east, south and west sun), wind speed, temperature and precipitation.</p>
+<p>With the Modbus variant I want to keep the possibility open to connect several participants (in special room sensors) to the control system via the bus system.</p>
+<h2 id="the-heating-system">The heating system<a class="headerlink" href="#the-heating-system" title="Permanent link">&para;</a></h2>
+<p>My heating consists of the 20qm solar collectors and the "romantic" stove in the living room as well as an ETA SH20 twin.</p>
+<p><img alt="eta_thump" src="../images/eta_thump.png" /></p>
+<p>During the installation I saw that a maintenance interface is attached to the display.</p>
+<p>On inquiry with the manufacturer I got the RS232 protocol and thus the possibility by a CM1241 to access it.</p>
+<p>Here the protocoll:</p>
+<ol>
+<li>Byte startsign: alwas ’{’ == hex 0x7B</li>
+<li>Byte Servicekennung</li>
+<li>Byte Servicekennung</li>
+<li>Byte Anzahl der Nutzdatenbytes</li>
+<li>Byte Prüfsumme: alle Nutzdatenbytes addiert, modulo 256</li>
+<li>ab 6. Byte Nutzdaten</li>
+</ol>
+<p>last Byte stoppsign alwas ’}’ == hex 0x7D</p>
+<p>settings of serial interface:</p>
+<p>19200 Baud, 1 Startbit, 8 Datenbits, 1 Stoppbit, NoParity, NoHandshake</p>
+<p>Herewith I inform the heating control that it should send out the actual values cyclically:</p>
+<pre class="codehilite"><code class="language-javascript">#SEND_PTP_start(REQ := #cmd.eta_start,
+                &quot;PORT&quot; := #CP_Adress,
+                BUFFER := #frame_start);
+#cmd.eta_start := FALSE;
+
+#SEND_PTP_cmd(REQ:=#cmd.eta_cmd,
+              &quot;PORT&quot;:=#CP_Adress,
+              BUFFER:=#frame_cmd);</code></pre></div>
         </div>
 
         <footer class="col-md-12">

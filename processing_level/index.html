@@ -182,40 +182,6 @@ END_IF;</code></pre>
 <p><strong><em>TO-DO Current</em></strong></p>
 <p>I have not yet realized the socket module. Currently I only switch the sockets in the children's room.</p>
 <p>Since here however a bedside lamp is switched I also used the light component for it.</p>
-<h3 id="sensor-interface">sensor interface<a class="headerlink" href="#sensor-interface" title="Permanent link">&para;</a></h3>
-<p><strong><em>wetter station</em></strong></p>
-<p>For the weather station I decided for the P03/3-Modbus from Elsner.</p>
-<p><img alt="wetterstation" src="../images/wetterstation.png" /></p>
-<p>With it I can get the weather data: Brightness (east, south and west sun), wind speed, temperature and precipitation.</p>
-<p>With the Modbus variant I want to keep the possibility open to connect several participants (in special room sensors) to the control system via the bus system.</p>
-<p><strong><em>heating with ETA</em></strong></p>
-<p><img alt="eta_thump" src="../images/eta_thump.png" /></p>
-<p>My heating consists of the 20qm solar collectors and the "romantic" stove in the living room as well as an ETA SH20 twin.</p>
-<p>During the installation I saw that a maintenance interface is attached to the display.</p>
-<p>On inquiry with the manufacturer I got the RS232 protocol and thus the possibility by a CM1241 to access it.</p>
-<p>Here the protocoll:</p>
-<ol>
-<li>Byte startsign: alwas ’{’ == hex 0x7B</li>
-<li>Byte Servicekennung</li>
-<li>Byte Servicekennung</li>
-<li>Byte Anzahl der Nutzdatenbytes</li>
-<li>Byte Prüfsumme: alle Nutzdatenbytes addiert, modulo 256</li>
-<li>ab 6. Byte Nutzdaten</li>
-</ol>
-<p>last Byte stoppsign alwas ’}’ == hex 0x7D</p>
-<p>settings of serial interface:</p>
-<p>19200 Baud, 1 Startbit, 8 Datenbits, 1 Stoppbit, NoParity, NoHandshake</p>
-<p>Herewith I inform the heating control that it should send out the actual values cyclically:</p>
-<pre class="codehilite"><code class="language-javascript">#SEND_PTP_start(REQ := #cmd.eta_start,
-                &quot;PORT&quot; := #CP_Adress,
-                BUFFER := #frame_start);
-#cmd.eta_start := FALSE;
-
-#SEND_PTP_cmd(REQ:=#cmd.eta_cmd,
-              &quot;PORT&quot;:=#CP_Adress,
-              BUFFER:=#frame_cmd);</code></pre>
-
-
 <h3 id="communication">communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
 <p>For external communication each CPU contains a net_interface block.</p>
 <p>Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.</p>
