@@ -35,9 +35,9 @@ Or to configure debug / control clients for different devices
 
 ## Grafana
 
-***Grafana is the open source analytics and monitoring solution for every database***
-
 Using an open source solution is much easier than implementing a monitor dashboard yourself.
+
+***Grafana is the open source analytics and monitoring solution for every database***
 
 I had good experiences with [grafana](https://grafana.com). Out of the box even larger time ranges are displayed performant.
 
@@ -100,3 +100,17 @@ docker run -d -p 3000:3000 -v grafana-storage:/var/lib/grafana --name=grafana_ah
 The network ad blocking / monitoring software [pi-hole.net](https://pi-hole.net)
 
 is not really connected to the home automation system but it is always a good idear to have control over your network.
+
+## dotNet tool
+
+Here are some historical pics of the outdated dot net tool.
+
+![pctool_main](images/pctool_main.png)
+
+![pctool_floor_EG.png](images/pctool_floor_EG.png)
+
+![pctool_floor_OG.png](images/pctool_floor_OG.png)
+
+![pctool_parameter.png](images/pctool_parameter.png)
+
+![pctool_edit_floor.png](images/pctool_edit_floor.png)
