@@ -53,10 +53,10 @@
                                 <a href="./">control</a>
                             </li>
                             <li >
-                                <a href="../processing_level/">processing</a>
+                                <a href="../processing_level/">process</a>
                             </li>
                             <li >
-                                <a href="../field_level/">field</a>
+                                <a href="../field_level/">field level</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
@@ -105,12 +105,95 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#control-system">Control system</a></li>
+            <li><a href="#node-red">Node red</a></li>
+            <li><a href="#grafana">Grafana</a></li>
+            <li><a href="#mqtt-mosquitto">mqtt mosquitto</a></li>
+            <li><a href="#raspberry-setup">Raspberry setup</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="control-system">Control system<a class="headerlink" href="#control-system" title="Permanent link">&para;</a></h1>
-<p><img alt="node_red_status_example" src="../images/node_red_status_example.png" /></p></div>
+<h2 id="node-red">Node red<a class="headerlink" href="#node-red" title="Permanent link">&para;</a></h2>
+<p>As control system and for the connection of other devices I currently use <a href="https://nodered.org">node-RED</a>.</p>
+<p><strong><em>Node-RED is a programming tool for wiring together hardware devices, APIs and online services</em></strong></p>
+<p>It has already implemented interfaces (which are called 'nodes') to a lot of devices I use.</p>
+<p><img alt="NodeRedInterfaces" src="https://www.plantuml.com/plantuml/png/0/TP4nJyCm48Lt_uetepO3I1NAW0fYGMgH80C3ON3ZIsFXdeDzQGk_7ZlGKePErhtl-RspF8-YWmmRfzJhnHkcqniyUaFFPDHWUfoClsUM4XbfYTuri2mKMjsGsdo8_8iutabQXZ-E4gqbP-1eImw6jhQXM3F57jUNizcavfsMfZD-ZKXXf1CKHQ6iFn-VsCXBUEae_6qLKREpxuH0KQ1xcy9kNofKLwaenWxYuImF-yCcISvbf-5cfSmgHIy_gwS5D9kK-S2j6_RtT-heB1751u9s3dtmNnHpTtQdXxB0QD4r7qYUiBFI8GoEGBosJ3MhER59__4D" title="NodeRedInterfaces" /></p>
+<h3 id="requirements-regarding-plugins">Requirements regarding plugins<a class="headerlink" href="#requirements-regarding-plugins" title="Permanent link">&para;</a></h3>
+<ol>
+<li>node-red-dashboard</li>
+<li>node-red-contrib-fritz</li>
+<li>node-red-contrib-s7</li>
+<li>node-red-node-mysql</li>
+<li>node-red-contrib-os</li>
+<li>node-red-contrib-mqtt-broker</li>
+<li>node-red-node-email</li>
+<li>(outdated) node-red-contrib-netatmo</li>
+<li>node-red-contrib-netatmo-dashboard</li>
+<li>node-red-contrib-viera</li>
+</ol>
+<h3 id="dashboards">Dashboards<a class="headerlink" href="#dashboards" title="Permanent link">&para;</a></h3>
+<p>It is easy to make quick dash boards to monitor the sensor and health state of the devices.</p>
+<p><img alt="node_red_status_example" src="../images/node_red_status_example.png" /></p>
+<p>Or to configure debug / control clients for different devices</p>
+<p><img alt="node_red_cmd" src="../images/node_red_cmd.png" /></p>
+<h2 id="grafana">Grafana<a class="headerlink" href="#grafana" title="Permanent link">&para;</a></h2>
+<p><strong><em>Grafana is the open source analytics and monitoring solution for every database</em></strong></p>
+<p>Using an open source solution is much easier than implementing a monitor dashboard yourself.</p>
+<p>I had good experiences with <a href="https://grafana.com">grafana</a>. Out of the box even larger time ranges are displayed performant.</p>
+<p>I can recommend this <a href="https://grafana.com/docs/installation/docker/">installation pages</a></p>
+<p><img alt="grafana_home_automation" src="../images/grafana_home_automation.png" /></p>
+<h2 id="mqtt-mosquitto">mqtt mosquitto<a class="headerlink" href="#mqtt-mosquitto" title="Permanent link">&para;</a></h2>
+<p><strong><em>Eclipse Mosquitto is an open source message broker that implements the MQTT protocol</em></strong></p>
+<h2 id="raspberry-setup">Raspberry setup<a class="headerlink" href="#raspberry-setup" title="Permanent link">&para;</a></h2>
+<p>Most of the control components are running as docker image on a raspberry.</p>
+<p>Here are a few steps to set up:</p>
+<ul>
+<li>
+<p>enable ssh server</p>
+</li>
+<li>
+<p>copy the puplic key to the raspberry for easier access</p>
+</li>
+</ul>
+<pre class="codehilite"><code class="language-bash">cat ~/.ssh/id_rsa.pub | ssh pi_name@192.168.xxx.xxx -p 22 'mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys'</code></pre>
+
+
+<ul>
+<li>get docker</li>
+</ul>
+<pre class="codehilite"><code class="language-bash">`sudo apt-get update &amp;&amp; sudo apt-get upgrade -y`
+`curl -sSL https://get.docker.com | sh`
+`sudo usermod -aG docker $USER`</code></pre>
+
+
+<ul>
+<li>setup container <strong>mqtt mosquitto</strong></li>
+</ul>
+<pre class="codehilite"><code class="language-bash">docker run -itd -p 1883:1883 -p 9001:9001 --name mosquitto_ah eclipse-mosquitto</code></pre>
+
+
+<ul>
+<li>setup container <strong>node red</strong></li>
+</ul>
+<p>Mind that as long as we run the mosquitto and node-red container at the same host the <code>--link mosquitto_ah:broker</code> is necessary.</p>
+<p>If changing the deployment to different machines update the node-red-mqtt-server from broker to the new ip address</p>
+<pre class="codehilite"><code class="language-bash">sudo chown -R 1000:1000 /home/pi/.node-red
+docker run -it -p 1880:1880 -p 7724:7724/udp -p 7725:7725/udp -v /home/pi/.node-red:/data --restart=always --name nodered_ah --link mosquitto_ah:broker nodered/node-red</code></pre>
+
+
+<ul>
+<li>setup container <strong>grafana</strong></li>
+</ul>
+<pre class="codehilite"><code class="language-bash">docker volume create grafana-storage
+docker run -d -p 3000:3000 -v grafana-storage:/var/lib/grafana --name=grafana_ah grafana/grafana</code></pre>
+
+
+<ul>
+<li>setup pi hole</li>
+</ul>
+<p>The network ad blocking / monitoring software <a href="https://pi-hole.net">pi-hole.net</a></p>
+<p>is not really connected to the home automation system but it is always a good idear to have control over your network.</p></div>
         </div>
 
         <footer class="col-md-12">

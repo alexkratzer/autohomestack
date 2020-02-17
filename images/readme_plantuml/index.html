@@ -53,10 +53,10 @@
                                 <a href="../../control_system/">control</a>
                             </li>
                             <li >
-                                <a href="../../processing_level/">processing</a>
+                                <a href="../../processing_level/">process</a>
                             </li>
                             <li >
-                                <a href="../../field_level/">field</a>
+                                <a href="../../field_level/">field level</a>
                             </li>
                             <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
@@ -107,14 +107,15 @@
         <li class="main active"><a href="#plantuml-code-for-readme">plantuml code for readme</a></li>
             <li><a href="#components-of-the-auto-home-stack">Components of the auto home stack</a></li>
             <li><a href="#legend">legend</a></li>
+            <li><a href="#node-red">node red</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="plantuml-code-for-readme">plantuml code for readme<a class="headerlink" href="#plantuml-code-for-readme" title="Permanent link">&para;</a></h1>
+<p>until I get the plant-uml plugin working here is the code to the pictures</p>
 <h2 id="components-of-the-auto-home-stack">Components of the auto home stack<a class="headerlink" href="#components-of-the-auto-home-stack" title="Permanent link">&para;</a></h2>
-<pre><code class="plantuml">
-@startuml
+<pre class="codehilite"><code class="language-plantuml">@startuml
 
 skinparam component {
     FontColor          black
@@ -166,11 +167,11 @@ node &quot;ahs&quot; {
     [aktor] &lt;-up- [plc_xx]
 }
 
-@enduml
-</code></pre>
+@enduml</code></pre>
+
 
 <h2 id="legend">legend<a class="headerlink" href="#legend" title="Permanent link">&para;</a></h2>
-<pre><code class="plantuml">@startuml
+<pre class="codehilite"><code class="language-plantuml">@startuml
 node &quot;Legend&quot;{
     package &quot;device&quot;{
         [item 1] as TMS #Tomato
@@ -179,8 +180,27 @@ node &quot;Legend&quot;{
       [item 2] as CM #Lime
     }
 }
-@enduml
-</code></pre></div>
+@enduml</code></pre>
+
+
+<h2 id="node-red">node red<a class="headerlink" href="#node-red" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-plantuml">@startuml
+
+[*] --&gt; NodeRed
+udp -&gt; NodeRed
+NodeRed -&gt; udp
+udp : plc interface
+mqtt --&gt; NodeRed
+NodeRed --&gt; mqtt
+mqtt : field level devices\nesp 8266,\nwatchdog services, ...
+iot --&gt; NodeRed
+NodeRed --&gt; iot
+iot : other interfaces \nlike rest apis, AWS S3,\nssh to linux devices,\n...
+NodeRed --&gt; db
+db : MySQL and \nInfluxDB
+
+NodeRed : store all prozess \nand event data\nprozess data with rule engine\n
+@enduml</code></pre></div>
         </div>
 
         <footer class="col-md-12">

@@ -8,7 +8,7 @@
         <meta name="author" content="alexander kratzer">
         <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/processing_level/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>processing - Auto Home Stack</title>
+        <title>process - Auto Home Stack</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -53,10 +53,10 @@
                                 <a href="../control_system/">control</a>
                             </li>
                             <li class="active">
-                                <a href="./">processing</a>
+                                <a href="./">process</a>
                             </li>
                             <li >
-                                <a href="../field_level/">field</a>
+                                <a href="../field_level/">field level</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
@@ -122,7 +122,7 @@
 <p><img alt="TIA_multiinstanz" src="../images/TIA_multiinstanz.PNG" /></p>
 <p>Here is an example of the light building block. This is called several times in a superimposed "control" block.</p>
 <p><strong><em>ash became light</em></strong></p>
-<pre><code class="javascript">IF #turn_on THEN
+<pre class="codehilite"><code class="language-javascript">IF #turn_on THEN
     #switch_signal := true;
 END_IF;
 
@@ -133,8 +133,8 @@ IF #param.&quot;auto-off_lux_enable&quot; THEN
                     PT := t#10s,
                     Q =&gt; #tmp_turn_off_lux
     );
-END_IF;
-</code></pre>
+END_IF;</code></pre>
+
 
 <p>Since the interior of the house took place over the winter, I realized the light building block first.</p>
 <p>The module has one input to change the output signal and one input to switch it on and one input to switch it off.</p>
@@ -146,11 +146,11 @@ END_IF;
 <p>The target position and the target angle of the slats (each in 0 - 100%) are transferred to an extra "blind motor" module.</p>
 <p>In this module, the time of the actual position and the actual angle is continuously normalized and the target values are approached in a state machine. </p>
 <p>In addition, I have locked a simultaneous up and down signal at the outputs at different positions.</p>
-<pre><code class="javascript">// normierung der position/zeit zwischen 0 - 100 
+<pre class="codehilite"><code class="language-javascript">// normierung der position/zeit zwischen 0 - 100 
 #cur_data.position := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.position_in_time, MAX := #DRIVING_TIME_POSITION) * #DIGIT_SCALA);
 #cur_data.angle := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.angle_in_time, MAX := #DRIVING_TIME_ANGLE) * #DIGIT_SCALA);
-END_IF;
-</code></pre>
+END_IF;</code></pre>
+
 
 <p>The blind module has the following features:</p>
 <ul>
@@ -206,15 +206,15 @@ END_IF;
 <p>settings of serial interface:</p>
 <p>19200 Baud, 1 Startbit, 8 Datenbits, 1 Stoppbit, NoParity, NoHandshake</p>
 <p>Herewith I inform the heating control that it should send out the actual values cyclically:</p>
-<pre><code class="javascript">#SEND_PTP_start(REQ := #cmd.eta_start,
+<pre class="codehilite"><code class="language-javascript">#SEND_PTP_start(REQ := #cmd.eta_start,
                 &quot;PORT&quot; := #CP_Adress,
                 BUFFER := #frame_start);
 #cmd.eta_start := FALSE;
 
 #SEND_PTP_cmd(REQ:=#cmd.eta_cmd,
               &quot;PORT&quot;:=#CP_Adress,
-              BUFFER:=#frame_cmd);
-</code></pre>
+              BUFFER:=#frame_cmd);</code></pre>
+
 
 <h3 id="communication">communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
 <p>For external communication each CPU contains a net_interface block.</p>
