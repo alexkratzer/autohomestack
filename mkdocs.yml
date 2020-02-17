@@ -7,8 +7,8 @@ site_author: 'alexander kratzer'
 nav:
     - Home:                 index.md
     - control:              'control_system.md'
-    - processing:           processing_level.md
-    - field:                field_level.md
+    - process:              processing_level.md
+    - field level:          field_level.md
     
     - About:
         - References:           'references.md'
@@ -21,6 +21,7 @@ markdown_extensions:
     - toc:
         permalink: true
     - admonition
+    - codehilite
 #    - plantuml-markdown:
 #        server: https://localhost:8080
 #        # server: https://plantuml.com/plantuml

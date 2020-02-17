@@ -1,6 +1,4 @@
-# another self-built ***home automation system***
-
-## Introduction
+# another self-built home automation system
 
 My main focus was a robust, self-sufficient control system with which I could not depend on a proprietary system from a single manufacturer but could expand with hardware / software from different manufacturers.
 
@@ -11,8 +9,6 @@ Via the LAN interface, the CPUs communicate with a NAS running a data logger scr
 As a central control system I use NodeRed which provides a webserver for operation (and a lot of help during development).
 
 ![AutoHome_uebersicht](images/AutoHome_uebersicht.png)
-
--|-
 
 ## Requirements
 
@@ -39,4 +35,4 @@ here another view of the main components
 
 !!! warning
 
-    of course i am not liable for any damage caused by replicas ;-)
+    of course I am not liable for any damage caused by replicas ;-)

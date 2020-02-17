@@ -1,5 +1,7 @@
 # plantuml code for readme
 
+until I get the plant-uml plugin working here is the code to the pictures
+
 ## Components of the auto home stack
 
 ``` plantuml
@@ -71,5 +73,27 @@ node "Legend"{
       [item 2] as CM #Lime
     }
 }
+@enduml
+```
+
+## node red
+
+``` plantuml
+@startuml
+
+[*] --> NodeRed
+udp -> NodeRed
+NodeRed -> udp
+udp : plc interface
+mqtt --> NodeRed
+NodeRed --> mqtt
+mqtt : field level devices\nesp 8266,\nwatchdog services, ...
+iot --> NodeRed
+NodeRed --> iot
+iot : other interfaces \nlike rest apis, AWS S3,\nssh to linux devices,\n...
+NodeRed --> db
+db : MySQL and \nInfluxDB
+
+NodeRed : store all prozess \nand event data\nprozess data with rule engine\n
 @enduml
 ```

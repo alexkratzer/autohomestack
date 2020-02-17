@@ -1,21 +1,14 @@
-# usage MkDocs
+# some useful hints
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
+## usage MkDocs
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+* `gh-deploy`  Deploy your documentation to GitHub Pages
 
-## Project layout
+### Project layout
 
     mkdocs.yml    # The configuration file.
     docs/
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
-
-## custom cmd
-
-`mkdocs gh-deploy` - execute local at root to make and deploy for github
