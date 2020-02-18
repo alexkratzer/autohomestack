@@ -59,6 +59,23 @@
                                 <a href="field_level/">field level</a>
                             </li>
                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">interface <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="topics_node/">node topics</a>
+</li>
+                                    
+<li >
+    <a href="plc_lib_interface/">plc lib</a>
+</li>
+                                    
+<li >
+    <a href="my_multiroom/">multiroom</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -67,11 +84,11 @@
 </li>
                                     
 <li >
-    <a href="hints/">hints</a>
+    <a href="hints/">Hints</a>
 </li>
                                     
 <li >
-    <a href="images/readme_plantuml/">plantuml code</a>
+    <a href="images/readme_plantuml/">Plantuml code</a>
 </li>
                                 </ul>
                             </li>
@@ -105,6 +122,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#another-self-built-home-automation-system">another self-built home automation system</a></li>
+            <li><a href="#business-view">Business view</a></li>
             <li><a href="#requirements">Requirements</a></li>
             <li><a href="#components">Components</a></li>
     </ul>
@@ -116,7 +134,8 @@
 <p>Here my choice fell on Simatic CPUs. The sensors and actuators are wired to these and they process the control program.</p>
 <p>Via the LAN interface, the CPUs communicate with a NAS running a data logger script. Here various data are stored in a mySQL database for later evaluation.</p>
 <p>As a central control system I use NodeRed which provides a webserver for operation (and a lot of help during development).</p>
-<p><img alt="AutoHome_uebersicht" src="images/AutoHome_uebersicht.png" /></p>
+<h2 id="business-view">Business view<a class="headerlink" href="#business-view" title="Permanent link">&para;</a></h2>
+<p><img alt="business_view.svg" src="drawio/business_view.svg" /></p>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -136,7 +155,11 @@
 </tr>
 <tr>
 <td>robustnes</td>
-<td>Backups of databases and other artifacts should be created automatically.</td>
+<td>Backups of databases and other artifacts should be created automatically</td>
+</tr>
+<tr>
+<td>robustnes</td>
+<td>Basic functions like switching light on/off must work even if the control level or parts of the process level fail</td>
 </tr>
 <tr>
 <td>interoperability</td>
@@ -148,7 +171,7 @@
 </tr>
 <tr>
 <td>interoperability</td>
-<td>For integrating iot devices the system provides shall provide a MQTT broker. That allows easy w-lan connecting of esp based devices</td>
+<td>For integrating iot devices the system shall provide a MQTT broker. That allows easy w-lan connecting of esp based devices</td>
 </tr>
 <tr>
 <td>interoperability</td>
@@ -165,8 +188,8 @@
 <p><a href="images/readme_plantuml/">source</a></p>
 <p>here another view of the main components</p>
 <p><img alt="AutoHome_Blockschaltbild" src="images/AutoHome_Blockschaltbild.png" /></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>of course I am not liable for any damage caused by replicas ;-)</p>
 </div></div>
         </div>
@@ -251,5 +274,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2020-02-17 22:32:19
+Build Date UTC : 2020-02-18 23:07:03
 -->

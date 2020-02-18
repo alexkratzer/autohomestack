@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="alexander kratzer">
-        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/processing_level/">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/plc_lib_interface/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>process - Auto Home Stack</title>
+        <title>plc lib - Auto Home Stack</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -52,13 +52,13 @@
                             <li >
                                 <a href="../control_system/">control</a>
                             </li>
-                            <li class="active">
-                                <a href="./">process</a>
+                            <li >
+                                <a href="../processing_level/">process</a>
                             </li>
                             <li >
                                 <a href="../field_level/">field level</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">interface <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -66,8 +66,8 @@
     <a href="../topics_node/">node topics</a>
 </li>
                                     
-<li >
-    <a href="../plc_lib_interface/">plc lib</a>
+<li class="active">
+    <a href="./">plc lib</a>
 </li>
                                     
 <li >
@@ -101,17 +101,17 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../control_system/">
+                                <a rel="next" href="../topics_node/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../field_level/">
+                                <a rel="prev" href="../my_multiroom/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/processing_level.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/plc_lib_interface.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -121,89 +121,118 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#processing-level">Processing level</a></li>
-            <li><a href="#simatic-plc-programm">Simatic PLC programm</a></li>
+        <li class="main active"><a href="#plc-fb-lib">plc FB lib</a></li>
+            <li><a href="#aktor-light">aktor light</a></li>
+            <li><a href="#aktor-heater">aktor heater</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="processing-level">Processing level<a class="headerlink" href="#processing-level" title="Permanent link">&para;</a></h1>
-<p>For monitoring and control of most hard-wired sensor/actuator devices I use Siemens Simatic Series 1200 CPUs.</p>
-<p>These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.</p>
-<p>The picture shows a sub-distributor during the construction phase. Right beside the multimeter you can see a 1214C CPU with 3x DI/DO expansion modules.</p>
-<p><img alt="Unterverteiler_Bauphase" src="../images/Unterverteiler_Bauphase.JPG" /></p>
-<p>The CPUs are programmed with SCL (Structured Control Language). The syntax is similar to Pascal. In the following I describe the user program in excerpts.</p>
-<h2 id="simatic-plc-programm">Simatic PLC programm<a class="headerlink" href="#simatic-plc-programm" title="Permanent link">&para;</a></h2>
-<p>My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.</p>
-<h3 id="aktor-interface">aktor interface<a class="headerlink" href="#aktor-interface" title="Permanent link">&para;</a></h3>
-<p>For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.</p>
-<p><img alt="TIA_multiinstanz" src="../images/TIA_multiinstanz.PNG" /></p>
-<p>Here is an example of the light building block. This is called several times in a superimposed "control" block.</p>
-<p><strong><em>ash became light</em></strong></p>
-<pre class="codehilite"><code class="language-javascript">IF #turn_on THEN
-    #switch_signal := true;
-END_IF;
-
-#Tturn_off(IN:=#turn_off, PT:=t#5s, Q=&gt;#tmp_turn_off_hold);
-
-IF #param.&quot;auto-off_lux_enable&quot; THEN
-    #&quot;Tauto-off-lux&quot;(IN := &quot;sense_lux_stairs_og&quot; &gt; #param.&quot;auto-off_lux&quot;,
-                    PT := t#10s,
-                    Q =&gt; #tmp_turn_off_lux
-    );
-END_IF;</code></pre>
-
-
-<p>Since the interior of the house took place over the winter, I realized the light building block first.</p>
-<p>The module has one input to change the output signal and one input to switch it on and one input to switch it off.</p>
-<p>The output switches directly the coupling relay which controls the physical light.</p>
-<p>In the "inner life" of the module there is a delay to prevent the rear switching on/off (I implemented this function because of a stress test of my kids). </p>
-<p>In addition there is a timer which switches off the light after a configured time and the possibility to also switch off the light if a brightness value is exceeded.</p>
-<p><strong><em>and getting dark again</em></strong></p>
-<p>The blind building block was a little trickier. Because I can't evaluate the signal of the physical end stop in the control I measured the time of the up and down movement.</p>
-<p>The target position and the target angle of the slats (each in 0 - 100%) are transferred to an extra "blind motor" module.</p>
-<p>In this module, the time of the actual position and the actual angle is continuously normalized and the target values are approached in a state machine. </p>
-<p>In addition, I have locked a simultaneous up and down signal at the outputs at different positions.</p>
-<pre class="codehilite"><code class="language-javascript">// normierung der position/zeit zwischen 0 - 100 
-#cur_data.position := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.position_in_time, MAX := #DRIVING_TIME_POSITION) * #DIGIT_SCALA);
-#cur_data.angle := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.angle_in_time, MAX := #DRIVING_TIME_ANGLE) * #DIGIT_SCALA);
-END_IF;</code></pre>
-
-
-<p>The blind module has the following features:</p>
-<ul>
-<li>
-<p>When the up/down button is pressed briefly, the blind moves to the respective end position (i.e. completely up or completely down).</p>
-</li>
-<li>
-<p>If the blind is moving and the up/down button is pressed again, the motor stops.</p>
-</li>
-<li>
-<p>If a button is pressed for a longer period of time (&gt; 300ms have become established), the motor moves until the button is released again.</p>
-</li>
-<li>
-<p>Automatic startup when a parameterized wind speed is exceeded (measured by the weather station)</p>
-</li>
-<li>
-<p>Time-controlled approach of a position and an angle (I have planned 10 events so far but needed a maximum of 4)</p>
-</li>
-<li>
-<p>still on the TO-DO list: event-based approaching of an angle due to solar radiation and room temperature</p>
-</li>
-</ul>
-<p><strong><em>heating module</em></strong></p>
-<p>The heating module is kept simpler again.</p>
-<p>Due to the relatively sluggish wall heating, I have not yet implemented an exact regulation of the heating circuits.</p>
-<p>In order to avoid a constant toggling the servomotors switch off only with 0,5 degrees over target.</p>
-<p>In addition, an interval can be parameterized if the temperature falls below the target value and the time of day during which the module is to be active.</p>
-<p>For IBS purposes (and e.g. vacation time), the PC-Tool can also be used to switch to manual mode (defined on or off).</p>
-<p><strong><em>TO-DO Current</em></strong></p>
-<p>I have not yet realized the socket module. Currently I only switch the sockets in the children's room.</p>
-<p>Since here however a bedside lamp is switched I also used the light component for it.</p>
-<h3 id="communication">communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
-<p>For external communication each CPU contains a net_interface block.</p>
-<p>Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.</p>
-<p>Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.</p></div>
+<h1 id="plc-fb-lib">plc FB lib<a class="headerlink" href="#plc-fb-lib" title="Permanent link">&para;</a></h1>
+<h2 id="aktor-light">aktor light<a class="headerlink" href="#aktor-light" title="Permanent link">&para;</a></h2>
+<p>udp interface
+-|-|-</p>
+<p>logic interface
+-|-|-</p>
+<h2 id="aktor-heater">aktor heater<a class="headerlink" href="#aktor-heater" title="Permanent link">&para;</a></h2>
+<p>distributor <strong>upper floor</strong></p>
+<table>
+<thead>
+<tr>
+<th>circuit</th>
+<th>room</th>
+<th>location</th>
+<th>length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>child east</td>
+<td>wall</td>
+<td>87</td>
+</tr>
+<tr>
+<td>2</td>
+<td>child west</td>
+<td>wall</td>
+<td>86</td>
+</tr>
+<tr>
+<td>3</td>
+<td>north west</td>
+<td>wall</td>
+<td>88</td>
+</tr>
+<tr>
+<td>4</td>
+<td>bath</td>
+<td>wall</td>
+<td>94</td>
+</tr>
+<tr>
+<td>5</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>6</td>
+<td>bath</td>
+<td>floor</td>
+<td>51</td>
+</tr>
+</tbody>
+</table>
+<p>distributor <strong>ground floor</strong></p>
+<table>
+<thead>
+<tr>
+<th>circuit</th>
+<th>room</th>
+<th>location</th>
+<th>length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>entrance</td>
+<td>floor</td>
+<td>?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>office</td>
+<td>wall</td>
+<td>112</td>
+</tr>
+<tr>
+<td>3</td>
+<td>living room</td>
+<td>wall</td>
+<td>111</td>
+</tr>
+<tr>
+<td>4</td>
+<td>kitchen, dining</td>
+<td>wall</td>
+<td>130</td>
+</tr>
+<tr>
+<td>5</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>6</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table></div>
         </div>
 
         <footer class="col-md-12">

@@ -2,37 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/control_system/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/processing_level/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/field_level/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://alexkratzer.github.io/autohomestack/topics_node/</loc>
+     <lastmod>2020-02-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://alexkratzer.github.io/autohomestack/plc_lib_interface/</loc>
+     <lastmod>2020-02-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://alexkratzer.github.io/autohomestack/my_multiroom/</loc>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/references/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/hints/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://alexkratzer.github.io/autohomestack/images/readme_plantuml/</loc>
-     <lastmod>2020-02-17</lastmod>
+     <lastmod>2020-02-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
