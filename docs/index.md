@@ -8,6 +8,8 @@ Via the LAN interface, the CPUs communicate with a NAS running a data logger scr
 
 As a central control system I use NodeRed which provides a webserver for operation (and a lot of help during development).
 
+## Business view
+
 ![AutoHome_uebersicht](images/AutoHome_uebersicht.png)
 
 ## Requirements
@@ -33,6 +35,6 @@ here another view of the main components
 
 ![AutoHome_Blockschaltbild](images/AutoHome_Blockschaltbild.png)
 
-!!! warning
+!!! tip
 
     of course I am not liable for any damage caused by replicas ;-)

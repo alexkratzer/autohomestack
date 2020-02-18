@@ -1,6 +1,8 @@
 # Processing level
 
-The core components of my home automation solution consist of Siemens Simatic 1200 series CPUs. These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.
+For monitoring and control of most hard-wired sensor/actuator devices I use Siemens Simatic Series 1200 CPUs.
+
+These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.
 
 The picture shows a sub-distributor during the construction phase. Right beside the multimeter you can see a 1214C CPU with 3x DI/DO expansion modules.
 
@@ -10,9 +12,9 @@ The CPUs are programmed with SCL (Structured Control Language). The syntax is si
 
 ## Simatic PLC programm
 
-### aktor interface
-
 My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.
+
+### aktor interface
 
 For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.
 
