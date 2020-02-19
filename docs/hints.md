@@ -5,6 +5,7 @@
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
+* `localhost:8000` to view it in browser
 
 ### Project layout
 
