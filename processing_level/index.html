@@ -123,6 +123,7 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#processing-level">Processing level</a></li>
             <li><a href="#simatic-plc-programm">Simatic PLC programm</a></li>
+            <li><a href="#data-logger">Data logger</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -203,7 +204,13 @@ END_IF;</code></pre>
 <h3 id="communication">communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
 <p>For external communication each CPU contains a net_interface block.</p>
 <p>Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.</p>
-<p>Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.</p></div>
+<p>Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.</p>
+<h2 id="data-logger">Data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
+<p>During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
+<p>And after implementing this interface at the plc and i kept it for data logging.</p>
+<p>Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p>
+<p>The main script provides a IP listener for every configuret plc connection.</p>
+<p>Messages from the remote clients will be parsed and stored in a db.</p></div>
         </div>
 
         <footer class="col-md-12">

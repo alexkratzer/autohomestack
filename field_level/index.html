@@ -123,7 +123,6 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#field-level">Field level</a></li>
             <li><a href="#iot-multisensor">IoT multisensor</a></li>
-            <li><a href="#data-logger">Data logger</a></li>
             <li><a href="#wetter-station">Wetter station</a></li>
             <li><a href="#the-heating-system">The heating system</a></li>
     </ul>
@@ -132,15 +131,122 @@
 
 <h1 id="field-level">Field level<a class="headerlink" href="#field-level" title="Permanent link">&para;</a></h1>
 <h2 id="iot-multisensor">IoT multisensor<a class="headerlink" href="#iot-multisensor" title="Permanent link">&para;</a></h2>
-<p>TODO esp 8266 description</p>
-<p>requirements</p>
-<p>upload stl file</p>
-<h2 id="data-logger">Data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
-<p>During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
-<p>And after implementing this interface at the plc and i kept it for data logging.</p>
-<p>Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p>
-<p>The main script provides a IP listener for every configuret plc connection.</p>
-<p>Messages from the remote clients will be parsed and stored in a db.</p>
+<h3 id="esp8266">ESP8266<a class="headerlink" href="#esp8266" title="Permanent link">&para;</a></h3>
+<p>To enable the esp8266 libs at Arduino IDE</p>
+<ul>
+<li>Go to File &gt; Preferences -&gt; Additional Board Manager URLs: http://arduino.esp8266.com/stable/package_esp8266com_index.json</li>
+<li>Tools &gt; Board -&gt; Boards Manager -&gt; Search for ESP8266 and install</li>
+</ul>
+<p>Dependency libs:</p>
+<ul>
+<li>
+<p>git clone https://github.com/knolleary/pubsubclient.git</p>
+</li>
+<li>
+<p>git clone https://github.com/adafruit/DHT-sensor-library.git</p>
+</li>
+<li>
+<p>copy to ~/Arduino/libraries</p>
+</li>
+</ul>
+<p>Features:</p>
+<ul>
+<li>
+<p>read temperatur / humility and publish cyclic</p>
+</li>
+<li>
+<p>read light lux and publish cyclic</p>
+</li>
+<li>
+<p>detect motion and publish at detection (on rising edge)</p>
+</li>
+</ul>
+<p>MQTT Interface</p>
+<ul>
+<li>
+<p>subscription topics (start with prefix(iot/v01) + esp_name + topic_type)</p>
+</li>
+<li>
+<p>e.g. iot/v01/nodeMCUIBS/config/get_status</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>topic</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/config/echo</td>
+<td>just send an reply</td>
+</tr>
+<tr>
+<td>/config/get_status[value: ""; status; prozess; heap]</td>
+<td></td>
+</tr>
+<tr>
+<td>/config/set_name [new name]</td>
+<td>change name of esp (with prefix for topics)</td>
+</tr>
+<tr>
+<td>/config/send_intervall_sensor [new time in ms]</td>
+<td>e.g. "10000" for 10s</td>
+</tr>
+<tr>
+<td>/config/send_intervall_status</td>
+<td>watchdog with status information</td>
+</tr>
+<tr>
+<td>/config/reset [dht, setup, vars]</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>GPIO usage</p>
+<table>
+<thead>
+<tr>
+<th>pin</th>
+<th>DHT22</th>
+<th>AM312</th>
+<th>KY-018</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>VCC</td>
+<td>VCC</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DATA=D7</td>
+<td>OUT=D2/D5</td>
+<td>VCC</td>
+</tr>
+<tr>
+<td>3</td>
+<td>nc</td>
+<td>GND</td>
+<td>DATA=A0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GND</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3d-case">3D case<a class="headerlink" href="#3d-case" title="Permanent link">&para;</a></h3>
+<p>This is the 3D model of the case</p>
+<p><img alt="multisensor_case_3d_model" src="../images/multisensor_case_3d_model.png" /></p>
+<h3 id="downloads">Downloads<a class="headerlink" href="#downloads" title="Permanent link">&para;</a></h3>
+<p>You can download the STL file here: <a href="../iot_multisensor/new_multisensor_V0.1.stl">new_multisensor_V0.1</a></p>
+<p>The arduino sketch is stored here: <a href="../iot_multisensor/ah_iot_multisensor_v06.ino">ah_iot_multisensor_v06</a></p>
 <h2 id="wetter-station">Wetter station<a class="headerlink" href="#wetter-station" title="Permanent link">&para;</a></h2>
 <p>For the weather station I decided for the P03/3-Modbus from Elsner.</p>
 <p><img alt="wetterstation" src="../images/wetterstation.png" /></p>
