@@ -14,7 +14,7 @@ As a central control system I use NodeRed which provides a webserver for operati
 
 ## Requirements
 
-type | desc
+type | description
 -|-
 robustnes|When switching on (e.g. after a power failure) the system itself should start up and be active
 robustnes|Services / applications on servers should be monitored automatically and restarted if necessary
