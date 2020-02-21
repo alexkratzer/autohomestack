@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/control_system/">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/level_control/raspberry_setup/">
       
       
         <meta name="author" content="alexander kratzer">
@@ -35,27 +35,27 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="../img/favicon.ico">
+      <link rel="shortcut icon" href="../../images/favicon.ico">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
-        <title>control - Auto Home Stack</title>
+        <title>Raspberry setup - Auto Home Stack</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
         
-        <meta name="theme-color" content="">
+        <meta name="theme-color" content="#3f51b5">
       
     
     
-      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
@@ -64,7 +64,7 @@
         <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
     
@@ -75,13 +75,11 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     <svg class="md-svg">
       <defs>
         
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
         
       </defs>
     </svg>
@@ -89,7 +87,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#control-system" tabindex="0" class="md-skip">
+      <a href="#raspberry-setup" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -100,7 +98,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://alexkratzer.github.io/autohomestack/" title="Auto Home Stack" aria-label="Auto Home Stack" class="md-header-nav__button md-logo">
           
-            <i class="md-icon">house</i>
+            <img alt="logo" src="../../images/favicon.ico" width="24" height="24">
           
         </a>
       </div>
@@ -115,7 +113,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                control
+                Raspberry setup
               
             </span>
           
@@ -150,28 +148,6 @@
         
       </div>
       
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-<a href="https://github.com/alexkratzer/autohomestack/" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-          </div>
-        </div>
-      
     </div>
   </nav>
 </header>
@@ -183,33 +159,19 @@
       
         
 
-<nav class="md-tabs" data-md-component="tabs">
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
-      
-        
-  <li class="md-tabs__item">
-    
-      <a href=".." class="md-tabs__link md-tabs__link--active">
-        Home
-      </a>
-    
-  </li>
-
-      
-        
-      
-        
-      
-        
       
         
   
   
     <li class="md-tabs__item">
       
-        <a href="../topics_node/" class="md-tabs__link">
-          interface
+        <a href="../.." class="md-tabs__link">
+          Home
         </a>
       
     </li>
@@ -221,7 +183,72 @@
   
     <li class="md-tabs__item">
       
-        <a href="../references/" class="md-tabs__link">
+        <a href="../node_red/" class="md-tabs__link md-tabs__link--active">
+          Control level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../level_process/simatic_plc/" class="md-tabs__link">
+          Process level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../level_field/iot_multisensor/" class="md-tabs__link">
+          Field level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../topics_node/" class="md-tabs__link">
+          Interface
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../my_multiroom/" class="md-tabs__link">
+          multiroom
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../references/" class="md-tabs__link">
           About
         </a>
       
@@ -244,31 +271,11 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://alexkratzer.github.io/autohomestack/" title="Auto Home Stack" class="md-nav__button md-logo">
       
-        <i class="md-icon">house</i>
+        <img alt="logo" src="../../images/favicon.ico" width="48" height="48">
       
     </a>
     Auto Home Stack
   </label>
-  
-    <div class="md-nav__source">
-      
-
-
-  
-
-<a href="https://github.com/alexkratzer/autohomestack/" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -277,16 +284,121 @@
       
 
 
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
       Home
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Home
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Auto Home Stack" class="md-nav__link">
+      Auto Home Stack
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../home/requirements/" title="Requirements" class="md-nav__link">
+      Requirements
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../home/components/" title="Components" class="md-nav__link">
+      Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
       
       
       
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Control level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Control level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../node_red/" title="Node RED" class="md-nav__link">
+      Node RED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../control_system/" title="control_system" class="md-nav__link">
+      control_system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dotNet_tool/" title="dotNet tool" class="md-nav__link">
+      dotNet tool
+    </a>
+  </li>
+
+        
+          
+          
+          
 
   
 
@@ -298,87 +410,15 @@
       
     
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        control
-      </label>
-    
-    <a href="./" title="control" class="md-nav__link md-nav__link--active">
-      control
+    <a href="./" title="Raspberry setup" class="md-nav__link md-nav__link--active">
+      Raspberry setup
     </a>
     
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#node-red" class="md-nav__link">
-    Node red
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#requirements-regarding-plugins" class="md-nav__link">
-    Requirements regarding plugins
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboards" class="md-nav__link">
-    Dashboards
-  </a>
-  
-</li>
+  </li>
+
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grafana" class="md-nav__link">
-    Grafana
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mqtt-mosquitto" class="md-nav__link">
-    mqtt mosquitto
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#raspberry-setup" class="md-nav__link">
-    Raspberry setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dotnet-tool" class="md-nav__link">
-    dotNet tool
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -387,10 +427,46 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Process level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Process level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
-    <a href="../processing_level/" title="process" class="md-nav__link">
-      process
+    <a href="../../level_process/simatic_plc/" title="Simatic PLC" class="md-nav__link">
+      Simatic PLC
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_process/plc_program/" title="PLC program" class="md-nav__link">
+      PLC program
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -399,10 +475,46 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Field level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Field level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
-    <a href="../field_level/" title="field level" class="md-nav__link">
-      field level
+    <a href="../../level_field/iot_multisensor/" title="IoT Multisensor" class="md-nav__link">
+      IoT Multisensor
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_field/field_level/" title="devices" class="md-nav__link">
+      devices
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -416,11 +528,11 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      interface
+      Interface
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
-        interface
+        Interface
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -431,7 +543,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../topics_node/" title="node topics" class="md-nav__link">
+    <a href="../../topics_node/" title="node topics" class="md-nav__link">
       node topics
     </a>
   </li>
@@ -443,20 +555,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../plc_lib_interface/" title="plc lib" class="md-nav__link">
+    <a href="../../plc_lib_interface/" title="plc lib" class="md-nav__link">
       plc lib
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../my_multiroom/" title="multiroom" class="md-nav__link">
-      multiroom
     </a>
   </li>
 
@@ -476,10 +576,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
-      About
+      multiroom
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-6">
+        multiroom
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../my_multiroom/" title="multiroom" class="md-nav__link">
+      multiroom
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
         About
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -491,7 +627,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../references/" title="References" class="md-nav__link">
+    <a href="../../references/" title="References" class="md-nav__link">
       References
     </a>
   </li>
@@ -503,7 +639,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../hints/" title="Hints" class="md-nav__link">
+    <a href="../../hints/" title="Hints" class="md-nav__link">
       Hints
     </a>
   </li>
@@ -515,7 +651,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../images/readme_plantuml/" title="Plantuml code" class="md-nav__link">
+    <a href="../../images/readme_plantuml/" title="Plantuml code" class="md-nav__link">
       Plantuml code
     </a>
   </li>
@@ -543,70 +679,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#node-red" class="md-nav__link">
-    Node red
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#requirements-regarding-plugins" class="md-nav__link">
-    Requirements regarding plugins
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboards" class="md-nav__link">
-    Dashboards
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grafana" class="md-nav__link">
-    Grafana
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mqtt-mosquitto" class="md-nav__link">
-    mqtt mosquitto
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#raspberry-setup" class="md-nav__link">
-    Raspberry setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dotnet-tool" class="md-nav__link">
-    dotNet tool
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -617,42 +689,8 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/control_system.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
-                
-                <h1 id="control-system">Control system<a class="headerlink" href="#control-system" title="Permanent link">&para;</a></h1>
-<h2 id="node-red">Node red<a class="headerlink" href="#node-red" title="Permanent link">&para;</a></h2>
-<p>As control system and for the connection of other devices I currently use <a href="https://nodered.org">node-RED</a>.</p>
-<p><strong><em>Node-RED is a programming tool for wiring together hardware devices, APIs and online services</em></strong></p>
-<p>It has already implemented interfaces (which are called 'nodes') to a lot of devices I use.</p>
-<p><img alt="NodeRedInterfaces" src="https://www.plantuml.com/plantuml/png/0/TP4nJyCm48Lt_uetepO3I1NAW0fYGMgH80C3ON3ZIsFXdeDzQGk_7ZlGKePErhtl-RspF8-YWmmRfzJhnHkcqniyUaFFPDHWUfoClsUM4XbfYTuri2mKMjsGsdo8_8iutabQXZ-E4gqbP-1eImw6jhQXM3F57jUNizcavfsMfZD-ZKXXf1CKHQ6iFn-VsCXBUEae_6qLKREpxuH0KQ1xcy9kNofKLwaenWxYuImF-yCcISvbf-5cfSmgHIy_gwS5D9kK-S2j6_RtT-heB1751u9s3dtmNnHpTtQdXxB0QD4r7qYUiBFI8GoEGBosJ3MhER59__4D" title="NodeRedInterfaces" /></p>
-<h3 id="requirements-regarding-plugins">Requirements regarding plugins<a class="headerlink" href="#requirements-regarding-plugins" title="Permanent link">&para;</a></h3>
-<ol>
-<li>node-red-dashboard</li>
-<li>node-red-contrib-fritz</li>
-<li>node-red-contrib-s7</li>
-<li>node-red-node-mysql</li>
-<li>node-red-contrib-os</li>
-<li>node-red-contrib-mqtt-broker</li>
-<li>node-red-node-email</li>
-<li>(outdated) node-red-contrib-netatmo</li>
-<li>node-red-contrib-netatmo-dashboard</li>
-<li>node-red-contrib-viera</li>
-</ol>
-<h3 id="dashboards">Dashboards<a class="headerlink" href="#dashboards" title="Permanent link">&para;</a></h3>
-<p>It is easy to make quick dash boards to monitor the sensor and health state of the devices.</p>
-<p><img alt="node_red_status_example" src="../images/node_red_status_example.png" /></p>
-<p>Or to configure debug / control clients for different devices</p>
-<p><img alt="node_red_cmd" src="../images/node_red_cmd.png" /></p>
-<h2 id="grafana">Grafana<a class="headerlink" href="#grafana" title="Permanent link">&para;</a></h2>
-<p>Using an open source solution is much easier than implementing a monitor dashboard yourself.</p>
-<p><strong><em>Grafana is the open source analytics and monitoring solution for every database</em></strong></p>
-<p>I had good experiences with <a href="https://grafana.com">grafana</a>. Out of the box even larger time ranges are displayed performant.</p>
-<p>I can recommend this <a href="https://grafana.com/docs/installation/docker/">installation pages</a></p>
-<p><img alt="grafana_home_automation" src="../images/grafana_home_automation.png" /></p>
-<h2 id="mqtt-mosquitto">mqtt mosquitto<a class="headerlink" href="#mqtt-mosquitto" title="Permanent link">&para;</a></h2>
-<p><strong><em>Eclipse Mosquitto is an open source message broker that implements the MQTT protocol</em></strong></p>
-<h2 id="raspberry-setup">Raspberry setup<a class="headerlink" href="#raspberry-setup" title="Permanent link">&para;</a></h2>
+                <h1 id="raspberry-setup">Raspberry setup<a class="headerlink" href="#raspberry-setup" title="Permanent link">&para;</a></h1>
 <p>Most of the control components are running as docker image on a raspberry.</p>
 <p>Here are a few steps to set up:</p>
 <ul>
@@ -706,24 +744,6 @@ docker run -d -p <span class="m">3000</span>:3000 -v grafana-storage:/var/lib/gr
 </ul>
 <p>The network ad blocking / monitoring software <a href="https://pi-hole.net">pi-hole.net</a></p>
 <p>is not really connected to the home automation system but it is always a good idear to have control over your network.</p>
-<h2 id="dotnet-tool">dotNet tool<a class="headerlink" href="#dotnet-tool" title="Permanent link">&para;</a></h2>
-<p>The PC-Tool is written in C# and was developed during the commissioning phase (which will probably not be finished that soon ;-) ).</p>
-<p>The tool has a fancy surface and is suitable for carrying out basic parameter settings on the controller.</p>
-<p>It turns out that it is uncomfortable to rely on a windows pc to control the system.</p>
-<p>If you are interested you can look at it <a href="../references/">references.md</a></p>
-<p>Here are some historical pics of the outdated dot net pc tool.</p>
-<p><img alt="pctool_parameter.png" src="../images/pctool_parameter.png" /></p>
-<p>All devices / sensors / actuators could be configured in a parameter window.</p>
-<p>Due to its generic structure, any actuators can be added during runtime and addressed in the controller.</p>
-<p>These can then be positioned in the ui by drag and drop</p>
-<p><img alt="pctool_edit_floor.png" src="../images/pctool_edit_floor.png" /></p>
-<p>With this view all actors of a selected type can be observed and controlled</p>
-<p><img alt="pctool_main" src="../images/pctool_main.png" /></p>
-<p>Clicking on a specific image either triggers an action or opens a sub window with further options</p>
-<p><img alt="pctool_floor_EG.png" src="../images/pctool_floor_EG.png" /></p>
-<p><img alt="pctool_floor_OG.png" src="../images/pctool_floor_OG.png" /></p>
-<p>To visualize past data from the data logger the tool has a sql client with dashboard</p>
-<p><img alt="dotNetDBviewer" src="../images/dotNetDBviewer.png" /></p>
                 
                   
                 
@@ -745,7 +765,7 @@ docker run -d -p <span class="m">3000</span>:3000 -v grafana-storage:/var/lib/gr
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../dotNet_tool/" title="dotNet tool" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -754,19 +774,19 @@ docker run -d -p <span class="m">3000</span>:3000 -v grafana-storage:/var/lib/gr
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                dotNet tool
               </span>
             </div>
           </a>
         
         
-          <a href="../processing_level/" title="process" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../level_process/simatic_plc/" title="Simatic PLC" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                process
+                Simatic PLC
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -794,9 +814,9 @@ docker run -d -p <span class="m">3000</span>:3000 -v grafana-storage:/var/lib/gr
       
     </div>
     
-      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
     
   </body>

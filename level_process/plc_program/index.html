@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/processing_level/">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/level_process/plc_program/">
       
       
         <meta name="author" content="alexander kratzer">
@@ -35,27 +35,27 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="../img/favicon.ico">
+      <link rel="shortcut icon" href="../../images/favicon.ico">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
-        <title>process - Auto Home Stack</title>
+        <title>PLC program - Auto Home Stack</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
         
-        <meta name="theme-color" content="">
+        <meta name="theme-color" content="#3f51b5">
       
     
     
-      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
@@ -64,7 +64,7 @@
         <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
     
@@ -75,13 +75,11 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     <svg class="md-svg">
       <defs>
         
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
         
       </defs>
     </svg>
@@ -100,7 +98,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://alexkratzer.github.io/autohomestack/" title="Auto Home Stack" aria-label="Auto Home Stack" class="md-header-nav__button md-logo">
           
-            <i class="md-icon">house</i>
+            <img alt="logo" src="../../images/favicon.ico" width="24" height="24">
           
         </a>
       </div>
@@ -115,7 +113,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                process
+                PLC program
               
             </span>
           
@@ -150,28 +148,6 @@
         
       </div>
       
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-<a href="https://github.com/alexkratzer/autohomestack/" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-          </div>
-        </div>
-      
     </div>
   </nav>
 </header>
@@ -183,33 +159,19 @@
       
         
 
-<nav class="md-tabs" data-md-component="tabs">
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
-      
-        
-  <li class="md-tabs__item">
-    
-      <a href=".." class="md-tabs__link md-tabs__link--active">
-        Home
-      </a>
-    
-  </li>
-
-      
-        
-      
-        
-      
-        
       
         
   
   
     <li class="md-tabs__item">
       
-        <a href="../topics_node/" class="md-tabs__link">
-          interface
+        <a href="../.." class="md-tabs__link">
+          Home
         </a>
       
     </li>
@@ -221,7 +183,72 @@
   
     <li class="md-tabs__item">
       
-        <a href="../references/" class="md-tabs__link">
+        <a href="../../level_control/node_red/" class="md-tabs__link">
+          Control level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../simatic_plc/" class="md-tabs__link md-tabs__link--active">
+          Process level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../level_field/iot_multisensor/" class="md-tabs__link">
+          Field level
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../topics_node/" class="md-tabs__link">
+          Interface
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../my_multiroom/" class="md-tabs__link">
+          multiroom
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../references/" class="md-tabs__link">
           About
         </a>
       
@@ -244,31 +271,11 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://alexkratzer.github.io/autohomestack/" title="Auto Home Stack" class="md-nav__button md-logo">
       
-        <i class="md-icon">house</i>
+        <img alt="logo" src="../../images/favicon.ico" width="48" height="48">
       
     </a>
     Auto Home Stack
   </label>
-  
-    <div class="md-nav__source">
-      
-
-
-  
-
-<a href="https://github.com/alexkratzer/autohomestack/" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -277,28 +284,169 @@
       
 
 
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
       Home
-    </a>
-  </li>
-
-    
-      
-      
-      
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Home
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
-    <a href="../control_system/" title="control" class="md-nav__link">
-      control
+    <a href="../.." title="Auto Home Stack" class="md-nav__link">
+      Auto Home Stack
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../home/requirements/" title="Requirements" class="md-nav__link">
+      Requirements
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../home/components/" title="Components" class="md-nav__link">
+      Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
       
       
       
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Control level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Control level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_control/node_red/" title="Node RED" class="md-nav__link">
+      Node RED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_control/control_system/" title="control_system" class="md-nav__link">
+      control_system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_control/dotNet_tool/" title="dotNet tool" class="md-nav__link">
+      dotNet tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_control/raspberry_setup/" title="Raspberry setup" class="md-nav__link">
+      Raspberry setup
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Process level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Process level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../simatic_plc/" title="Simatic PLC" class="md-nav__link">
+      Simatic PLC
+    </a>
+  </li>
+
+        
+          
+          
+          
 
   
 
@@ -311,11 +459,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        process
+        PLC program
       </label>
     
-    <a href="./" title="process" class="md-nav__link md-nav__link--active">
-      process
+    <a href="./" title="PLC program" class="md-nav__link md-nav__link--active">
+      PLC program
     </a>
     
       
@@ -372,16 +520,57 @@
     
   </li>
 
+        
+      </ul>
+    </nav>
+  </li>
+
     
       
       
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Field level
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Field level
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
-    <a href="../field_level/" title="field level" class="md-nav__link">
-      field level
+    <a href="../../level_field/iot_multisensor/" title="IoT Multisensor" class="md-nav__link">
+      IoT Multisensor
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_field/field_level/" title="devices" class="md-nav__link">
+      devices
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -395,11 +584,11 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      interface
+      Interface
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
-        interface
+        Interface
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -410,7 +599,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../topics_node/" title="node topics" class="md-nav__link">
+    <a href="../../topics_node/" title="node topics" class="md-nav__link">
       node topics
     </a>
   </li>
@@ -422,20 +611,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../plc_lib_interface/" title="plc lib" class="md-nav__link">
+    <a href="../../plc_lib_interface/" title="plc lib" class="md-nav__link">
       plc lib
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../my_multiroom/" title="multiroom" class="md-nav__link">
-      multiroom
     </a>
   </li>
 
@@ -455,10 +632,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
-      About
+      multiroom
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-6">
+        multiroom
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../my_multiroom/" title="multiroom" class="md-nav__link">
+      multiroom
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
         About
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -470,7 +683,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../references/" title="References" class="md-nav__link">
+    <a href="../../references/" title="References" class="md-nav__link">
       References
     </a>
   </li>
@@ -482,7 +695,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../hints/" title="Hints" class="md-nav__link">
+    <a href="../../hints/" title="Hints" class="md-nav__link">
       Hints
     </a>
   </li>
@@ -494,7 +707,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../images/readme_plantuml/" title="Plantuml code" class="md-nav__link">
+    <a href="../../images/readme_plantuml/" title="Plantuml code" class="md-nav__link">
       Plantuml code
     </a>
   </li>
@@ -575,20 +788,13 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/alexkratzer/autohomestack/edit/master/docs/processing_level.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
-                
                 
                 <h1 id="processing-level">Processing level<a class="headerlink" href="#processing-level" title="Permanent link">&para;</a></h1>
-<p>For monitoring and control of most hard-wired sensor/actuator devices I use Siemens Simatic Series 1200 CPUs.</p>
-<p>These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.</p>
-<p>The picture shows a sub-distributor during the construction phase. Right beside the multimeter you can see a 1214C CPU with 3x DI/DO expansion modules.</p>
-<p><img alt="Unterverteiler_Bauphase" src="../images/Unterverteiler_Bauphase.JPG" /></p>
-<p>The CPUs are programmed with SCL (Structured Control Language). The syntax is similar to Pascal. In the following I describe the user program in excerpts.</p>
 <h2 id="simatic-plc-programm">Simatic PLC programm<a class="headerlink" href="#simatic-plc-programm" title="Permanent link">&para;</a></h2>
 <p>My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.</p>
 <h3 id="aktor-interface">aktor interface<a class="headerlink" href="#aktor-interface" title="Permanent link">&para;</a></h3>
 <p>For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.</p>
-<p><img alt="TIA_multiinstanz" src="../images/TIA_multiinstanz.PNG" /></p>
+<p><img alt="TIA_multiinstanz" src="../TIA_multiinstanz.PNG" /></p>
 <p>Here is an example of the light building block. This is called several times in a superimposed "control" block.</p>
 <p><strong><em>ash became light</em></strong></p>
 <div class="codehilite"><pre><span></span><code><span class="nx">IF</span> <span class="err">#</span><span class="nx">turn_on</span> <span class="nx">THEN</span>
@@ -684,7 +890,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../control_system/" title="control" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../simatic_plc/" title="Simatic PLC" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -693,19 +899,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                control
+                Simatic PLC
               </span>
             </div>
           </a>
         
         
-          <a href="../field_level/" title="field level" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../level_field/iot_multisensor/" title="IoT Multisensor" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                field level
+                IoT Multisensor
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -733,9 +939,9 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
     
   </body>
