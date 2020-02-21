@@ -6,6 +6,8 @@
 * `mkdocs build` - Build the documentation site.
 * `mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
 * `localhost:8000` to view it in browser
+* [https://autohomestack.github.io/website/](https://autohomestack.github.io/website/)
+* [https://autohomestack.de](https://autohomestack.de)
 
 ### Project layout
 

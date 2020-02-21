@@ -1,15 +1,5 @@
 # Processing level
 
-For monitoring and control of most hard-wired sensor/actuator devices I use Siemens Simatic Series 1200 CPUs.
-
-These are actually used in industrial environments (so they meet my requirements regarding robustness) and were priced within my budget.
-
-The picture shows a sub-distributor during the construction phase. Right beside the multimeter you can see a 1214C CPU with 3x DI/DO expansion modules.
-
-![Unterverteiler_Bauphase](images/Unterverteiler_Bauphase.JPG)
-
-The CPUs are programmed with SCL (Structured Control Language). The syntax is similar to Pascal. In the following I describe the user program in excerpts.
-
 ## Simatic PLC programm
 
 My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.
@@ -18,7 +8,7 @@ My focus was on a generic solution in order to be able to extend the control pro
 
 For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.
 
-![TIA_multiinstanz](images/TIA_multiinstanz.PNG)
+![TIA_multiinstanz](TIA_multiinstanz.PNG)
 
 Here is an example of the light building block. This is called several times in a superimposed "control" block.
 

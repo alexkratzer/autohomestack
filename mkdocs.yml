@@ -1,25 +1,29 @@
 site_name: Auto Home Stack
-repo_url: https://github.com/alexkratzer/autohomestack
+
 site_url: 'https://alexkratzer.github.io/autohomestack/'
 
 site_author: 'alexander kratzer'
 
 nav:
-    - Home:                 index.md
-    - test:
-        test1:
-            test1:  test_test
-            test2:  test_test
-        test2: nochmal
-        test3:
-            blie
-            bla
-    - control:              'control_system.md'
-    - process:              processing_level.md
-    - field level:          field_level.md
-    - interface:
+    - Home:
+        - Auto Home Stack:      index.md
+        - Requirements:         'home/requirements.md'
+        - Components:           'home/components.md'
+    - Control level:        
+        - Node RED:             'level_control/node_red.md'
+        - control_system:       'level_control/control_system.md'
+        - dotNet tool:          'level_control/dotNet_tool.md'
+        - Raspberry setup:      'level_control/raspberry_setup.md'
+    - Process level:
+        - Simatic PLC:          'level_process/simatic_plc.md'
+        - PLC program:          'level_process/plc_program.md'
+    - Field level:          
+        - IoT Multisensor:      level_field/iot_multisensor.md
+        - devices:              level_field/field_level.md
+    - Interface:
         - node topics:          topics_node.md
         - plc lib:              plc_lib_interface.md
+    - multiroom:
         - multiroom:            my_multiroom.md
     
     - About:
@@ -31,6 +35,22 @@ nav:
 # theme: 'windmill-dark'
 # theme: windmill
 # extra_css: [extra.css]
+theme:
+    font:
+        text: 'Ubuntu'
+        code: 'Ubuntu Mono'
+    name: 'material'
+    palette:
+        primary: 'indigo'
+        accent: 'indigo'
+#      primary: 'white'
+#      accent: 'teal'
+    language: 'en'
+    favicon: 'images/favicon.ico'
+    feature:
+      tabs: true
+    logo: 'images/favicon.ico'
+      #icon: 'settings_power'
 
 markdown_extensions:
     - toc:
