@@ -1,12 +1,14 @@
 # Raspberry setup
 
+## Docker
+
 Most of the control components are running as docker image on a raspberry.
 
 Here are a few steps to set up:
 
 * enable ssh server
 
-* copy the puplic key to the raspberry for easier access
+* copy your puplic key to the raspberry for easier access
 
 ```bash
 cat ~/.ssh/id_rsa.pub | ssh pi_name@192.168.xxx.xxx -p 22 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
@@ -49,3 +51,56 @@ docker run -d -p 3000:3000 -v grafana-storage:/var/lib/grafana --name=grafana_ah
 The network ad blocking / monitoring software [pi-hole.net](https://pi-hole.net)
 
 is not really connected to the home automation system but it is always a good idear to have control over your network.
+
+## Script device_status.py
+
+### Download
+
+This script [device_status.py](../scripts/device_status.py) is executed from the main raspberry.
+
+Some unit tests are [here](../scripts/test_device_status.py) available (I used pytest).
+
+dependencies:
+
+```bash
+pip3 install paho-mqtt
+```
+
+If not using python3 replace `subprocess` with `commands`
+
+### Purpose
+
+Its purpose is to get the status (temperature, ram usage, ...) of devices with ssh interface.
+
+Results will be puplished at MQTT for further processing.
+
+current clients:
+
+ip|name|component
+-|-|-
+192.168.1.39|og_floor|piCorePlayer
+192.168.1.40|eg_living|piCorePlayer
+192.168.1.41|og_bath|piCorePlayer
+192.168.1.211|rpi4|node-red + other container
+192.168.1.200|syn|NAS and home automation server
+
+### Usage
+
+* copy this script to clients:
+
+```bash
+scp ~/repo/path_to_script/device_status.py rpi:~
+```
+
+* To trigger this script we setup a crontab entry which executes this script every 10 minutes
+
+```bash
+crontab -e
+*/10 * * * * /usr/bin/python /home/pi/device_status.py
+```
+
+* get logfile from rpi for debugging purpose
+
+```bash
+scp rpi:~/device_status.log ~/Desktop/LOG_device_status.log
+```

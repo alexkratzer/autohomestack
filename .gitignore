@@ -1,3 +1,4 @@
 site/
 img/
 !*/favicon.ico
+__pycache__

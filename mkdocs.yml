@@ -20,16 +20,15 @@ nav:
     - Field level:          
         - IoT Multisensor:      level_field/iot_multisensor.md
         - devices:              level_field/field_level.md
-    - Interface:
-        - node topics:          topics_node.md
-        - plc lib:              plc_lib_interface.md
-    - multiroom:
-        - multiroom:            my_multiroom.md
+    - Multiroom:
+        - multiroom:            multiroom/my_multiroom.md
     
     - About:
         - References:           'references.md'
         - Hints:                hints.md
         - Plantuml code:        images/readme_plantuml.md
+        - node topics:          topics_node.md
+        - plc lib:              plc_lib_interface.md
 
 # theme: readthedocs
 # theme: 'windmill-dark'
@@ -49,7 +48,7 @@ theme:
     favicon: 'images/favicon.ico'
     feature:
       tabs: true
-    logo: 'images/favicon.ico'
+    logo: 'images/house-blue-logo.png'
       #icon: 'settings_power'
 
 markdown_extensions:
