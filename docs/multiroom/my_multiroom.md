@@ -12,7 +12,7 @@ In case of LAN and power supply the Raspberry and the amplifier could disappear 
 
 Here you see the network cabinet with tree raspberrys as media-player and the amplifier.
 
-![network cabinet](20200222_123121.jpg)
+![network cabinet](network_cabinet_sound.jpg)
 
 ## Media-player
 
@@ -21,6 +21,22 @@ As in (almost) every modern household, no Raspberry PI should be missing.
 On the Raspberry there is a digital/analog converter from [hifiberry.com](https://www.hifiberry.com/dac) plugged in, which feeds its signal into the amplifier.
 
 As media player software I use **piCorePlayer** which is a tiny core linux distribution running entirely in RAM.
+
+For remote controll for the Logitech Media Server I use the app squeezer.
+
+* It supports my Spotify account
+
+* I can listen from my (local stored at synology NAS) own music collection
+
+* I can choose from internet radio stations
+
+In the app I can select in which zone the music is played
+
+![Squeezer main](Squeezer_main.jpg)
+
+And I can manage the playlist and synchronize the players if necessary
+
+![Squeezer playlist](Squeezer_playlist.jpg)
 
 ## Amplifier
 
