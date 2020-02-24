@@ -97,3 +97,21 @@ db : MySQL and \nInfluxDB
 NodeRed : store all prozess \nand event data\nprozess data with rule engine\n
 @enduml
 ```
+
+## node_red rule engine
+
+``` plantuml
+@startuml
+(*) --> new event
+
+If "compare topic" then
+--> [matches] "create alarm"
+--> send to receiver
+--> (*)
+else
+--> [no match] continue
+Endif
+--> (*)
+
+@enduml
+```

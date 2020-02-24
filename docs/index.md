@@ -15,5 +15,3 @@ As a central control system I use NodeRed which provides a webserver for operati
 ## Business view
 
 ![business_view.svg](drawio/business_view.svg)
-
-[test](../node_red_flows/test.md)
