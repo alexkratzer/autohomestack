@@ -393,6 +393,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#rule-engine" class="md-nav__link">
+    Rule engine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloads" class="md-nav__link">
+    Downloads
+  </a>
+  
+</li>
+      
       
       
       
@@ -695,6 +709,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#rule-engine" class="md-nav__link">
+    Rule engine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloads" class="md-nav__link">
+    Downloads
+  </a>
+  
+</li>
+      
       
       
       
@@ -735,6 +763,44 @@
 <p><img alt="node_red_status_example" src="../node_red_status_example.png" /></p>
 <p>Or to configure debug / control clients for different devices</p>
 <p><img alt="node_red_cmd" src="../node_red_cmd.png" /></p>
+<h2 id="rule-engine">Rule engine<a class="headerlink" href="#rule-engine" title="Permanent link">&para;</a></h2>
+<p>The rule engine is a function node that is triggered by the receipt of any message.</p>
+<p><img alt="node red rule engine" src="https://www.plantuml.com/plantuml/svg/0/FOvB3i8m34JtFeNL5I3r2gWR5fm1TM6bKpLIubIEMwvF21BRcJUVgRgO7pdHvNRbSRopuiqueKxqN7a89UzYO2zx30Fx1gKlzihYOKET6s8G1qiIoqCtAtHf2JO4n1FMnJP0I1M_k1Rk3JE7eXxr03rqYUiVfQcLj6CV" title="node red rule engine" /></p>
+<p>In this example rule a sensor event from the light barrier triggers the rule engine.</p>
+<p>If the weather station detects that it is dark two lights are switched on.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">plc_cmd</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;v01/plc/car/sensor/event&#39;</span><span class="p">)){</span>
+    <span class="kd">var</span> <span class="nx">lux_weather</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;PD.plcog.weather.light_lux&#39;</span><span class="p">)</span>
+
+    <span class="c1">//not a bug but a feature</span>
+    <span class="c1">//weather station sends never 0 value</span>
+    <span class="c1">//but 1 if no lux is detected</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">lux_weather</span><span class="o">!=</span><span class="mi">1</span><span class="p">){</span>
+        <span class="nx">info</span> <span class="o">=</span> <span class="s1">&#39;aktor/light set to value on&#39;</span>
+        <span class="nx">plc_cmd</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">payload</span><span class="o">:</span> <span class="s2">&quot;aktor/light/led_stripes/set_switch_value#on&quot;</span><span class="p">,</span> <span class="nx">topic</span><span class="o">:</span> <span class="s2">&quot;car&quot;</span> <span class="p">});</span>
+        <span class="nx">plc_cmd</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">payload</span><span class="o">:</span> <span class="s2">&quot;aktor/light/drive/set_switch_value#on&quot;</span><span class="p">,</span> <span class="nx">topic</span><span class="o">:</span> <span class="s2">&quot;car&quot;</span> <span class="p">});</span>  
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="nx">info</span> <span class="o">=</span> <span class="s1">&#39;no action since it is not dark&#39;</span>
+    <span class="p">}</span>
+
+<span class="c1">//for logging or later use a new alarm is generated</span>
+<span class="c1">//and stored at the database</span>
+<span class="nx">msg</span><span class="p">.</span><span class="nx">alarm</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">topic</span> <span class="o">:</span> <span class="nx">t</span><span class="p">,</span>
+    <span class="nx">status</span> <span class="o">:</span> <span class="s1">&#39;created&#39;</span><span class="p">,</span>
+    <span class="nx">time_created</span> <span class="o">:</span> <span class="nx">getFormattedDate</span><span class="p">(),</span>
+    <span class="nx">info</span> <span class="o">:</span> <span class="nx">info</span>
+<span class="p">}</span>
+
+<span class="nx">msg</span><span class="p">.</span><span class="nx">topic</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO node_log(topic, message) VALUES ( \&quot;rule_engine/&quot;</span><span class="o">+</span><span class="nx">t</span><span class="o">+</span><span class="s2">&quot;\&quot;, \&quot;&quot;</span><span class="o">+</span><span class="nx">info</span><span class="o">+</span><span class="s2">&quot;\&quot; )&quot;</span>
+
+<span class="c1">//the alarm and commands for the PLC s are returned for further processing</span>
+<span class="k">return</span> <span class="p">[</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">plc_cmd</span><span class="p">];</span>
+</code></pre></div>
+
+
+<h2 id="downloads">Downloads<a class="headerlink" href="#downloads" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/alexkratzer/autohomestack/tree/master/node_red_flows">node_red_flows repo</a></p>
                 
                   
                 

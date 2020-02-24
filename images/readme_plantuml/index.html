@@ -628,6 +628,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#node_red-rule-engine" class="md-nav__link">
+    node_red rule engine
+  </a>
+  
+</li>
+      
       
       
       
@@ -705,6 +712,13 @@
         <li class="md-nav__item">
   <a href="#node-red" class="md-nav__link">
     node red
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node_red-rule-engine" class="md-nav__link">
+    node_red rule engine
   </a>
   
 </li>
@@ -816,6 +830,23 @@
 <span class="nl">db</span> <span class="p">:</span> <span class="n">MySQL</span> <span class="n">and</span> <span class="err">\</span><span class="n">nInfluxDB</span>
 
 <span class="nl">NodeRed</span> <span class="p">:</span> <span class="n">store</span> <span class="n">all</span> <span class="n">prozess</span> <span class="err">\</span><span class="n">nand</span> <span class="n">event</span> <span class="n">data</span><span class="err">\</span><span class="n">nprozess</span> <span class="n">data</span> <span class="n">with</span> <span class="n">rule</span> <span class="n">engine</span><span class="err">\</span><span class="n">n</span>
+<span class="p">@</span><span class="n">enduml</span>
+</code></pre></div>
+
+
+<h2 id="node_red-rule-engine">node_red rule engine<a class="headerlink" href="#node_red-rule-engine" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="n">startuml</span>
+<span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">new</span> <span class="n">event</span>
+
+<span class="n">If</span> <span class="s">&quot;compare topic&quot;</span> <span class="n">then</span>
+<span class="o">--&gt;</span> <span class="p">[</span><span class="n">matches</span><span class="p">]</span> <span class="s">&quot;create alarm&quot;</span>
+<span class="o">--&gt;</span> <span class="n">send</span> <span class="n">to</span> <span class="n">receiver</span>
+<span class="o">--&gt;</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">else</span>
+<span class="o">--&gt;</span> <span class="p">[</span><span class="n">no</span> <span class="n">match</span><span class="p">]</span> <span class="k">continue</span>
+<span class="n">Endif</span>
+<span class="o">--&gt;</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span>
+
 <span class="p">@</span><span class="n">enduml</span>
 </code></pre></div>
                 
