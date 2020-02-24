@@ -1,0 +1,1087 @@
+[
+    {
+        "id": "e3a2c1ac.72282",
+        "type": "tab",
+        "label": "M2M interface",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "84d94946.b39308",
+        "type": "catch",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "scope": null,
+        "x": 67.88333129882812,
+        "y": 23.883331298828125,
+        "wires": [
+            [
+                "17c65b17.7ecab5"
+            ]
+        ]
+    },
+    {
+        "id": "17c65b17.7ecab5",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 247.88333129882812,
+        "y": 23.883331298828125,
+        "wires": []
+    },
+    {
+        "id": "c0e218a8.39a4d8",
+        "type": "fritzbox-in",
+        "z": "e3a2c1ac.72282",
+        "device": "98ec99e3.ad5758",
+        "name": "",
+        "service": "urn:dslforum-org:service:Hosts:1",
+        "action": "GetSpecificHostEntry",
+        "arguments": "{\"NewMACAddress\":\"value\"}",
+        "x": 330,
+        "y": 900,
+        "wires": [
+            [
+                "6ac06b83.f146e4"
+            ]
+        ]
+    },
+    {
+        "id": "c443e427.0b5478",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "s5 mini",
+        "topic": "",
+        "payload": "{\"NewMACAddress\":\"C4:42:02:74:5D:C1\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 165,
+        "y": 900,
+        "wires": [
+            [
+                "c0e218a8.39a4d8"
+            ]
+        ]
+    },
+    {
+        "id": "89b1351a.97e6b8",
+        "type": "fritzbox-in",
+        "z": "e3a2c1ac.72282",
+        "device": "98ec99e3.ad5758",
+        "name": "get info",
+        "service": "urn:dslforum-org:service:WLANConfiguration:1",
+        "action": "SetEnable",
+        "arguments": "{\"NewEnable\":\"value\"}",
+        "x": 280,
+        "y": 1300,
+        "wires": [
+            [
+                "aefd3dca.562f7"
+            ]
+        ]
+    },
+    {
+        "id": "f7202f75.ae90f",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "s4 mini",
+        "topic": "",
+        "payload": "{\"NewMACAddress\":\"6c:c7:ec:29:d6:37\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 110,
+        "y": 1380,
+        "wires": [
+            [
+                "a00e7a92.0c5ad8"
+            ]
+        ]
+    },
+    {
+        "id": "eb23b52b.79fca8",
+        "type": "ui_toast",
+        "z": "e3a2c1ac.72282",
+        "position": "top right",
+        "displayTime": "2",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 1050,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "95eef314.44dff",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "format output",
+        "func": "if (!context.value) {\n  context.value = false;\n}\n\nif (context.value == msg.payload.NewActive){\n    return null;\n}else{\n    context.value = msg.payload.NewActive;\n    var s = msg.payload.NewHostName + \" [\" + msg.payload.NewIPAddress + \"]\";\n    if(msg.payload.NewActive == 1){\n        s = s + \" connected at \";\n    }else{\n        s = s + \" disconnected at \";\n    }\n    var d = new Date();\n    msg.payload = s +  d.getDate()  + \"-\" + (d.getMonth()+1) + \"-\" + d.getFullYear() + \" \" +\n    d.getHours() + \":\" + d.getMinutes();\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 564,
+        "y": 882,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3e80ce81.5cef22",
+        "type": "mysql",
+        "z": "e3a2c1ac.72282",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 920,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ac06b83.f146e4",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "format output",
+        "func": "switch (msg.payload.NewIPAddress) {\n    case \"192.168.1.21\":\n        var currentdevice = msg.payload.NewIPAddress;\n        \n        var lastactive = context.get(currentdevice);\n        var nowactive = msg.payload.NewActive;\n        context.set('192.168.1.21', msg.payload.NewActive);\n        if (lastactive == nowactive){\n            return null;\n        }else{\n            var s = msg.payload.NewHostName + \" [\" + currentdevice + \"]\";\n            if(nowactive == 1){\n                s = s + \" connected at \";\n            }else{\n                s = s + \" disconnected at \";\n            }\n            var d = new Date();\n            msg.payload = s +  d.getDate()  + \"-\" + (d.getMonth()+1) + \"-\" + d.getFullYear() + \" \" +\n            d.getHours() + \":\" + d.getMinutes();\n        \n            return [msg,null];\n        }\n        break;\n        \n    case \"192.168.1.22\":\n        var currentdevice = msg.payload.NewIPAddress;\n        \n        var lastactive = context.get(currentdevice);\n        var nowactive = msg.payload.NewActive;\n        context.set('192.168.1.22', msg.payload.NewActive);\n        if (lastactive == nowactive){\n            return null;\n        }else{\n            var s = msg.payload.NewHostName + \" [\" + currentdevice + \"]\";\n            if(nowactive == 1){\n                s = s + \" connected at \";\n            }else{\n                s = s + \" disconnected at \";\n            }\n            var d = new Date();\n            msg.payload = s +  d.getDate()  + \"-\" + (d.getMonth()+1) + \"-\" + d.getFullYear() + \" \" +\n            d.getHours() + \":\" + d.getMinutes();\n        \n            return [null,msg];\n        }\n        break;\n        \n    default:\n        node.warn(\"unknown device: \" + msg.payload.NewIPAddress);\n        return null;\n}\n\n//node.warn(\"currentdevice: \" + currentdevice)\n\n//var count = context.get('count')||0;\n\n//if (!context.get[msg.payload.NewIPAddress]) {\n//  context.set([msg.payload.NewIPAddress,0]);\n//}\n//var lastactive = context.get(msg.payload.NewIPAddress)||0;\n\n//node.warn(\"lastactive: \" + lastactive)\n//node.warn(\"nowactive: \" + nowactive)\n\n//context.set([currentdevice, nowactive])\n\n//node.warn(\"context get \" + currentdevice + \": \" + context.get(currentdevice))\n\n//var wlanDevicesStatus = context.get([\"count\", \"colour\", \"temperature\"]);\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 539,
+        "y": 944,
+        "wires": [
+            [
+                "eb23b52b.79fca8"
+            ],
+            [
+                "7f45f856.8ba8d8"
+            ]
+        ]
+    },
+    {
+        "id": "7f45f856.8ba8d8",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "query INSERT",
+        "func": "\nvar q = \"INSERT INTO events(msg) VALUES ( \\\"\" + msg.payload + \" \\\")\";\nmsg.topic = q;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 723,
+        "y": 994,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "772eb4ec.a98b1c",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "log wlan access",
+        "info": "",
+        "x": 184.5,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "9d39b754.fae888",
+        "type": "udp out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "addr": "192.168.1.202",
+        "iface": "",
+        "port": "7724",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1030,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "86a8d77e.745f08",
+        "type": "switch",
+        "z": "e3a2c1ac.72282",
+        "name": "dest",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "og",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "eg",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "car",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "net_plc",
+                "vt": "str"
+            },
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 807.5,
+        "y": 467,
+        "wires": [
+            [
+                "c1554c4.232beb",
+                "70f028e4.7be048"
+            ],
+            [
+                "9d39b754.fae888",
+                "70f028e4.7be048"
+            ],
+            [
+                "2727308b.a84d9",
+                "70f028e4.7be048"
+            ],
+            [
+                "f2e3e644.965e78",
+                "70f028e4.7be048"
+            ],
+            [
+                "a05707ed.6c9238"
+            ]
+        ]
+    },
+    {
+        "id": "eb2a15e1.8bc628",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "plc OG",
+        "info": "",
+        "x": 1198.5,
+        "y": 395,
+        "wires": []
+    },
+    {
+        "id": "c1554c4.232beb",
+        "type": "udp out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "addr": "192.168.1.201",
+        "iface": "",
+        "port": "7724",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1032,
+        "y": 394,
+        "wires": []
+    },
+    {
+        "id": "6e55ef13.67656",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "plc EG",
+        "info": "",
+        "x": 1196.5,
+        "y": 441,
+        "wires": []
+    },
+    {
+        "id": "2727308b.a84d9",
+        "type": "udp out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "addr": "192.168.1.203",
+        "iface": "",
+        "port": "7724",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1030,
+        "y": 481,
+        "wires": []
+    },
+    {
+        "id": "262170df.80f67",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "carport",
+        "info": "",
+        "x": 1198.5,
+        "y": 481,
+        "wires": []
+    },
+    {
+        "id": "70f028e4.7be048",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1071,
+        "y": 350,
+        "wires": []
+    },
+    {
+        "id": "a05707ed.6c9238",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "unknown plc",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 999.5,
+        "y": 559.9999694824219,
+        "wires": []
+    },
+    {
+        "id": "f2e3e644.965e78",
+        "type": "udp out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "addr": "192.168.1.206",
+        "iface": "",
+        "port": "7724",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1030,
+        "y": 521,
+        "wires": []
+    },
+    {
+        "id": "70f89245.27bc7c",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "net_plc",
+        "info": "",
+        "x": 1198.5,
+        "y": 521,
+        "wires": []
+    },
+    {
+        "id": "c52c188e.a92f18",
+        "type": "link in",
+        "z": "e3a2c1ac.72282",
+        "name": "pass msg to plc",
+        "links": [
+            "40c13284.ad953c",
+            "e741966d.e0cc88",
+            "6bb16f2.766f19",
+            "2b92901d.b75d6",
+            "3575dcd6.b9bcc4",
+            "f61e6716.a97ed8"
+        ],
+        "x": 610.5000305175781,
+        "y": 518.9999694824219,
+        "wires": [
+            [
+                "86a8d77e.745f08",
+                "ca6635d6.466a88"
+            ]
+        ]
+    },
+    {
+        "id": "8569a061.f5774",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "send msg to remote",
+        "info": "",
+        "x": 970,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "77809f31.46c27",
+        "type": "mqtt in",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "#",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "60f7dc17.961d94",
+        "x": 130,
+        "y": 400,
+        "wires": [
+            [
+                "717615.32c139ec",
+                "51877a66.65ac64"
+            ]
+        ]
+    },
+    {
+        "id": "ca6635d6.466a88",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "log plc cmd",
+        "func": "\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"node_red/plc_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg\n\n/*\nif(global.get('ui_config.show_send_msg')){\n    return msg;\n}else{\n    return null;\n}\n*/",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 804.86669921875,
+        "y": 615.8666687011719,
+        "wires": [
+            [
+                "89cd1756.68a788"
+            ]
+        ]
+    },
+    {
+        "id": "45f20bc5.8d9cf4",
+        "type": "mysql",
+        "z": "e3a2c1ac.72282",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 670.1166687011719,
+        "y": 377.1166687011719,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "717615.32c139ec",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "node_log",
+        "func": "// default OUT1: writes all received messages to database\n// default OUT2: pass all received messages to rule_engine\n// with filtering the topic batch operations can be performed\n\nvar t = msg.topic;\nvar p = msg.payload;\n// node.warn(\"node_log [\" + t + \"] \" + p);\n\n\nvar basement = 'v01/esp/basement/'\nvar esp_dbg = 'v01/esp/default/pd/'\nvar esp_unwired = 'v01/esp/unwired/pd/'\n\n\n//TODO remove if IBS is done\n// dont write\nif(t==esp_dbg || t==esp_unwired){\n    //node.warn('v01/esp/xxxx/pd/ ' + p )\n    return null;\n}\n\nif(t.includes('/status/log')){\n    set_status_log(t, p)\n    return [ { topic: \"INSERT INTO node_status_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\" }, null];\n}else if(t.startsWith(basement + 'pd')){\n    // comes very often, dont write to standard node_log database table\n    //tmp=27.0, humid=41.4, lux=1024\n    var PD_ESP = 'PD.espbasement';\n    var PD_ESP_instance = global.get(PD_ESP)\n    \n    set_var(msg.payload, PD_ESP)\n    var q = \"INSERT INTO node_data_logger_esp_basement(temperature, humidity, lux) VALUES ( \\\"\"+\n    PD_ESP_instance.tmp.value + \n    \"\\\", \\\"\" + PD_ESP_instance.humid.value + \n    \"\\\", \\\"\" + PD_ESP_instance.lux.value + \"\\\")\";\n    return [ { topic: q }, null];\n}\n\n//### to add new rule add logic here ###\n// else if(t.startsWith(<YOUR SEARCH TOPIC>)){}\n//### to add new rule add logic here ###\n\n\n//node.warn(\"node_log [\" + t + \"] \" + p);\n//UI log window; DB auto_home; cmd for further processing\nreturn [ \n    { topic: \"INSERT INTO node_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\"},\n    { payload: p, topic: t}\n    ];\n\n\n\n\n///\n// write current status from received message to local variable objects\n// msg including '/status/log' in topic are stored at another table \nfunction set_status_log(topic, log_msg){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    //node.warn(\"at set_status_log [\" + t + \"] \" + p);\n    \n    var topic_split = topic.split('/')\n    var s_name = 'status.' + topic_split[1] + '.' + topic_split[2]\n    \n    var global_dev = global.get(s_name);\n    \n    \n    if(global_dev == null){\n        var s_name_sub = 'status.' + topic_split[1]\n        if(global.get(s_name_sub) == null){\n            global.set(s_name_sub,{ var_parent_created : getFormattedDate() });\n            if(global.get(s_name_sub) == null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_child_created : getFormattedDate() });\n    }\n    \n    global_dev = global.get(s_name);\n    \n    if(global_dev == null){node.error(\"ERROR global_dev still undefined\");}\n    \n    global_dev['last_rcv_time'] = getFormattedDate();\n    \n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }\n    \n}\n\n// write current status from received message to local variable objects\n// this status is pushed to a global variable 'PD'\nfunction set_var(log_msg, PD_name){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            PD_ESP_instance[ds_key] = ds_value;\n            /*\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }*/\n        }\n    }\n}\n\n/*\nfunction set_var_only_if_exists(log_msg, PD_name){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_set_var_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }\n        }\n    }\n}\n*/\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 500,
+        "y": 400,
+        "wires": [
+            [
+                "45f20bc5.8d9cf4"
+            ],
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "e835ab5b.85b2e8",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "rule engine",
+        "func": "var t = msg.topic;\nvar p = msg.payload;\n//https://nodered.org/docs/user-guide/writing-functions\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\n\nvar info = 'not processed by rule_engine';\n\n//[v01/esp/basement/i/]\nvar basement = 'v01/esp/basement/'\n\nif(t.startsWith(basement + 'i')){\n    // node.warn(\"topic starts with v01/esp/basement/i\");\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        info = 'event from motion ' + basement + ' switch on light'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        info = 'event from motion ' + basement + ' no light turn on, lux: ' + lux\n    }\n}\n\nmsg.alarm = {\n        status : 'created',\n        info : info\n}\n\nreturn [msg, plc_cmd];\n\n\n\n\n\n\n/*\nvar m = msg.payload;\n\nif(p.startsWith('motion corridor')){\n    flow.set('trigger_motion_corridor', Date.now());\n}\n\n//going stairs up, turn light off\nif(p.startsWith('motion stairs')){\n    var t = flow.get('trigger_motion_corridor');\n    if(Math.abs(t - Date.now) < 2000){\n        return [{ payload: \"aktor/light/basement_floor/set value#off\", topic: \"eg\" },\n        { payload: \"aktor/light/basement_stairs/set value#off\", topic: \"eg\" }];\n    }\n    node.error(\"try to subtract \" );\n    node.error(\"goint up, calc time: \" + Math.abs(t - Date.now) );\n}\n*/",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 651.1166687011719,
+        "y": 429.1166687011719,
+        "wires": [
+            [
+                "54065dc0.311964",
+                "78c02aad.e9c034"
+            ],
+            [
+                "86a8d77e.745f08"
+            ]
+        ]
+    },
+    {
+        "id": "54065dc0.311964",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 808.11669921875,
+        "y": 401.1166687011719,
+        "wires": []
+    },
+    {
+        "id": "e8af5c2c.2a1b6",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "netatmo logger",
+        "func": "// msg.topic = \"iot/v01/netatmo/data_logger\";\n// node.warn(\"netatmo [\" + msg.topic + \"] \" + msg.payload);\n\nvar dataset = [];\nvar node_log_prefix = 'v01/netatmo/'\n\nbase        = msg.payload.compact\nmodule1     = msg.payload.compact.outdoor\nrain        = msg.payload.compact.rain\n\nbase_detail = msg.payload.detailed[0]\nmodule1_detail = base_detail.modules[0]\nrain_detail = base_detail.modules[1]\n\nvar glob_netatmo = global.get('PD.netatmo');\n\nglob_netatmo.last_rcv_time  = Date.now();\nglob_netatmo.base           = base;\nglob_netatmo.module1        = module1;\nglob_netatmo.rain           = rain;\n\n//getIsoDate(); //for debugging\n\n/* //TODO: store maybe via prozess data channel\ndataset.push({ payload: \"node_data_logger_netatmo\", topic: \n\"INSERT INTO node_data_logger_netatmo(\" + \n\"base_time_utc, base_temperature, base_co2, base_humidity, base_pressure, base_noise, base_temp_trend, \" +\n\"module1_temperature, module1_humidity, rain_rain, rain_sum_rain_1, rain_sum_rain_24) VALUES ( \\\"\"+\ngetFormattedDate(base_detail.date_setup) + \"\\\", \\\"\"+\nbase.temperature +\"\\\", \\\"\"+\nbase.co2 +\"\\\", \\\"\"+\nbase.humidity +\"\\\", \\\"\"+\nbase.pressure +\"\\\", \\\"\"+\nbase.noise +\"\\\", \\\"\"+\nbase.temperatureTrend +\"\\\", \\\"\"+\nmodule1.temperature +\"\\\", \\\"\"+\nmodule1.humidity +\"\\\", \\\"\"+\nrain.rain +\"\\\", \\\"\"+\nrain.sum_rain_1 +\"\\\", \\\"\"+\nrain.sum_rain_24 +\n\"\\\" )\"\n});   \n*/\n\ndataset.push({ \n    payload: \n    \"date_setup=\" +             getFormattedDate(base_detail.date_setup) + \n    \", last_status_store=\" +    getFormattedDate(base.last_status_store) +\n    \", wifi_status=\" +          base_detail.wifi_status +\n    \", reachable=\" +            base_detail.reachable +\n    \", co2_calibrating=\" +      base_detail.co2_calibrating +\n    \", city=\" +                 base_detail.place.city, \n    topic:                      getLogTopic('base')\n});\n\n\ndataset.push({ \n    payload:\n    \"last_setup=\" +             getFormattedDate(module1_detail.last_setup) + \n    \", battery_percent=\" +      module1_detail.battery_percent +\n    \", reachable=\" +            module1_detail.reachable +\n    \", last_message=\" +         getFormattedDate(module1_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(module1_detail.last_seen) +\n    \", rf_status=\" +            module1_detail.rf_status +\n    \", battery_vp=\" +           module1_detail.battery_vp,\n    topic:                      getLogTopic('outdoor')\n});\n\n\ndataset.push({ \n    payload: \n    \"last_setup=\" +             getFormattedDate(rain_detail.last_setup) + \n    \", battery_percent=\" +      rain_detail.battery_percent +\n    \", reachable=\" +            rain_detail.reachable +\n    \", last_message=\" +         getFormattedDate(rain_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(rain_detail.last_seen) +\n    \", rf_status=\" +            rain_detail.rf_status +\n    \", battery_vp=\" +           rain_detail.battery_vp,\n    topic:                      getLogTopic('rain')\n});\n\n\nreturn [dataset];\n\nfunction getLogTopic(device){\n    return node_log_prefix + device + '/status/log'\n}\n\nfunction getFormattedDate(input){\n    var d = new Date(input*1000);\n    //var d = new Date(input);\n    //node.warn(\"getFormattedDate input: \" + input + \" date: \" + d);\n    return d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n}\n\nfunction getIsoDate(){\n    var date = new Date(); \n    var now_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),\n    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());\n\n    node.warn(\"isoDate \" + new Date(now_utc));\n    return new Date(now_utc);\n \n    //var isoDate = new Date().toISOString();\n    //node.warn(\"isoDate \" + isoDate);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "717615.32c139ec"
+            ]
+        ]
+    },
+    {
+        "id": "89cd1756.68a788",
+        "type": "mysql",
+        "z": "e3a2c1ac.72282",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 1006.61669921875,
+        "y": 616.1166687011719,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "213066c5.0aa43a",
+        "type": "udp in",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "iface": "",
+        "port": "7725",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "e6ad76b.f075788"
+            ]
+        ]
+    },
+    {
+        "id": "e6ad76b.f075788",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "plc logger",
+        "func": "// source ip is not more evaluated.\n// plc itself adds its name at topic 3 index\n//var source = msg.ip;\n/*\nif(msg.ip === '192.168.1.201'){\n    source = 'og';\n}else if(msg.ip === '192.168.1.202'){\n    source = 'eg';\n}else if(msg.ip === '192.168.1.203'){\n    source = 'car';\n}else if(msg.ip === '192.168.1.206'){\n    source = 'plc_net';\n}else if(msg.ip === '192.168.1.210'){\n    source = 'rpi3';\n}\n*/\n\nvar t = msg.payload;\nvar ta = t.split('#');\n\nvar topic = ta[0];\nvar message = ta[1];\n\n\n// TODO only for debug\nmsg.payload = topic + \" # \" + message;\n// node.warn('node_log: ' + msg.payload);\n\n\nif(topic.startsWith('v01/plc/')){\n    //add source to topic\n    //topic.startsWith('v01/plc/')\n    //var to = topic.slice(0, 8) + source + \"/\" + topic.slice(8);\n \n    if(topic.startsWith('v01/plc/eg/pd/eta')){\n        fill_datalogger(message, 'PD.plceg.eta');\n        return null;\n        //return [null, msg{payload:message, PDname:'plceg.eta'}];        //dont store PD directly to DB\n    }else if(topic.startsWith('v01/plc/eg/pd/sensor')){\n        fill_datalogger(message, 'PD.plceg.sensor');\n        return null;\n    }else if(topic.startsWith('v01/plc/og/pd/weather')){\n        fill_datalogger_value(message, 'PD.plcog.weather');\n        return null;\n    }else if(topic.startsWith('v01/plc/og/pd/sensor')){\n        fill_datalogger_value(message, 'PD.plcog.sensor');\n        return null;\n    }else{\n        return [ { topic: topic, payload: message}]; \n    }\n}\n\n//there should be no topic left....\nreturn [ { topic: 'ERROR/' + topic, payload: message}]; \n\n\nfunction fill_datalogger(log_msg, PD_name){\n    //log_msg e.g. in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n            \n                var obj = parent_object[data_object];\n                if(obj.key==ds_key){\n                    //node.warn(data_object + \\\" = found key [\\\" + ds_key + \\\"] set value to = \\\" + ds_value);\n                    obj.value=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n                \n            /* use this if objects are collected under parent object, e.g. dl.eta.kessen or dl.plc_value\n                for (var prop in obj) {\n                    //node.error(\\\"check DS: \\\" + prop );\n                    if(!obj.hasOwnProperty(prop)) continue; // skip loop if the property is from prototype\n                    \n                    if(obj[prop].key==ds_key){\n                        obj[prop].value=ds_value;\n                        //node.warn(prop + \\\" = found key: \\\" + ds_key + \\\" set value to = \\\" + ds_value);\n                        ds_value='found';\n                        continue;\n                    }\n                }\n                */\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\"+ds_key+\"] was not found at datalogger_object\");\n            }\n        }\n    }\n}\n\n\nfunction fill_datalogger_value(log_msg, PD_name){\n    //log_msg e.g. in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object].value=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object\");\n            }\n        }\n    }\n}\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 140,
+        "y": 560,
+        "wires": [
+            [
+                "5177f674.c5ec58",
+                "717615.32c139ec"
+            ]
+        ]
+    },
+    {
+        "id": "5177f674.c5ec58",
+        "type": "ui_text",
+        "z": "e3a2c1ac.72282",
+        "group": "168c65c2.ece29a",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "plc resp:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 360,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "e32df7ae.b64cd8",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "receive msg from remote PLC",
+        "info": "",
+        "x": 200,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e1db9aa7.21a938",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "dbg fill PD object",
+        "info": "var log_msg = \"ks= 4.2E+1,ag= -4.2E+1,pz= 42, \";\nfill_datalogger(log_msg);\n\nfunction fill_datalogger(log_msg){\n    //log_msg e.g. in this format: \"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \";\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_obj = flow.get('dl');\n            for (var eta_ds in parent_obj) {\n                // skip loop if the property is from prototype\n                if (!parent_obj.hasOwnProperty(eta_ds)) continue;\n            \n                var obj = parent_obj[eta_ds];\n            \n                for (var prop in obj) {\n                    //node.error(\"check DS: \" + prop );\n                    // skip loop if the property is from prototype\n                    if(!obj.hasOwnProperty(prop)) continue;\n                    \n                    if(obj[prop].key==ds_key){\n                        obj[prop].value=ds_value;\n                        node.warn(prop + \" = found key: \" + ds_key + \" set value to = \" + ds_value);\n                        ds_value='found';\n                        continue;\n                    }\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.warn(\"key was not found: \" + ds_key);\n            }\n        }\n    }\n}",
+        "x": 260,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "57eef2aa.d94ecc",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 492,
+        "y": 45,
+        "wires": [
+            [
+                "13ee314c.a2165f"
+            ]
+        ]
+    },
+    {
+        "id": "13ee314c.a2165f",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "init global prozessdata object",
+        "func": "//at global val status all devices status with topic containing /status/log are stored\nglobal.set('status',{});\nglobal.set('device_status',[]);\nglobal.set('master_data_v2',[]);\nglobal.set('tmp_status',{});\n\nglobal.set('PD.plceg.eta',\n{   \n    last_rcv_time : 'none',\n    kessel: {key:'ks',value:'none'},\n    abgas: {key:'ag',value:'none'},\n    pufferladezustand : {key:'pz',value:'none'},\n    puffer_oben: {key:'po',value:'none'},\n    puffer_mitte: {key:'pm',value:'none'},\n    puffer_unten: {key:'pu',value:'none'},\n    kesselruecklauf: {key:'kr',value:'none'},\n    kollektor: {key:'kt',value:'none'},\n    boiler_unten_solar: {key:'bu',value:'none'},\n    aussentemperatur: {key:'at',value:'none'},\n    vorlauf: {key:'vl',value:'none'}\n} );\n\nglobal.set('PD.plceg.sensor',\n{\n    last_rcv_time : 'none',\n    temperature_floor: {key:'tf',value:'none'},\n    humidity_floor: {key:'hf',value:'none'},\n    temperature_kitchen: {key:'tk',value:'none'},\n    temperature_office: {key:'to',value:'none'},\n    temperature_distributionbox: {key:'tdb',value:'none'},\n    temperature_dungeon: {key:'td',value:'none'}\n} );\n\nglobal.set('PD.plcog.weather',\n{   \n    last_rcv_time : 'none',\n    temperatur: {value:'none'},\n    sun_south:{value:'none'},\n    sun_west:{value:'none'},\n    sun_east:{value:'none'},\n    light_lux:{value:'none'},\n    wind:{value:'none'},\n    rain:{value:'none'},\n    wind_max:{value:'none'}\n} );\n\nglobal.set('PD.plcog.sensor',\n{\n    last_rcv_time : 'none',\n    lux_stairs: {value:'none'},\n    temperature_stairs:{value:'none'},\n    temperature_bath:{value:'none'},\n    temperature_child_east:{value:'none'},\n    temperature_child_west:{value:'none'},\n    temperature_DistributionBoxOg:{value:'none'}\n} );\n\nglobal.set('PD.espbasement',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.netatmo',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'}\n} );",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 717.5,
+        "y": 45,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "171ae787.a26898",
+        "type": "netatmo-dashboard",
+        "z": "e3a2c1ac.72282",
+        "creds": "c16727b2.369608",
+        "x": 180,
+        "y": 300,
+        "wires": [
+            [
+                "e8af5c2c.2a1b6"
+            ]
+        ]
+    },
+    {
+        "id": "f0bab2fa.2622f",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 159,
+        "y": 258,
+        "wires": [
+            [
+                "171ae787.a26898"
+            ]
+        ]
+    },
+    {
+        "id": "2b3afc71.c75b74",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "netatmo logger",
+        "func": "// msg.topic = \"iot/v01/netatmo/data_logger\";\n// node.warn(\"netatmo [\" + msg.topic + \"] \" + msg.payload);\n\nvar dataset = [];\nvar node_log_prefix = 'v01/netatmo/'\n\nbase        = msg.payload.compact\nmodule1     = msg.payload.compact.outdoor\nrain        = msg.payload.compact.rain\n\nbase_detail = msg.payload.detailed[0]\nmodule1_detail = base_detail.modules[0]\nrain_detail = base_detail.modules[1]\n\nvar glob_netatmo = global.get('PD.netatmo');\n\nglob_netatmo.last_rcv_time  = Date.now();\nglob_netatmo.base           = base;\nglob_netatmo.module1        = module1;\nglob_netatmo.rain           = rain;\n\n//getIsoDate(); //for debugging\n\ndataset.push({ payload: \"node_data_logger_netatmo\", topic: \n\"INSERT INTO node_data_logger_netatmo(\" + \n\"base_time_utc, base_temperature, base_co2, base_humidity, base_pressure, base_noise, base_temp_trend, \" +\n\"module1_temperature, module1_humidity, rain_rain, rain_sum_rain_1, rain_sum_rain_24) VALUES ( \\\"\"+\ngetFormattedDate(base_detail.date_setup) + \"\\\", \\\"\"+\nbase.temperature +\"\\\", \\\"\"+\nbase.co2 +\"\\\", \\\"\"+\nbase.humidity +\"\\\", \\\"\"+\nbase.pressure +\"\\\", \\\"\"+\nbase.noise +\"\\\", \\\"\"+\nbase.temperatureTrend +\"\\\", \\\"\"+\nmodule1.temperature +\"\\\", \\\"\"+\nmodule1.humidity +\"\\\", \\\"\"+\nrain.rain +\"\\\", \\\"\"+\nrain.sum_rain_1 +\"\\\", \\\"\"+\nrain.sum_rain_24 +\n\"\\\" )\"\n});   \n\ndataset.push({ payload: \"base_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"base\\\", \\\"\"+\n\"{date_setup:\" +   getFormattedDate(base_detail.date_setup) + \n\", last_status_store:\" +    getFormattedDate(base.last_status_store) +\n\", wifi_status:\" +          base_detail.wifi_status +\n\", reachable:\" +            base_detail.reachable +\n\", co2_calibrating:\" +      base_detail.co2_calibrating +\n\", city:\" +                 base_detail.place.city +\n\"}\\\" )\"\n});\n\n\ndataset.push({ payload: \"modul1_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"module1\\\", \\\"\"+ \n\n\"{last_setup:\" +             getFormattedDate(module1_detail.last_setup) + \n\", battery_percent:\" +      module1_detail.battery_percent +\n\", reachable:\" +            module1_detail.reachable +\n\", last_message:\" +         getFormattedDate(module1_detail.last_message) +\n\", last_seen:\" +            getFormattedDate(module1_detail.last_seen) +\n\", rf_status:\" +            module1_detail.rf_status +\n\", battery_vp:\" +           module1_detail.battery_vp +\n\"}\\\" )\"\n});\n\n\ndataset.push({ payload: \"rain_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"rain\\\", \\\"\"+ \n\n\"{last_setup:\" +             getFormattedDate(rain_detail.last_setup) + \n\", battery_percent:\" +      rain_detail.battery_percent +\n\", reachable:\" +            rain_detail.reachable +\n\", last_message:\" +         getFormattedDate(rain_detail.last_message) +\n\", last_seen:\" +            getFormattedDate(rain_detail.last_seen) +\n\", rf_status:\" +            rain_detail.rf_status +\n\", battery_vp:\" +           rain_detail.battery_vp +\n\"}\\\" )\"\n});\n\n\nreturn [dataset];\n\n\nfunction getFormattedDate(input){\n    var d = new Date(input*1000);\n    //var d = new Date(input);\n    //node.warn(\"getFormattedDate input: \" + input + \" date: \" + d);\n    return d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n}\n\nfunction getIsoDate(){\n    var date = new Date(); \n    var now_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),\n    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());\n\n    node.warn(\"isoDate \" + new Date(now_utc));\n    return new Date(now_utc);\n \n    //var isoDate = new Date().toISOString();\n    //node.warn(\"isoDate \" + isoDate);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "feae7cfe.ff9c7",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "redeploy",
+        "topic": "event",
+        "payload": "redeploy node-RED",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "df020ab7.4d5e68"
+            ]
+        ]
+    },
+    {
+        "id": "df020ab7.4d5e68",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "log",
+        "func": "// var t = \"INSERT INTO node_log(topic, message) VALUES ( \\\"\\\", \\\"\"+msg.payload+\"\\\" )\"\nreturn { topic: 'v01/rpi/4/status' , payload: msg.payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "717615.32c139ec"
+            ]
+        ]
+    },
+    {
+        "id": "eaf3c522.5982b8",
+        "type": "comment",
+        "z": "e3a2c1ac.72282",
+        "name": "MAC LIST",
+        "info": "TODO: add to Master Data Table\n\nesp unwired = DC:4F:22:66:CB:BD",
+        "x": 340,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "cfe0f33d.1bd4b",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "10s",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "x": 170,
+        "y": 1160,
+        "wires": [
+            [
+                "9b98f557.2f07b8"
+            ]
+        ]
+    },
+    {
+        "id": "bc955a9b.b48468",
+        "type": "fritzbox-in",
+        "z": "e3a2c1ac.72282",
+        "device": "98ec99e3.ad5758",
+        "name": "",
+        "service": "urn:dslforum-org:service:Hosts:1",
+        "action": "GetSpecificHostEntry",
+        "arguments": "{\"NewMACAddress\":\"value\"}",
+        "x": 490,
+        "y": 1160,
+        "wires": [
+            [
+                "86f00bdc.ff6f38",
+                "a4dfb0f6.37692"
+            ]
+        ]
+    },
+    {
+        "id": "aefd3dca.562f7",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 470,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "9b98f557.2f07b8",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "get status vars",
+        "func": "var dataset = [];\nvar now = new Date()\n\nvar dev_list = global.get('master_data_v2');\n//node.warn('dev_list: ' + dev_list);\n/*\nget_dev( 'alex-siemens-handy', \"C4:42:02:74:5D:C1\");\nget_dev('esp', \"DC:4F:22:66:CB:BD\");\nget_dev('common_pc_eno2', \"00:d8:61:2e:36:ad\");\n*/\nfor (let i of dev_list){\n    if((i.mac!==\"\")){\n        get_dev(i.mac);    \n    }\n}\n\n//msg.payload = {\"NewMACAddress\":\"C4:42:02:74:5D:C1\"}\nreturn [dataset];\n\n\n\nfunction get_dev(dev_mac){\n    //dataset.push({payload:{\"NewMACAddress\":dev_mac, 'dev_name':dev_name}});\n    dataset.push({payload:{\"NewMACAddress\":dev_mac}});\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 1160,
+        "wires": [
+            [
+                "bc955a9b.b48468"
+            ]
+        ]
+    },
+    {
+        "id": "86f00bdc.ff6f38",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "set device network status",
+        "func": "var v_device_status = global.get('device_status');\nvar msg_payload = msg.payload;\n\n\n\nvar q = 'no change';\nvar objFound_bool = false;\nfor (var i = 0; i < v_device_status.length; i++) {\n    if(msg_payload.NewIPAddress === v_device_status[i].NewIPAddress){\n        \n        objFound_bool = true;\n        if(msg_payload.NewActive !== v_device_status[i].NewActive){\n            var status_duration = ', status_duration=' + get_duration(v_device_status[i].status_change)\n            var msg_content = 'ip= '+msg_payload.NewIPAddress+', online_status= ' + msg_payload.NewActive + ', hostname=' + msg_payload.NewHostName + status_duration;\n            q = \"INSERT INTO node_log(topic, message) VALUES ( \\\"\"+ get_topic(msg_payload.NewIPAddress) +\"\\\", \\\"\"+msg_content+\"\\\" )\" \n            v_device_status[i] =msg_payload;\n            v_device_status[i].status_change = new Date();\n        }\n    }\n}\nif(!objFound_bool){\n    v_device_status.push(msg_payload)\n}\n\n\n//############################ new approach ##########################\nvar global_var = 'tmp_status';\nvar glob_status = global.get(global_var);\n\nfor (var key in glob_status) {\n    // skip loop if the property is from prototype\n    if (!glob_status.hasOwnProperty(key)) continue;\n    //node.warn('key ' + key)\n\n    var obj = glob_status[key];\n    for (var prop in obj) {\n        // skip loop if the property is from prototype\n        if (!obj.hasOwnProperty(prop)) continue;\n        \n        //node.warn('var set:  ' + global_var + '.' + key + '.' + prop + '.network')\n        // your code\n        // alert(prop + \" = \" + obj[prop]);\n        if(msg_payload.NewIPAddress === global.get(global_var + '.' + key + '.' + prop + '.meta.ip_address'))\n        {\n            global.set(global_var + '.' + key + '.' + prop + '.network', msg_payload);\n            global.set(global_var + '.' + key + '.' + prop + '.network.last_rcv_time', getFormattedDate());\n        }\n    }\n}\n\n\nif(q==='no change'){\n    return null;\n}else{\n    return {topic:q, payload:'see topic'}\n}\n\n\nfunction get_topic(ip){\n    var md = global.get('master_data_v2');\n    for (var m = 0; m < md.length; m++) {\n        if(obj.NewIPAddress === md[m].ip_address){\n            return 'v01/' + md[m].type + '/' + md[m].name + '/event'\n        }\n    }\n    return 'v01/unknown/' + ip + '/event'\n}\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}\n\nfunction get_duration(last_time){\n    var now = new Date()\n    var parsed_date = new Date(last_time);\n    var diff = now - parsed_date;\n    var time_diff = '';\n    //node.warn('parsed_date: '+parsed_date + ' diff: ' + diff)\n\n    var tag = Math.floor(diff / (1000*60*60*24));\n    diff = diff % (1000*60*60*24);\n    if(tag>0){time_diff += \"d:\" + tag;}\n    \n    var std = Math.floor(diff / (1000*60*60));\n    diff = diff % (1000*60*60);\n    if(std>0){time_diff += \" h:\" + std;}\n    \n    var min = Math.floor(diff / (1000*60));\n    diff = diff % (1000*60);\n    if(min>0){time_diff += \" m:\" + min;}\n    \n    var sec = Math.floor(diff / 1000);\n    time_diff += \" s:\" + sec;\n    \n    //node.warn('parsed_date: '+parsed_date + '/ diff: ' + diff + '/ time_diff: ' + time_diff)\n    return time_diff;\n}\n\n\nfunction set_status_network(status_object, network_status){\n    var global_var = 'tmp_status';\n    \n    var s_name = global_var + '.' + status_object['type'] + '.' + status_object['name']\n    node.warn(\"at set_status_network [\" + status_object + \"] s_name: \" + s_name);\n    \n    var global_dev = global.get(s_name);\n    \n    //check if objects are existing\n    //if not -> initialise them\n    if(global_dev == null){\n        var s_name_sub = global_var + '.' + status_object['type']\n        if(global.get(s_name_sub) == null){\n            global.set(s_name_sub,{ var_parent_created : getFormattedDate() });\n            if(global.get(s_name_sub) == null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_child_created : getFormattedDate() });\n    }\n    \n    global.set(s_name + '.network', status_object);\n    global.set(s_name + '.network.last_rcv_time', getFormattedDate());\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 1160,
+        "wires": [
+            [
+                "3e80ce81.5cef22"
+            ]
+        ]
+    },
+    {
+        "id": "51877a66.65ac64",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 380,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a7f97b3d.5086f8",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1030,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "ed15dd0a.e4a9c",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "",
+        "payload": "{\"NewEnable\":\"true\"}",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 1220,
+        "wires": [
+            [
+                "89b1351a.97e6b8"
+            ]
+        ]
+    },
+    {
+        "id": "a00e7a92.0c5ad8",
+        "type": "fritzbox-in",
+        "z": "e3a2c1ac.72282",
+        "device": "98ec99e3.ad5758",
+        "name": "get info",
+        "service": "urn:dslforum-org:service:WLANConfiguration:1",
+        "action": "GetInfo",
+        "arguments": "{}",
+        "x": 280,
+        "y": 1360,
+        "wires": [
+            [
+                "aefd3dca.562f7"
+            ]
+        ]
+    },
+    {
+        "id": "da4af03e.629f2",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1100,
+        "wires": [
+            [
+                "ff3b22d6.ba7d6"
+            ]
+        ]
+    },
+    {
+        "id": "ff3b22d6.ba7d6",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "init status_change time",
+        "func": "var dataset = [];\n\nvar dev_list = global.get('master_data_v2');\nnode.warn('dev_list: ' + dev_list);\n\nfor (let i of dev_list){\n    var topic_search = 'v01/' + i.type + '/' + i.name\n    //var t = \"SELECT message from node_log WHERE topic LIKE \" + topic_search + '% ORDER BY id DESC LIMIT 1'\n    var t = \"SELECT timestamp, topic from node_log WHERE topic LIKE '\" + topic_search + \"' AND message LIKE 'ip=%' ORDER BY id DESC LIMIT 1\"\n    dataset.push({topic:t});\n    node.warn('status_change time: ' + t);\n}\n\nreturn [dataset];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 415.5,
+        "y": 1100,
+        "wires": [
+            [
+                "c1bcb27a.86fa3"
+            ]
+        ]
+    },
+    {
+        "id": "c1bcb27a.86fa3",
+        "type": "mysql",
+        "z": "e3a2c1ac.72282",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 620,
+        "y": 1100,
+        "wires": [
+            [
+                "a7f97b3d.5086f8"
+            ]
+        ]
+    },
+    {
+        "id": "12c697ff.78a828",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "set device status time",
+        "func": "var dev_status = global.get('device_status');\nvar obj = msg.payload;\n\n\nvar q = 'no change';\n\nvar objFound_bool = false;\nfor (var i = 0; i < dev_status.length; i++) {\n    if(obj.NewIPAddress === dev_status[i].NewIPAddress){\n        objFound_bool = true;\n        if(obj.NewActive !== dev_status[i].NewActive){\n            var status_duration = ', status_duration=' + get_duration(dev_status[i].status_change)\n            var msg_content = 'ip= '+obj.NewIPAddress+', online_status= ' + obj.NewActive + ', hostname=' + obj.NewHostName + status_duration;\n            q = \"INSERT INTO node_log(topic, message) VALUES ( \\\"\"+ get_topic(obj.NewIPAddress) +\"\\\", \\\"\"+msg_content+\"\\\" )\" \n            dev_status[i] =obj;\n            dev_status[i].status_change = new Date();\n        }\n    }\n}\nif(!objFound_bool){\n    dev_status.push(obj)\n}\n\nif(q==='no change'){\n    return null;\n}else{\n    return {topic:q, payload:'see topic'}\n}\n\n\nfunction get_topic(ip){\n    var md = global.get('master_data_v2');\n    for (var m = 0; m < md.length; m++) {\n        if(obj.NewIPAddress === md[m].ip_address){\n            return 'v01/' + md[m].type + '/' + md[m].name + '/event'\n        }\n    }\n    return 'v01/unknown/' + ip + '/event'\n}\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 1100,
+        "wires": [
+            [
+                "a7f97b3d.5086f8"
+            ]
+        ]
+    },
+    {
+        "id": "a4dfb0f6.37692",
+        "type": "debug",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 680,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "78c02aad.e9c034",
+        "type": "ui_template",
+        "z": "e3a2c1ac.72282",
+        "group": "720145b.5088cbc",
+        "name": "rule engine alarms",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<h2>alarm info: {{msg.alarm.info}}</h2>\n\n\n<p>topic: {{msg.topic}}</p>\n<p>payload: {{msg.payload}}</p>\n<p>alarm_status: {{msg.alarm.status}}</p>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 870,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98ec99e3.ad5758",
+        "type": "fritzbox-config",
+        "z": "",
+        "name": "",
+        "host": "192.168.1.1",
+        "port": "49000",
+        "ssl": false
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "60f7dc17.961d94",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "docker_mosquitto",
+        "broker": "broker",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "168c65c2.ece29a",
+        "type": "ui_group",
+        "z": "",
+        "name": "frames",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 6,
+        "disp": false,
+        "width": "18",
+        "collapse": false
+    },
+    {
+        "id": "c16727b2.369608",
+        "type": "netatmo-config-node",
+        "z": "",
+        "client_id": "xxx",
+        "client_secret": "xxx",
+        "username": "xxx@xxx.de",
+        "password": "xxx"
+    },
+    {
+        "id": "720145b.5088cbc",
+        "type": "ui_group",
+        "z": "",
+        "name": "alarm",
+        "tab": "4e0c8ed6.89c15",
+        "disp": true,
+        "width": "12",
+        "collapse": true
+    },
+    {
+        "id": "f5ad8d49.0cdf1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "net_PLC",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4e0c8ed6.89c15",
+        "type": "ui_tab",
+        "z": "",
+        "name": "status",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,2417 @@
+[
+    {
+        "id": "2add6854.c048c8",
+        "type": "tab",
+        "label": "status",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "fbd05434.d39358",
+        "type": "catch",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "scope": null,
+        "x": 84,
+        "y": 36,
+        "wires": [
+            [
+                "6655e64c.916e78"
+            ]
+        ]
+    },
+    {
+        "id": "6655e64c.916e78",
+        "type": "debug",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 264,
+        "y": 36,
+        "wires": []
+    },
+    {
+        "id": "a969e062.1c33d",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "abgas",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "250",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "50",
+        "x": 474.5,
+        "y": 835,
+        "wires": []
+    },
+    {
+        "id": "1865f8e4.330647",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.abgas.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 196.5,
+        "y": 834,
+        "wires": [
+            [
+                "a969e062.1c33d"
+            ]
+        ]
+    },
+    {
+        "id": "1765c74d.bba8c9",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 6,
+        "width": "2",
+        "height": "2",
+        "gtype": "donut",
+        "title": "puffer",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0048b5",
+            "#e69800",
+            "#ca3838"
+        ],
+        "seg1": "15",
+        "seg2": "70",
+        "x": 479,
+        "y": 873,
+        "wires": []
+    },
+    {
+        "id": "90523b3f.13b3e8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.pufferladezustand.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 229,
+        "y": 873,
+        "wires": [
+            [
+                "1765c74d.bba8c9"
+            ]
+        ]
+    },
+    {
+        "id": "48c10fa0.a49f9",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "donut",
+        "title": "humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#b5000c",
+            "#17e600",
+            "#ca3838"
+        ],
+        "seg1": "40",
+        "seg2": "60",
+        "x": 594,
+        "y": 592,
+        "wires": []
+    },
+    {
+        "id": "75291a61.e43224",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.humidity_floor.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 228,
+        "y": 591,
+        "wires": [
+            [
+                "48c10fa0.a49f9"
+            ]
+        ]
+    },
+    {
+        "id": "35b24886.6edd08",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "kitchen",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 595,
+        "y": 626,
+        "wires": []
+    },
+    {
+        "id": "199138b2.fb02e7",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.temperature_kitchen.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 249,
+        "y": 626,
+        "wires": [
+            [
+                "35b24886.6edd08"
+            ]
+        ]
+    },
+    {
+        "id": "6697c496.02ad9c",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 6,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "office",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 605,
+        "y": 662,
+        "wires": []
+    },
+    {
+        "id": "e2a3ce3.4bd473",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.temperature_office.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 248,
+        "y": 662,
+        "wires": [
+            [
+                "6697c496.02ad9c"
+            ]
+        ]
+    },
+    {
+        "id": "d455ccc.e3dc63",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 7,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "dungeon",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 596,
+        "y": 697,
+        "wires": []
+    },
+    {
+        "id": "777a82e8.b44c5c",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.temperature_dungeon.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 257,
+        "y": 697,
+        "wires": [
+            [
+                "d455ccc.e3dc63"
+            ]
+        ]
+    },
+    {
+        "id": "309a8896.1a3cd8",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 8,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "floor eg",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 597,
+        "y": 731,
+        "wires": []
+    },
+    {
+        "id": "449d9007.b6d57",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.temperature_floor.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 248,
+        "y": 731,
+        "wires": [
+            [
+                "309a8896.1a3cd8"
+            ]
+        ]
+    },
+    {
+        "id": "d90e2f4.21effd",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "9fd3ad01.5df16",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "time eta",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 464.5,
+        "y": 795,
+        "wires": []
+    },
+    {
+        "id": "a78c2fdd.5b672",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.last_rcv_time",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 199,
+        "y": 795,
+        "wires": [
+            [
+                "d90e2f4.21effd"
+            ]
+        ]
+    },
+    {
+        "id": "8cdaa64d.ffa1d8",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "685e04a2.15030c",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "time plc eg",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 581,
+        "y": 555,
+        "wires": []
+    },
+    {
+        "id": "a9bb8906.306ea8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.sensor.last_rcv_time",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 210.5,
+        "y": 555,
+        "wires": [
+            [
+                "8cdaa64d.ffa1d8"
+            ]
+        ]
+    },
+    {
+        "id": "a4351303.04289",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 7,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "kollektor",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "-10",
+        "max": "120",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "50",
+        "x": 473,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "89857f08.8e424",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.kollektor.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 199,
+        "y": 920,
+        "wires": [
+            [
+                "a4351303.04289"
+            ]
+        ]
+    },
+    {
+        "id": "21a32419.051aac",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 8,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "outside north",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "-20",
+        "max": "40",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "25",
+        "x": 479,
+        "y": 966,
+        "wires": []
+    },
+    {
+        "id": "833c5456.b17a58",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.aussentemperatur.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 223,
+        "y": 966,
+        "wires": [
+            [
+                "21a32419.051aac"
+            ]
+        ]
+    },
+    {
+        "id": "843ca64d.c2d228",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "puffer oben",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "100",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "25",
+        "seg2": "80",
+        "x": 482,
+        "y": 1011,
+        "wires": []
+    },
+    {
+        "id": "e6ef17c3.f8ddd8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.puffer_oben.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 219,
+        "y": 1010,
+        "wires": [
+            [
+                "843ca64d.c2d228"
+            ]
+        ]
+    },
+    {
+        "id": "271a748c.6cce2c",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "puffer mitte",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "100",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "25",
+        "seg2": "80",
+        "x": 483,
+        "y": 1049,
+        "wires": []
+    },
+    {
+        "id": "23f0b1c4.e7743e",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.puffer_mitte.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 220,
+        "y": 1050,
+        "wires": [
+            [
+                "271a748c.6cce2c"
+            ]
+        ]
+    },
+    {
+        "id": "d4769ba1.644288",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "9fd3ad01.5df16",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "puffer unten",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "100",
+        "colors": [
+            "#1d00b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "25",
+        "seg2": "80",
+        "x": 490,
+        "y": 1091,
+        "wires": []
+    },
+    {
+        "id": "92df08cb.1fd3a8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg.eta.puffer_unten.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 222,
+        "y": 1090,
+        "wires": [
+            [
+                "d4769ba1.644288"
+            ]
+        ]
+    },
+    {
+        "id": "5e0d1231.eb373c",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 10,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "temperatur",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "-15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#e68800",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "x": 1333,
+        "y": 578,
+        "wires": []
+    },
+    {
+        "id": "bc37c4e2.0f38f8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.temperatur.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 947,
+        "y": 579,
+        "wires": [
+            [
+                "5e0d1231.eb373c"
+            ]
+        ]
+    },
+    {
+        "id": "21de3d88.a75682",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "75530ff8.a3b41",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "time weather",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1332,
+        "y": 545,
+        "wires": []
+    },
+    {
+        "id": "ddceb480.703778",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.last_rcv_time",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 936.5,
+        "y": 545,
+        "wires": [
+            [
+                "21de3d88.a75682"
+            ]
+        ]
+    },
+    {
+        "id": "864976f5.2cba18",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "sun south",
+        "label": "k LUX",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#000000",
+            "#00cfe6",
+            "#ca7238"
+        ],
+        "seg1": "2",
+        "seg2": "99",
+        "x": 1324,
+        "y": 612,
+        "wires": []
+    },
+    {
+        "id": "47fce639.ae1668",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.sun_south.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 948,
+        "y": 613,
+        "wires": [
+            [
+                "864976f5.2cba18"
+            ]
+        ]
+    },
+    {
+        "id": "78f7a573.0bb33c",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.sun_west.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 937,
+        "y": 646,
+        "wires": [
+            [
+                "bce7e7fa.59c278"
+            ]
+        ]
+    },
+    {
+        "id": "512080dd.06979",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.sun_east.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 947,
+        "y": 679,
+        "wires": [
+            [
+                "b12928ea.9b9678"
+            ]
+        ]
+    },
+    {
+        "id": "10d8fc73.0ec144",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.light_lux.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 938,
+        "y": 712,
+        "wires": [
+            [
+                "78e8f2e9.d908dc"
+            ]
+        ]
+    },
+    {
+        "id": "f0a20762.c41458",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 8,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "wind",
+        "label": " m/s",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "16",
+        "colors": [
+            "#1d00b5",
+            "#e68800",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "x": 1315,
+        "y": 745,
+        "wires": []
+    },
+    {
+        "id": "2d8a199c.b39af6",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.wind.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 929,
+        "y": 746,
+        "wires": [
+            [
+                "f0a20762.c41458"
+            ]
+        ]
+    },
+    {
+        "id": "6914e369.10112c",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.weather.rain.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 928,
+        "y": 779,
+        "wires": [
+            [
+                "704410fb.a56e3"
+            ]
+        ]
+    },
+    {
+        "id": "35446ce4.802414",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 9,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "wind max",
+        "label": "m / s",
+        "format": "{{value}}",
+        "min": "-15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#e68800",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "x": 1324,
+        "y": 811,
+        "wires": []
+    },
+    {
+        "id": "390460cb.707e6",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "dl_weather.wind_max.value",
+        "payloadType": "flow",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 918,
+        "y": 812,
+        "wires": [
+            [
+                "35446ce4.802414"
+            ]
+        ]
+    },
+    {
+        "id": "78e8f2e9.d908dc",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 7,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "LUX",
+        "label": "LUX",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "1000",
+        "colors": [
+            "#000000",
+            "#00cfe6",
+            "#ca7238"
+        ],
+        "seg1": "2",
+        "seg2": "998",
+        "x": 1334,
+        "y": 712,
+        "wires": []
+    },
+    {
+        "id": "bce7e7fa.59c278",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "sun west",
+        "label": "k LUX",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#000000",
+            "#00cfe6",
+            "#ca7238"
+        ],
+        "seg1": "2",
+        "seg2": "99",
+        "x": 1324,
+        "y": 644,
+        "wires": []
+    },
+    {
+        "id": "b12928ea.9b9678",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "sun east",
+        "label": "k LUX",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#000000",
+            "#00cfe6",
+            "#ca7238"
+        ],
+        "seg1": "2",
+        "seg2": "99",
+        "x": 1324,
+        "y": 679,
+        "wires": []
+    },
+    {
+        "id": "704410fb.a56e3",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "75530ff8.a3b41",
+        "order": 11,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "rain",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 1314.5,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "9750f2ac.e4033",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 9,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "lux stairs",
+        "label": "lux",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "1000",
+        "colors": [
+            "#0d0506",
+            "#00e6ca",
+            "#ca5238"
+        ],
+        "seg1": "10",
+        "seg2": "70",
+        "x": 1302,
+        "y": 938,
+        "wires": []
+    },
+    {
+        "id": "b411c2a6.5694f",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.lux_stairs.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 926,
+        "y": 937,
+        "wires": [
+            [
+                "9750f2ac.e4033"
+            ]
+        ]
+    },
+    {
+        "id": "92c8c163.80f9",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 10,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "stairs",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 1293,
+        "y": 972,
+        "wires": []
+    },
+    {
+        "id": "f1c9854.7bf5178",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.temperature_stairs.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 957,
+        "y": 972,
+        "wires": [
+            [
+                "92c8c163.80f9"
+            ]
+        ]
+    },
+    {
+        "id": "c3ea9abc.b93028",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 11,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "bath",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 1313,
+        "y": 1008,
+        "wires": []
+    },
+    {
+        "id": "6f319b48.20ce24",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.temperature_bath.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 966,
+        "y": 1008,
+        "wires": [
+            [
+                "c3ea9abc.b93028"
+            ]
+        ]
+    },
+    {
+        "id": "2f8db507.7e375a",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 12,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "child noah",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 1314,
+        "y": 1043,
+        "wires": []
+    },
+    {
+        "id": "363aa0ed.d7235",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.temperature_child_east.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 965,
+        "y": 1043,
+        "wires": [
+            [
+                "2f8db507.7e375a"
+            ]
+        ]
+    },
+    {
+        "id": "49a8e3b.569371c",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 13,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "child nele",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 1305,
+        "y": 1077,
+        "wires": []
+    },
+    {
+        "id": "204b3e26.b5c802",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.temperature_child_west.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 966,
+        "y": 1077,
+        "wires": [
+            [
+                "49a8e3b.569371c"
+            ]
+        ]
+    },
+    {
+        "id": "42d044cc.c0fd1c",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "685e04a2.15030c",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "time plc og",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1289,
+        "y": 901,
+        "wires": []
+    },
+    {
+        "id": "e4c3c10c.cc51b",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.last_rcv_time",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 918.5,
+        "y": 901,
+        "wires": [
+            [
+                "42d044cc.c0fd1c"
+            ]
+        ]
+    },
+    {
+        "id": "c65a7ec0.ccf5e",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "685e04a2.15030c",
+        "order": 14,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "distribution box",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "35",
+        "colors": [
+            "#1d00b5",
+            "#16e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "28",
+        "x": 1325,
+        "y": 1111,
+        "wires": []
+    },
+    {
+        "id": "fe16afb9.1feb6",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plcog.sensor.temperature_DistributionBoxOg.value",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 996,
+        "y": 1111,
+        "wires": [
+            [
+                "c65a7ec0.ccf5e"
+            ]
+        ]
+    },
+    {
+        "id": "794013.5947efec",
+        "type": "comment",
+        "z": "2add6854.c048c8",
+        "name": "s7 vars",
+        "info": "TEST1: 'MR4', \t\t// Memory real at MD4\nTEST2: 'M32.2', \t\t// Bit at M32.2\nTEST3: 'M20.0', \t\t// Bit at M20.0\nTEST4: 'DB1,REAL0.20',\t// Array of 20 values in DB1\nTEST5: 'DB1,REAL4',\t\t// Single real value\nTEST6: 'DB1,REAL8',\t\t// Another single real value\nTEST7: 'DB1,INT12.2'\t\t// Two integer value array",
+        "x": 1027.88330078125,
+        "y": 38.383331298828125,
+        "wires": []
+    },
+    {
+        "id": "55734e44.f38ed",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "Wind in m/s",
+        "label": "m/s",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "16",
+        "colors": [
+            "#59ff00",
+            "#e6e600",
+            "#ff8082"
+        ],
+        "seg1": "3",
+        "seg2": "10",
+        "x": 1285.803466796875,
+        "y": 83.08804321289062,
+        "wires": []
+    },
+    {
+        "id": "de04dd16.3feec",
+        "type": "s7 in",
+        "z": "2add6854.c048c8",
+        "endpoint": "3bb8416c.3d281e",
+        "mode": "single",
+        "variable": "weather_wind(m/s)",
+        "diff": true,
+        "name": "",
+        "x": 1081.8729248046875,
+        "y": 85.49099731445312,
+        "wires": [
+            [
+                "55734e44.f38ed"
+            ]
+        ]
+    },
+    {
+        "id": "92194233.4b109",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "75530ff8.a3b41",
+        "order": 6,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "Wind max",
+        "label": "m/s",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "16",
+        "colors": [
+            "#59ff00",
+            "#e6e600",
+            "#ff8082"
+        ],
+        "seg1": "3",
+        "seg2": "10",
+        "x": 1301.803466796875,
+        "y": 119.0880126953125,
+        "wires": []
+    },
+    {
+        "id": "a56cffd3.3d20b",
+        "type": "s7 in",
+        "z": "2add6854.c048c8",
+        "endpoint": "3bb8416c.3d281e",
+        "mode": "single",
+        "variable": "wind_max",
+        "diff": true,
+        "name": "",
+        "x": 1052.8729248046875,
+        "y": 120.490966796875,
+        "wires": [
+            [
+                "92194233.4b109"
+            ]
+        ]
+    },
+    {
+        "id": "9f5e64ee.963d08",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 14,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "temperature",
+        "label": "c",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1285.5,
+        "y": 335,
+        "wires": []
+    },
+    {
+        "id": "3d0b4895.846e18",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 15,
+        "width": "2",
+        "height": "2",
+        "gtype": "donut",
+        "title": "humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "20",
+        "max": "80",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1273,
+        "y": 377,
+        "wires": []
+    },
+    {
+        "id": "e0cdf285.5051c",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 16,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "lux",
+        "label": "lux",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "1025",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1271,
+        "y": 415,
+        "wires": []
+    },
+    {
+        "id": "8c64976.1d2b068",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "1s interval",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "727a9eb0.a86b8",
+                "e1437854.f9f568"
+            ]
+        ]
+    },
+    {
+        "id": "d9003122.fc76c",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "3ccd4ae2.4a5136",
+        "order": 13,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "esp",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 1262,
+        "y": 291,
+        "wires": []
+    },
+    {
+        "id": "9a259c07.77e7f",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "time",
+        "payload": "PD.espbasement.last_rcv_time",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 966,
+        "y": 291,
+        "wires": [
+            [
+                "d9003122.fc76c"
+            ]
+        ]
+    },
+    {
+        "id": "57338227.0f93fc",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.espbasement.lux",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 926,
+        "y": 414,
+        "wires": [
+            [
+                "e0cdf285.5051c"
+            ]
+        ]
+    },
+    {
+        "id": "f202856d.cc2668",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.espbasement.humid",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 941,
+        "y": 375,
+        "wires": [
+            [
+                "3d0b4895.846e18"
+            ]
+        ]
+    },
+    {
+        "id": "2644c907.c4f506",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.espbasement.tmp",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 939,
+        "y": 332,
+        "wires": [
+            [
+                "9f5e64ee.963d08"
+            ]
+        ]
+    },
+    {
+        "id": "a3d9b2f7.b5f4",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 1,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "base temp",
+        "label": "c",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#0076b5",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "18",
+        "seg2": "28",
+        "x": 570,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "3cce90f8.a6fd5",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 2,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "base CO2",
+        "label": "ppm",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "3000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "800",
+        "seg2": "1200",
+        "x": 580,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "40cd9dc0.7512d4",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 3,
+        "width": "2",
+        "height": "2",
+        "gtype": "donut",
+        "title": "base humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 560,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "d231035c.922f",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 4,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "base pressure",
+        "label": "mbar",
+        "format": "{{value}}",
+        "min": "500",
+        "max": "1500",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 560,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "4a6a1db1.e32a14",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 6,
+        "width": "2",
+        "height": "2",
+        "gtype": "wave",
+        "title": "base noise",
+        "label": "db",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 570,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "6bf65fe7.ee24",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 7,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "module1 temperature",
+        "label": "c",
+        "format": "{{value}}",
+        "min": "-15",
+        "max": "35",
+        "colors": [
+            "#007cb5",
+            "#9be600",
+            "#ca3838"
+        ],
+        "seg1": "5",
+        "seg2": "25",
+        "x": 540,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "5c4ebefc.498a3",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 9,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "rain",
+        "label": "",
+        "format": "{{value | number:3}}",
+        "min": "0",
+        "max": "10",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 590,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "e7f9b9a0.9a8d28",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 10,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "rain 1h",
+        "label": "mm",
+        "format": "{{value | number:3}}",
+        "min": "0",
+        "max": "10",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 590,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "d4826cde.95ea5",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 11,
+        "width": "2",
+        "height": "2",
+        "gtype": "gage",
+        "title": "rain 24h",
+        "label": "mm",
+        "format": "{{value | number:3}}",
+        "min": "0",
+        "max": "10",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 580,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "c84dc9f6.a3bc38",
+        "type": "ui_text",
+        "z": "2add6854.c048c8",
+        "group": "3ccd4ae2.4a5136",
+        "order": 5,
+        "width": "2",
+        "height": "2",
+        "name": "",
+        "label": "base temp trend",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 560,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "36f27e55.44b7d2",
+        "type": "ui_gauge",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "group": "3ccd4ae2.4a5136",
+        "order": 8,
+        "width": "2",
+        "height": "2",
+        "gtype": "donut",
+        "title": "module1 humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 550,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "7ecbab01.69fc34",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.temperature",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1180,
+        "wires": [
+            [
+                "a3d9b2f7.b5f4"
+            ]
+        ]
+    },
+    {
+        "id": "22560250.ae01ae",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.co2",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 1220,
+        "wires": [
+            [
+                "3cce90f8.a6fd5"
+            ]
+        ]
+    },
+    {
+        "id": "f80bc8cb.30d048",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.humidity",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1260,
+        "wires": [
+            [
+                "40cd9dc0.7512d4"
+            ]
+        ]
+    },
+    {
+        "id": "964741ce.8ec6c",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.pressure",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1300,
+        "wires": [
+            [
+                "d231035c.922f"
+            ]
+        ]
+    },
+    {
+        "id": "33e85299.10a86e",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.noise",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 1340,
+        "wires": [
+            [
+                "4a6a1db1.e32a14"
+            ]
+        ]
+    },
+    {
+        "id": "744ab110.fa783",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.base.temperatureTrend",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 210,
+        "y": 1380,
+        "wires": [
+            [
+                "c84dc9f6.a3bc38"
+            ]
+        ]
+    },
+    {
+        "id": "54462636.aea1e8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.module1.temperature",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 1420,
+        "wires": [
+            [
+                "6bf65fe7.ee24"
+            ]
+        ]
+    },
+    {
+        "id": "bc3175c2.e8f8e8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.module1.humidity",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1460,
+        "wires": [
+            [
+                "36f27e55.44b7d2"
+            ]
+        ]
+    },
+    {
+        "id": "e698bdeb.3c6cf",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.rain.rain",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 1500,
+        "wires": [
+            [
+                "5c4ebefc.498a3"
+            ]
+        ]
+    },
+    {
+        "id": "edba408c.5f57c",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.rain.sum_rain_1",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1540,
+        "wires": [
+            [
+                "e7f9b9a0.9a8d28"
+            ]
+        ]
+    },
+    {
+        "id": "4115cde.aac9434",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.netatmo.rain.sum_rain_24",
+        "payloadType": "global",
+        "repeat": "240",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 1580,
+        "wires": [
+            [
+                "d4826cde.95ea5"
+            ]
+        ]
+    },
+    {
+        "id": "f4eb7bff.129c38",
+        "type": "ui_template",
+        "z": "2add6854.c048c8",
+        "group": "776e8a32.b4d2f4",
+        "name": "log status time",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<table id=\"table\" border=\"1\">\n    <tr>\n        <th>type</th>\n        <th>device</th>\n        <th>time</th>\n        <th>difference</th>\n    </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"item in row\" >{{item}}</td>\n </tr>\n </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 640,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "727a9eb0.a86b8",
+        "type": "function",
+        "z": "2add6854.c048c8",
+        "name": "get status vars",
+        "func": "var dataset = [];\n//var now = new Date().toLocaleString(\"de-DE\");\nvar now = new Date()\n\nvar var_status = global.get('status');\n\nvar dev_list = global.get('master_data_v2');\n//node.warn('dev_list: ' + dev_list);\n\nfor (let i of dev_list){\n    get_last_rcv_time(i.type, i.name);\n}\n\nmsg.payload = dataset\nreturn msg;\n\n\nfunction get_last_rcv_time(t1, t2){\n    var time_diff = '';\n    var var_last_rcv_time = 'undef'\n    if(!(var_status[t1]==null)){\n        if(!(var_status[t1][t2]==null)){\n            var_last_rcv_time = var_status[t1][t2].last_rcv_time;\n            var parsed_date = new Date(var_last_rcv_time);\n            var diff = now - parsed_date;\n\n            var tag = Math.floor(diff / (1000*60*60*24));\n            diff = diff % (1000*60*60*24);\n            if(tag>0){time_diff += \"d:\" + tag;}\n            \n            var std = Math.floor(diff / (1000*60*60));\n            diff = diff % (1000*60*60);\n            if(std>0){time_diff += \" h:\" + std;}\n            \n            var min = Math.floor(diff / (1000*60));\n            diff = diff % (1000*60);\n            if(min>0){time_diff += \" m:\" + min;}\n            \n            var sec = Math.floor(diff / 1000);\n            time_diff += \" s:\" + sec;\n            //var mSec = diff % 1000;\n            //time_diff += \".\" + mSec;\n            \n            //time_diff += \" h: \" + std + \" m: \" + min + \" s: \" + sec + \" ms: \" + mSec\n            //node.warn(time_diff);\n        }\n    }\n    dataset.push([t1, t2, var_last_rcv_time, time_diff]);\n}\n\n/*\nif(!(var_status['rpi']==null)){node.warn(\"WORKS 1\");}\nelse{  node.error('CAN HAPPEN AT START 1'); }\n*/\n\n/*\nvar display_value = '';\nfor (var key in var_status) {\n    \n    if (!var_status.hasOwnProperty(key)) continue;\n\n    var obj = var_status[key];\n    \n    for (var prop in obj) {\n        // skip loop if the property is from prototype\n        if (!obj.hasOwnProperty(prop)) continue;\n\n        display_value = display_value + prop + ' = ' + obj[prop] + \"\\n\";\n        dataset.push([now, prop + ' = ' + obj[prop]]);  \n    }\n}\n*/",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "f4eb7bff.129c38"
+            ]
+        ]
+    },
+    {
+        "id": "55fc7ca6.0226a4",
+        "type": "function",
+        "z": "2add6854.c048c8",
+        "name": "get dynamic var",
+        "func": "var dataset = [];\nvar now = new Date().toLocaleString(\"de-DE\"); //\"en-GB\"\n//dataset.push([now, 'processing... ', '....']);\ndataset.push({ payload: now + ' processing... ', topic: \"dbg\" });\n\nvar var_status = global.get('status');\n//var var_status = global.get('status.rpi.OG_floor.last_rcv_time');\n//node.warn(\"var_status [\" + var_status + \"] \");\n\nif(var_status==null){\n    node.error('global.get(status)==null');\n}\n/*\nif(!(var_status.rpi==null)){ node.warn(\"WORKS 0\");}\nelse{ node.error('CAN HAPPEN AT START 0'); }\n\nif(!(var_status['rpi']==null)){node.warn(\"WORKS 1\");}\nelse{  node.error('CAN HAPPEN AT START 1'); }\n*/\n\nobject_var = 'rpi'\n\n\nif(!(var_status[object_var]==null)){\n    //dataset.push([now, 'var_status[rpi].var_parent_created', var_status[rpi].var_parent_created]);\n    dataset.push({ payload: + \"var_status[rpi].var_parent_created\" + var_status[object_var].var_parent_created, topic: \"dbg\" });\n    //node.warn(\"WORKS: var_status [\" + var_status + \"] \");\n}\n\nvar rpi_OG_floor_last_rcv_time = global.get('status.rpi.OG_floor.last_rcv_time');\n\nif(!(rpi_OG_floor_last_rcv_time==null)){\n    node.warn('var_status_dbg: ' + rpi_OG_floor_last_rcv_time);\n    //node.error('CAN HAPPEN AT START status.rpi.OG_floor.last_rcv_time==null');\n}\n/*\nelse{\n    node.warn('var_status_dbg: ' + var_status_dbg);\n}*/\n\nmsg.payload = dataset\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "940c30a8.f9962",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "status",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "cb8ecb73.302e68"
+            ]
+        ]
+    },
+    {
+        "id": "cb8ecb73.302e68",
+        "type": "json",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "1ad2944c.7f915c"
+            ]
+        ]
+    },
+    {
+        "id": "1ad2944c.7f915c",
+        "type": "debug",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "6e3a732f.00f84c",
+        "type": "mysql",
+        "z": "2add6854.c048c8",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 460,
+        "y": 180,
+        "wires": [
+            [
+                "c236b50d.000538"
+            ]
+        ]
+    },
+    {
+        "id": "e1437854.f9f568",
+        "type": "function",
+        "z": "2add6854.c048c8",
+        "name": "query",
+        "func": "var dataset_count = 10;\n\nreturn {topic:\"SELECT * from node_log ORDER BY id DESC LIMIT \" + dataset_count};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "6e3a732f.00f84c"
+            ]
+        ]
+    },
+    {
+        "id": "c236b50d.000538",
+        "type": "ui_template",
+        "z": "2add6854.c048c8",
+        "group": "2ad4860c.8533ba",
+        "name": "table node_log",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "format": "\n<table id=\"table\" border=\"1\">\n    <tr>\n        <th width=\"180px\">time</th>\n        <th>topic</th>\n        <th>message</th>\n    </tr>\n    <tbody>\n        <tr ng-repeat=\"item in msg.payload\">\n            <td>{{item.timestamp}}</td>\n            <td>{{item.topic}}</td>\n            <td>{{item.message}}</td>\n        </tr>\n    </tbody>\n</table>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 642,
+        "y": 181,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9fd3ad01.5df16",
+        "type": "ui_group",
+        "z": "",
+        "name": "eta",
+        "tab": "4e0c8ed6.89c15",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "685e04a2.15030c",
+        "type": "ui_group",
+        "z": "",
+        "name": "plc sensor",
+        "tab": "4e0c8ed6.89c15",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "75530ff8.a3b41",
+        "type": "ui_group",
+        "z": "",
+        "name": "weather",
+        "tab": "4e0c8ed6.89c15",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "3bb8416c.3d281e",
+        "type": "s7 endpoint",
+        "z": "",
+        "address": "192.168.1.201",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "cycletime": "500",
+        "timeout": "1500",
+        "verbose": "default",
+        "name": "PLC OG",
+        "vartable": [
+            {
+                "addr": "DB80,REAL12",
+                "name": "weather_wind(m/s)"
+            },
+            {
+                "addr": "M30.2",
+                "name": "AtDayKeepLightOff OG"
+            },
+            {
+                "addr": "DB80,REAL18",
+                "name": "wind_max"
+            }
+        ]
+    },
+    {
+        "id": "3ccd4ae2.4a5136",
+        "type": "ui_group",
+        "z": "",
+        "name": "IoT",
+        "tab": "4e0c8ed6.89c15",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "776e8a32.b4d2f4",
+        "type": "ui_group",
+        "z": "",
+        "name": "log status time",
+        "tab": "4e0c8ed6.89c15",
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "2ad4860c.8533ba",
+        "type": "ui_group",
+        "z": "",
+        "name": "node log short",
+        "tab": "4e0c8ed6.89c15",
+        "disp": false,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "4e0c8ed6.89c15",
+        "type": "ui_tab",
+        "z": "",
+        "name": "status",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

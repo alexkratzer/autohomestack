@@ -1,0 +1,543 @@
+[
+    {
+        "id": "dfd1be6.36f1b4",
+        "type": "tab",
+        "label": "node log data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "50a0796d.e645a8",
+        "type": "ui_dropdown",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "data points",
+        "place": "Select option",
+        "group": "4f13eca4.e23334",
+        "order": 1,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "options": [
+            {
+                "label": "",
+                "value": "10",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "20",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "50",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "100",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "200",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "500",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "eb4f7690.4a8d18"
+            ]
+        ]
+    },
+    {
+        "id": "eb4f7690.4a8d18",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "set dataset_count",
+        "func": "flow.set('dataset_count',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 331,
+        "y": 160,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "59c9e4bf.86bc2c",
+        "type": "catch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "scope": null,
+        "x": 95,
+        "y": 78,
+        "wires": [
+            [
+                "b87e71a5.b0908"
+            ]
+        ]
+    },
+    {
+        "id": "b87e71a5.b0908",
+        "type": "debug",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 275,
+        "y": 78,
+        "wires": []
+    },
+    {
+        "id": "9e0ea084.19fe6",
+        "type": "mysql",
+        "z": "dfd1be6.36f1b4",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 966.5,
+        "y": 322,
+        "wires": [
+            [
+                "9fdc4c87.e51f3"
+            ]
+        ]
+    },
+    {
+        "id": "a5381577.4bc9a8",
+        "type": "inject",
+        "z": "dfd1be6.36f1b4",
+        "name": "5s timer",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 786.5,
+        "y": 262,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "9584bd5d.cea57",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "query",
+        "func": "var dataset_count;\ndataset_count = flow.get(\"dataset_count\");\nif (dataset_count === undefined){dataset_count = 40;}\nvar ex_topic = [];\n\nvar display_topic_from_input = flow.get(\"display_topic_from_input\");\nvar display_message_from_input = flow.get(\"display_message_from_input\");\n\nvar filter = 'none';\n\nif (display_topic_from_input !== '' && display_topic_from_input !== undefined){\n    filter = \"topic: \" + display_topic_from_input;\n    //node.warn(\"node log data (fct query) display_topic_from_input: \" + display_topic_from_input);\n    msg.topic = \"SELECT * from node_log WHERE topic LIKE \\'\" + display_topic_from_input + \"%\\' ORDER BY id DESC LIMIT \" + dataset_count;\n}else if(display_message_from_input !== '' && display_message_from_input !== undefined){\n    filter = \"message: \" + display_message_from_input;\n    //node.warn(\"node log data (fct query) display_message_from_input: \" + display_message_from_input);\n    msg.topic = \"SELECT * from node_log WHERE message LIKE \\'\" + display_message_from_input + \"%\\' ORDER BY id DESC LIMIT \" + dataset_count;\n}else\n//if (display_topic_from_input === '')\n{\n    var sensor_event = flow.get (\"display_sensor_event\");\n    //if (typeof sensor_event === undefined) { sensor_event = false; } \n    if(sensor_event === false){ex_topic.push('sensor/event')}\n    \n    var aktor_event = flow.get (\"display_aktor\");\n    if(aktor_event === false){ex_topic.push('aktor/')}\n    \n    var sensor_event_com = flow.get (\"display_sensor_event_com\");\n    if(sensor_event_com === false){ex_topic.push('sensor/event/com')}\n    \n    var error_aktor = flow.get (\"display_error_aktor\");\n    if(error_aktor === false){ex_topic.push('error/aktor')}\n    \n    var display_data_logger = flow.get(\"display_data_logger\");\n    if(display_data_logger===false){ex_topic.push('data_logger')}\n    \n    if (ex_topic.length > 0) {\n        var tmp_ex = 'WHERE (';\n        \n        for (index = 0; index < ex_topic.length; ++index) {\n            tmp_ex = tmp_ex + 'topic NOT LIKE \\'' + ex_topic[index] + '%';\n            if(index === (ex_topic.length - 1)){ //if last element\n                tmp_ex = tmp_ex + '\\')';\n            }else{\n                tmp_ex = tmp_ex + '\\' AND ';\n            }\n        }\n        \n        msg.topic = \"SELECT * from node_log \" + tmp_ex + \" ORDER BY id DESC LIMIT \" + dataset_count;\n    }else{\n        msg.topic = \"SELECT * from node_log ORDER BY id DESC LIMIT \" + dataset_count;\n    }\n}\n\nvar f = {payload: filter};\nreturn [msg, f];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 802.5,
+        "y": 318,
+        "wires": [
+            [
+                "9e0ea084.19fe6"
+            ],
+            [
+                "f8e06f25.ea4b"
+            ]
+        ]
+    },
+    {
+        "id": "26d4a62d.a9584a",
+        "type": "ui_switch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "topic sensor/event",
+        "group": "4f13eca4.e23334",
+        "order": 2,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 154,
+        "y": 219.47003173828125,
+        "wires": [
+            [
+                "ea0217c.d2272e8"
+            ]
+        ]
+    },
+    {
+        "id": "ea0217c.d2272e8",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_sensor_event",
+        "func": "flow.set('display_sensor_event',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420.5,
+        "y": 220.00003051757812,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "b956f922.8b7d98",
+        "type": "ui_switch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "topic aktor/...",
+        "group": "4f13eca4.e23334",
+        "order": 3,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 131.5,
+        "y": 277.0000305175781,
+        "wires": [
+            [
+                "862d3664.313e98"
+            ]
+        ]
+    },
+    {
+        "id": "862d3664.313e98",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_aktor",
+        "func": "flow.set('display_aktor',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 388,
+        "y": 277.530029296875,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "54521ed6.ff49f",
+        "type": "ui_switch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "topic sensor/event/com",
+        "group": "4f13eca4.e23334",
+        "order": 4,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 169.5,
+        "y": 327.0000305175781,
+        "wires": [
+            [
+                "e8c7de75.8877f"
+            ]
+        ]
+    },
+    {
+        "id": "e8c7de75.8877f",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display sensor/event/com",
+        "func": "flow.set('display_sensor_event_com',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 426,
+        "y": 327.530029296875,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "b95a400b.e6637",
+        "type": "ui_switch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "topic error/aktor/...",
+        "group": "4f13eca4.e23334",
+        "order": 5,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 153.5,
+        "y": 387.0000305175781,
+        "wires": [
+            [
+                "4b4f5836.5a8df8"
+            ]
+        ]
+    },
+    {
+        "id": "4b4f5836.5a8df8",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_error_aktor",
+        "func": "flow.set('display_error_aktor',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 387.530029296875,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "1085b3c6.11200c",
+        "type": "ui_text_input",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "search topic starts with:",
+        "group": "4f13eca4.e23334",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 160,
+        "y": 513.8800048828125,
+        "wires": [
+            [
+                "73e74850.e73538"
+            ]
+        ]
+    },
+    {
+        "id": "73e74850.e73538",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_topic_from_input",
+        "func": "flow.set('display_topic_from_input',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450.5,
+        "y": 513,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "b7a871a9.ddceb",
+        "type": "ui_text_input",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "search message starts with:",
+        "group": "4f13eca4.e23334",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": "50",
+        "topic": "",
+        "x": 170.5,
+        "y": 561,
+        "wires": [
+            [
+                "be541cf4.7839e"
+            ]
+        ]
+    },
+    {
+        "id": "be541cf4.7839e",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_message_from_input",
+        "func": "flow.set('display_message_from_input',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 461,
+        "y": 560.1199951171875,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "ffb57a6d.96ec88",
+        "type": "ui_switch",
+        "z": "dfd1be6.36f1b4",
+        "name": "",
+        "label": "topic data_logger",
+        "tooltip": "",
+        "group": "4f13eca4.e23334",
+        "order": 6,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 153.5,
+        "y": 432.0000305175781,
+        "wires": [
+            [
+                "15f9f753.43f2a9"
+            ]
+        ]
+    },
+    {
+        "id": "15f9f753.43f2a9",
+        "type": "function",
+        "z": "dfd1be6.36f1b4",
+        "name": "store display_data_logger",
+        "func": "flow.set('display_data_logger',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 432.530029296875,
+        "wires": [
+            [
+                "9584bd5d.cea57"
+            ]
+        ]
+    },
+    {
+        "id": "9fdc4c87.e51f3",
+        "type": "ui_template",
+        "z": "dfd1be6.36f1b4",
+        "group": "663615cb.aca44c",
+        "name": "table node_log",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "format": "\n<table id=\"table\" border=\"1\">\n    <tr>\n        <th width=\"180px\">time</th>\n        <th>topic</th>\n        <th>message</th>\n    </tr>\n    <tbody>\n        <tr ng-repeat=\"item in msg.payload\">\n            <td>{{item.timestamp}}</td>\n            <td>{{item.topic}}</td>\n            <td>{{item.message}}</td>\n        </tr>\n    </tbody>\n</table>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1168.5,
+        "y": 323,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f8e06f25.ea4b",
+        "type": "ui_text",
+        "z": "dfd1be6.36f1b4",
+        "group": "663615cb.aca44c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "filter: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 953.5,
+        "y": 376,
+        "wires": []
+    },
+    {
+        "id": "4f13eca4.e23334",
+        "type": "ui_group",
+        "z": "",
+        "name": "node log -settings-",
+        "tab": "7fa76325.bcb67c",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "663615cb.aca44c",
+        "type": "ui_group",
+        "z": "",
+        "name": "table node_log",
+        "tab": "7fa76325.bcb67c",
+        "order": 2,
+        "disp": false,
+        "width": "32",
+        "collapse": false
+    },
+    {
+        "id": "7fa76325.bcb67c",
+        "type": "ui_tab",
+        "z": "",
+        "name": "node log data",
+        "icon": "history",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]

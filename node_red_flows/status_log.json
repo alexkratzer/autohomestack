@@ -1,0 +1,274 @@
+[
+    {
+        "id": "681c70c5.4c8c8",
+        "type": "tab",
+        "label": "status log",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a9977583.497e18",
+        "type": "ui_dropdown",
+        "z": "681c70c5.4c8c8",
+        "name": "",
+        "label": "data points",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d647a890.f9ab08",
+        "order": 1,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "options": [
+            {
+                "label": "",
+                "value": "10",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "20",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "50",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "100",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "200",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "500",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "5bfecb42.80f1a4"
+            ]
+        ]
+    },
+    {
+        "id": "5bfecb42.80f1a4",
+        "type": "function",
+        "z": "681c70c5.4c8c8",
+        "name": "set dataset_count",
+        "func": "flow.set('dataset_count',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "d76f0591.90b6d8"
+            ]
+        ]
+    },
+    {
+        "id": "eae11431.26c688",
+        "type": "catch",
+        "z": "681c70c5.4c8c8",
+        "name": "",
+        "scope": null,
+        "x": 101.5,
+        "y": 40,
+        "wires": [
+            [
+                "536abfc5.97054"
+            ]
+        ]
+    },
+    {
+        "id": "536abfc5.97054",
+        "type": "debug",
+        "z": "681c70c5.4c8c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 281.5,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "a44a023b.dfa03",
+        "type": "mysql",
+        "z": "681c70c5.4c8c8",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 760,
+        "y": 320,
+        "wires": [
+            [
+                "f4a9101d.0eb2"
+            ]
+        ]
+    },
+    {
+        "id": "bb911a99.a82898",
+        "type": "inject",
+        "z": "681c70c5.4c8c8",
+        "name": "5s timer",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "d76f0591.90b6d8"
+            ]
+        ]
+    },
+    {
+        "id": "d76f0591.90b6d8",
+        "type": "function",
+        "z": "681c70c5.4c8c8",
+        "name": "query",
+        "func": "var ex_topic = [];\nvar dataset_count = flow.get(\"dataset_count\");\nvar display_topic_from_input = flow.get(\"display_topic_from_input\");\nvar filter = 'none';\n\nif (dataset_count === undefined){dataset_count = 40;}\nvar q = \"SELECT * from node_status_log ORDER BY timestamp DESC LIMIT \" + dataset_count\n\nif (display_topic_from_input !== '' && display_topic_from_input !== undefined){\n    filter = display_topic_from_input;\n    //node.warn(\"node log data (fct query) display_topic_from_input: \" + display_topic_from_input);\n    q = \"SELECT * from node_status_log WHERE topic LIKE \\'\" + display_topic_from_input + \"%\\' ORDER BY timestamp DESC LIMIT \" + dataset_count;\n}\n\nreturn [{topic: q}, {payload: filter}];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 550,
+        "y": 340,
+        "wires": [
+            [
+                "a44a023b.dfa03"
+            ],
+            [
+                "21426610.00839a"
+            ]
+        ]
+    },
+    {
+        "id": "7de00e26.1b77f",
+        "type": "ui_text_input",
+        "z": "681c70c5.4c8c8",
+        "name": "",
+        "label": "topic filter:",
+        "tooltip": "",
+        "group": "d647a890.f9ab08",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "fb82246d.2f79e8"
+            ]
+        ]
+    },
+    {
+        "id": "fb82246d.2f79e8",
+        "type": "function",
+        "z": "681c70c5.4c8c8",
+        "name": "set filter",
+        "func": "flow.set('display_topic_from_input',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "d76f0591.90b6d8"
+            ]
+        ]
+    },
+    {
+        "id": "f4a9101d.0eb2",
+        "type": "ui_template",
+        "z": "681c70c5.4c8c8",
+        "group": "4c5b83bc.55e78c",
+        "name": "table node status log",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "format": "\n<table id=\"table\" border=\"1\">\n    <tr>\n        <th width=\"180px\">time</th>\n        <th>topic</th>\n        <th>message</th>\n    </tr>\n    <tbody>\n        <tr ng-repeat=\"item in msg.payload\">\n            <td>{{item.timestamp}}</td>\n            <td>{{item.topic}}</td>\n            <td>{{item.message}}</td>\n        </tr>\n    </tbody>\n</table>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1000,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21426610.00839a",
+        "type": "ui_text",
+        "z": "681c70c5.4c8c8",
+        "group": "4c5b83bc.55e78c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "filter: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 730,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d647a890.f9ab08",
+        "type": "ui_group",
+        "z": "",
+        "name": "node status log -settings-",
+        "tab": "53866e10.c18ea",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "4c5b83bc.55e78c",
+        "type": "ui_group",
+        "z": "",
+        "name": "node status log",
+        "tab": "53866e10.c18ea",
+        "disp": false,
+        "width": "32",
+        "collapse": false
+    },
+    {
+        "id": "53866e10.c18ea",
+        "type": "ui_tab",
+        "z": "",
+        "name": "status log",
+        "icon": "history",
+        "order": 6,
+        "disabled": false,
+        "hidden": false
+    }
+]

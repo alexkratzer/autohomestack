@@ -22,7 +22,6 @@ nav:
         - devices:              level_field/field_level.md
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
-    
     - About:
         - References:           'references.md'
         - Hints:                hints.md

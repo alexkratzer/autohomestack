@@ -1,0 +1,2002 @@
+[
+    {
+        "id": "803c8493.065728",
+        "type": "tab",
+        "label": "net_PLC",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7d37a590.1e4d9c",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "ctrl auto home",
+        "info": "",
+        "x": 1020,
+        "y": 59,
+        "wires": []
+    },
+    {
+        "id": "3096c1ca.228a2e",
+        "type": "catch",
+        "z": "803c8493.065728",
+        "name": "",
+        "scope": null,
+        "x": 110,
+        "y": 55,
+        "wires": [
+            [
+                "b70512da.028bb"
+            ]
+        ]
+    },
+    {
+        "id": "b70512da.028bb",
+        "type": "debug",
+        "z": "803c8493.065728",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 290,
+        "y": 55,
+        "wires": []
+    },
+    {
+        "id": "cb9f3584.fb18d8",
+        "type": "ui_text_input",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "free topic",
+        "tooltip": "",
+        "group": "552d1bed.9df864",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 527.5,
+        "y": 99,
+        "wires": [
+            [
+                "8a308800.6cf828"
+            ]
+        ]
+    },
+    {
+        "id": "8a308800.6cf828",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "set free_topic",
+        "func": "flow.set('free.topic',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 713,
+        "y": 98,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9fa2a9bc.7ad3b8",
+        "type": "ui_text_input",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "free msg",
+        "tooltip": "",
+        "group": "552d1bed.9df864",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 529,
+        "y": 153,
+        "wires": [
+            [
+                "cf2ff5b5.ac7238"
+            ]
+        ]
+    },
+    {
+        "id": "cf2ff5b5.ac7238",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "set free_msg",
+        "func": "flow.set('free.msg',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 704.5,
+        "y": 152,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a2d17fe5.1545b",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "",
+        "group": "552d1bed.9df864",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "send free msg",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 539.5,
+        "y": 240.99993896484375,
+        "wires": [
+            [
+                "55f6e870.bab2f8"
+            ]
+        ]
+    },
+    {
+        "id": "55f6e870.bab2f8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "get free",
+        "func": "msg.payload = flow.get('free.topic') + '#' + flow.get('free.msg');\nmsg.topic = flow.get('free.dest');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 735,
+        "y": 241.99993896484375,
+        "wires": [
+            [
+                "40c13284.ad953c"
+            ]
+        ]
+    },
+    {
+        "id": "8a1e6afa.e8ef68",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "set free_dest",
+        "func": "flow.set('free.dest',msg.payload)",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 713,
+        "y": 201,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "43602539.ce309c",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "free dest",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "552d1bed.9df864",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "options": [
+            {
+                "label": "og",
+                "value": "og",
+                "type": "str"
+            },
+            {
+                "label": "eg",
+                "value": "eg",
+                "type": "str"
+            },
+            {
+                "label": "carport",
+                "value": "carport",
+                "type": "str"
+            },
+            {
+                "label": "unknown",
+                "value": "unknown",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 522.5,
+        "y": 202,
+        "wires": [
+            [
+                "8a1e6afa.e8ef68"
+            ]
+        ]
+    },
+    {
+        "id": "a1ed2697.a1cfe8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "interaction topic cmd",
+        "func": "var choise = msg.payload;\nflow.set('interaction_msg.topic_domain', msg.payload);\nnode.warn('interaction_msg.topic_domain: ' + flow.get('interaction_msg.topic_domain'));\n\nvar opt = [];\nvar hint = null;\n\nif (choise === \"watchdog\")\n{\n    var send_plc_msg = {payload: choise + '#', topic: flow.get('interaction_destination')};\n}\nelse if (choise === \"mirror\")\n{\n    hint = \"choose response frames count\";\n    var send_plc_msg = {payload: choise + '#mirror message', topic: flow.get('interaction_destination')};\n}\nelse if (choise === \"burst\")\n{\n    hint = \"choose response frames count\";\n}\nelse if (choise === \"plc\")\n{\n    hint = \"select plc cmd\";\n    opt = flow.get('conf.options.plc_cmds')\n}\nelse if (choise === \"TODO\")\n{\n    node.warn(\"choise TODO at topic cmd interaction\");\n}\nelse if (choise === \"reset\")\n{\n    opt = flow.get('conf.options.domain');\n    msg.options = opt;\n}\n//##############################\nelse\n{node.error(\"unknown cmd at topic cmd interaction: \" + choise)}\n\nopt.push('reset'); //always add reset to menue\n\nmsg.options = opt;\nif (hint !== null){\n    HintMsg = { payload: hint, topic: 'hint: ' };\n}else{\n    HintMsg = null;\n}\n\nreturn [msg, HintMsg, send_plc_msg];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 907,
+        "y": 865,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a6717e25.257a",
+        "type": "ui_switch",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "show: send free msg",
+        "tooltip": "",
+        "group": "547a0c9f.32a094",
+        "order": 3,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "{\"group\":{\"show\":[\"net_PLC_send_free_msg\"]}}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"group\":{\"hide\":[\"net_PLC_send_free_msg\"]}}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "x": 1072,
+        "y": 142,
+        "wires": [
+            [
+                "6cc88ad7.3cda74"
+            ]
+        ]
+    },
+    {
+        "id": "6cc88ad7.3cda74",
+        "type": "ui_ui_control",
+        "z": "803c8493.065728",
+        "name": "",
+        "x": 1303.5,
+        "y": 139.8800048828125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2eb6c9c8.effa26",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "",
+        "topic": "",
+        "payload": "{\"group\":{\"hide\":[\"net_PLC_send_free_msg\",\"net_PLC_send_cmd_aktor\"]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 1044,
+        "y": 105,
+        "wires": [
+            [
+                "6cc88ad7.3cda74"
+            ]
+        ]
+    },
+    {
+        "id": "40c13284.ad953c",
+        "type": "link out",
+        "z": "803c8493.065728",
+        "name": "send free msg",
+        "links": [
+            "47cfa47.8ea2a5c",
+            "c52c188e.a92f18"
+        ],
+        "x": 843.5,
+        "y": 242.99993896484375,
+        "wires": []
+    },
+    {
+        "id": "e741966d.e0cc88",
+        "type": "link out",
+        "z": "803c8493.065728",
+        "name": "send msg",
+        "links": [
+            "47cfa47.8ea2a5c",
+            "c52c188e.a92f18"
+        ],
+        "x": 862.5,
+        "y": 682,
+        "wires": []
+    },
+    {
+        "id": "afd1ec10.f2641",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "send your own message",
+        "info": "",
+        "x": 569.5,
+        "y": 54,
+        "wires": []
+    },
+    {
+        "id": "5922f824.0c2978",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "send a message to remote",
+        "info": "",
+        "x": 160.49996948242188,
+        "y": 478.9999694824219,
+        "wires": []
+    },
+    {
+        "id": "c0a99a6c.f540c8",
+        "type": "ui_text",
+        "z": "803c8493.065728",
+        "group": "168c65c2.ece29a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "plc cmd:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 911.5,
+        "y": 793.5899658203125,
+        "wires": []
+    },
+    {
+        "id": "3f917837.b92e08",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 398.88330078125,
+        "y": 481.88330078125,
+        "wires": [
+            [
+                "185414bc.370e5b"
+            ]
+        ]
+    },
+    {
+        "id": "185414bc.370e5b",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "init config flow/globals",
+        "func": "global.set('ui_config',{\n    show_send_msg : true\n});\n\n\nflow.set('interaction_msg',\n{   \n    remote_name : '__none__',\n    topic_all : '__none__', \n    topic_domain: '__none__',\n    message : '__none__'\n} );\n\nflow.set('conf.options.remote', [\"og\", \"eg\", \"carport\", \"net_plc\"]);\nflow.set('conf.options.plc_get',  [\"timestamp\", \"verbose\", 'DataLoggerEnabled', 'all']);\nflow.set('conf.options.plc_set',  [\"timestamp\", \"verbose\", 'DataLoggerEnabled', 'AtDayKeepLightOff', 'reset_counter']);\nflow.set('conf.options.plc_set.timestamp',  [\"now\"]);\nflow.set('conf.options.plc_set.DataLoggerEnabled',  ['0', '1']);\nflow.set('conf.options.plc_set.AtDayKeepLightOff',  ['0', '1']);\nflow.set('conf.options.plc_set.verbose',  ['0', '1']);\n\n\n//custom plc options\nflow.set('conf.options.plc_custom.eg',  ['ring_bell']);\nflow.set('conf.options.plc_custom.og',  ['none']);\nflow.set('conf.options.plc_custom.carport',  ['none']);\nflow.set('conf.options.plc_custom.net_plc',  ['none']);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 597.38330078125,
+        "y": 483.88330078125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9fa01c9a.c89ef",
+        "type": "e-mail",
+        "z": "803c8493.065728",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "feedback.babba@googlemail.com",
+        "dname": "feedback.babba@googlemail.com",
+        "x": 1307.88330078125,
+        "y": 356.38330078125,
+        "wires": []
+    },
+    {
+        "id": "7ee0d36d.fbe2cc",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "",
+        "group": "547a0c9f.32a094",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "send mail TODO",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "send mail pressed",
+        "payloadType": "str",
+        "topic": "auto home notify",
+        "x": 1051.8868408203125,
+        "y": 355.8103332519531,
+        "wires": [
+            [
+                "9fa01c9a.c89ef"
+            ]
+        ]
+    },
+    {
+        "id": "2683973e.e368b8",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "remote",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 369.2499694824219,
+        "y": 537.1600036621094,
+        "wires": [
+            [
+                "6464b2cc.612c8c"
+            ]
+        ]
+    },
+    {
+        "id": "6464b2cc.612c8c",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "interaction_msg.remote_name",
+        "func": "flow.set('interaction_msg.remote_name', msg.payload);\n\nmsg.options = flow.get('conf.options.plc_custom.' + msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 601.2499694824219,
+        "y": 537.1600036621094,
+        "wires": [
+            [
+                "80119e78.0602e"
+            ]
+        ]
+    },
+    {
+        "id": "8d344ba0.1969b8",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "init",
+        "topic": "",
+        "payload": "conf.options.remote",
+        "payloadType": "flow",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "x": 115.24996948242188,
+        "y": 537.1600036621094,
+        "wires": [
+            [
+                "83d734d5.8b9ad8"
+            ]
+        ]
+    },
+    {
+        "id": "83d734d5.8b9ad8",
+        "type": "change",
+        "z": "803c8493.065728",
+        "name": "mv",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "options",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 247.24996948242188,
+        "y": 537.1600036621094,
+        "wires": [
+            [
+                "2683973e.e368b8"
+            ]
+        ]
+    },
+    {
+        "id": "370d2e74.a59fa2",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "plc get",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 6,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 363.25,
+        "y": 841.1600341796875,
+        "wires": [
+            [
+                "39570d7f.fee242"
+            ]
+        ]
+    },
+    {
+        "id": "47ccbbe6.e62984",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "init",
+        "topic": "",
+        "payload": "conf.options.plc_get",
+        "payloadType": "flow",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "x": 104.25,
+        "y": 843.1600341796875,
+        "wires": [
+            [
+                "2492ee6.0ebcd12"
+            ]
+        ]
+    },
+    {
+        "id": "2492ee6.0ebcd12",
+        "type": "change",
+        "z": "803c8493.065728",
+        "name": "mv",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "options",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 238.25,
+        "y": 843.1600341796875,
+        "wires": [
+            [
+                "370d2e74.a59fa2"
+            ]
+        ]
+    },
+    {
+        "id": "ca73b617.74c708",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'watchdog#';\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 285.75,
+        "y": 653.75,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "e80abb.374ab548",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "",
+        "group": "6225bb60.70c934",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "send watchdog",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 122.25,
+        "y": 653.75,
+        "wires": [
+            [
+                "ca73b617.74c708"
+            ]
+        ]
+    },
+    {
+        "id": "8a85e480.b1f4d8",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "burst count",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "2",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "5",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 115.75,
+        "y": 708.75,
+        "wires": [
+            [
+                "981fb825.4c0658"
+            ]
+        ]
+    },
+    {
+        "id": "981fb825.4c0658",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'burst#'+msg.payload;\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 284.75,
+        "y": 707.75,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "bcb8bf5c.891c6",
+        "type": "ui_text_input",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "mirror",
+        "tooltip": "tab or enter to send",
+        "group": "6225bb60.70c934",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 98.5,
+        "y": 771.25,
+        "wires": [
+            [
+                "1f583a78.df06a6"
+            ]
+        ]
+    },
+    {
+        "id": "1f583a78.df06a6",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'mirror#'+msg.payload;\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 275.75,
+        "y": 772.75,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "1a446174.2f26ef",
+        "type": "ui_switch",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "show send msg",
+        "tooltip": "",
+        "group": "547a0c9f.32a094",
+        "order": 4,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1060,
+        "y": 200,
+        "wires": [
+            [
+                "3b2a2c7d.31c1b4"
+            ]
+        ]
+    },
+    {
+        "id": "3b2a2c7d.31c1b4",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "show_send_msg",
+        "func": "global.set('ui_config.show_send_msg',msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1263,
+        "y": 199,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21b975a2.c86fba",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "plc set",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 7,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 362.75,
+        "y": 903.75,
+        "wires": [
+            [
+                "da60904d.24735"
+            ]
+        ]
+    },
+    {
+        "id": "7fc03d9.3e708c4",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "init",
+        "topic": "",
+        "payload": "conf.options.plc_set",
+        "payloadType": "flow",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "x": 103.75,
+        "y": 905.75,
+        "wires": [
+            [
+                "8137514f.6330d"
+            ]
+        ]
+    },
+    {
+        "id": "8137514f.6330d",
+        "type": "change",
+        "z": "803c8493.065728",
+        "name": "mv",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "options",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 237.75,
+        "y": 905.75,
+        "wires": [
+            [
+                "21b975a2.c86fba"
+            ]
+        ]
+    },
+    {
+        "id": "39570d7f.fee242",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'plc_get/'+msg.payload+'#';\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500.75,
+        "y": 842.75,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "c5488afa.8bcd58",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'plc_set/'+ flow.get('interaction_msg.plc_set') +'#' + msg.payload;\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 574.75,
+        "y": 969.75,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "da60904d.24735",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "interaction_msg.plc_set",
+        "func": "flow.set('interaction_msg.plc_set', msg.payload);\n\nvar opt = flow.get('conf.options.plc_set.' + msg.payload );\n\nmsg.options = opt;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 212.75,
+        "y": 969.75,
+        "wires": [
+            [
+                "9724a110.82436"
+            ]
+        ]
+    },
+    {
+        "id": "9724a110.82436",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "plc set var",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 8,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 417.75,
+        "y": 969.75,
+        "wires": [
+            [
+                "c5488afa.8bcd58"
+            ]
+        ]
+    },
+    {
+        "id": "2cf668c4.3807c8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "conv",
+        "func": "msg.payload = msg.topic + ' -> ' + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 891.75,
+        "y": 736.75,
+        "wires": [
+            [
+                "c0a99a6c.f540c8"
+            ]
+        ]
+    },
+    {
+        "id": "80119e78.0602e",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "custom",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "6225bb60.70c934",
+        "order": 9,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 550.75,
+        "y": 594.75,
+        "wires": [
+            [
+                "71bd9fbb.42c11"
+            ]
+        ]
+    },
+    {
+        "id": "71bd9fbb.42c11",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "msg.payload = 'plc_custom/' + msg.payload+'#';\nmsg.topic = flow.get('interaction_msg.remote_name');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 678.25,
+        "y": 596.3399658203125,
+        "wires": [
+            [
+                "e741966d.e0cc88",
+                "2cf668c4.3807c8"
+            ]
+        ]
+    },
+    {
+        "id": "e8017e33.720ce",
+        "type": "fritzbox-in",
+        "z": "803c8493.065728",
+        "device": "98ec99e3.ad5758",
+        "name": "guest wlan",
+        "service": "urn:dslforum-org:service:WLANConfiguration:3",
+        "action": "SetEnable",
+        "arguments": "{\"NewEnable\":\"value\"}",
+        "x": 1270.75,
+        "y": 427.75,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f9ae1ac.fcfea",
+        "type": "ui_switch",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "guest wlan on/off",
+        "tooltip": "gast_media",
+        "group": "547a0c9f.32a094",
+        "order": 5,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": " {\"NewEnable\":\"1\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": " {\"NewEnable\":\"0\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "x": 1068.7500305175781,
+        "y": 427.75,
+        "wires": [
+            [
+                "e8017e33.720ce"
+            ]
+        ]
+    },
+    {
+        "id": "71282b5a.6cd6f4",
+        "type": "mqtt out",
+        "z": "803c8493.065728",
+        "name": "",
+        "topic": "",
+        "qos": "1",
+        "retain": "false",
+        "broker": "60f7dc17.961d94",
+        "x": 1510,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "d427a88b.b04bc8",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "",
+        "group": "b19cf213.bd3ad",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "send",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1148.5,
+        "y": 725,
+        "wires": [
+            [
+                "8e48af8c.14688"
+            ]
+        ]
+    },
+    {
+        "id": "9fbe7a75.c397a8",
+        "type": "ui_text_input",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "msg",
+        "tooltip": "",
+        "group": "b19cf213.bd3ad",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": "3000",
+        "topic": "",
+        "x": 1158,
+        "y": 674,
+        "wires": [
+            [
+                "d1fb984f.4e00c8"
+            ]
+        ]
+    },
+    {
+        "id": "8e48af8c.14688",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send ibs",
+        "func": "var prefix = \"v01/esp/\"\nvar tmp_payload = flow.get(\"mqtt_ibs_msg\");\nvar tmp_topic = flow.get(\"mqtt_ibs_topic\");\nvar tmp_esp_name = flow.get(\"mqtt_ibs_esp_name\");\nvar t = prefix + tmp_esp_name  + \"/\" + tmp_topic; \nvar newMsg = { payload: tmp_payload, topic: t };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1335.5,
+        "y": 722,
+        "wires": [
+            [
+                "71282b5a.6cd6f4",
+                "fa83e601.3705b8",
+                "572bd921.8c9988"
+            ]
+        ]
+    },
+    {
+        "id": "783cb2d4.1ca32c",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "",
+        "func": "flow.set('mqtt_ibs_topic', msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1303.5,
+        "y": 631,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1fb984f.4e00c8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "",
+        "func": "flow.set('mqtt_ibs_msg', msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1309,
+        "y": 676,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8291ce57.2ace6",
+        "type": "ui_text_input",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "esp_name",
+        "tooltip": "",
+        "group": "b19cf213.bd3ad",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 1179,
+        "y": 593,
+        "wires": [
+            [
+                "e2482b62.6261a8"
+            ]
+        ]
+    },
+    {
+        "id": "e2482b62.6261a8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "",
+        "func": "flow.set('mqtt_ibs_esp_name', msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1315,
+        "y": 594,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5e6cdc.021503",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "topic",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b19cf213.bd3ad",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "",
+                "value": "cmd/echo",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "cmd/status",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "cmd/set_name",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "cmd/send_intervall_sensor",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "cmd/send_intervall_status",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "cmd/reset",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 1161.5,
+        "y": 631,
+        "wires": [
+            [
+                "783cb2d4.1ca32c"
+            ]
+        ]
+    },
+    {
+        "id": "b0561cbe.d002f",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "CMD PLC",
+        "info": "",
+        "x": 87,
+        "y": 612,
+        "wires": []
+    },
+    {
+        "id": "3b928b0d.f9b8f4",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "CMD IoT mqtt",
+        "info": "",
+        "x": 1147,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "fa83e601.3705b8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "log plc cmd",
+        "func": "\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"node_red/iot_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1374,
+        "y": 821,
+        "wires": [
+            [
+                "fc271850.017828",
+                "572bd921.8c9988"
+            ]
+        ]
+    },
+    {
+        "id": "fc271850.017828",
+        "type": "mysql",
+        "z": "803c8493.065728",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 1575.75,
+        "y": 821.25,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a4bf767b.cf7c48",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 330,
+        "y": 1200,
+        "wires": [
+            [
+                "c1bc5efd.92d33"
+            ]
+        ]
+    },
+    {
+        "id": "c1bc5efd.92d33",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "init plc config flow/globals",
+        "func": "flow.set('conf.options.remote', [\"og\", \"eg\", \"car\"]);\nflow.set('conf.options.aktor_types',['light','heater','jalousie']);\n\n//******************* v2 for aktor_cmd only ********************************//\nflow.set('conf.options.aktor_cmd.light',['get','set_switch_value', 'set_AutoOffLuxEnable', 'set_AutoOffLux', 'set_AutoOffTimeEnable','set_AutoOffTime']); \nflow.set('conf.options.aktor_cmd.heater',['get','set_ctrl_mode', 'set_stop_at_degree']); \nflow.set('conf.options.aktor_cmd.jalousie',['get','set_DriveUpAtWindSpeed', 'set_position', 'set_angle', 'set_init_motor', 'set_drive_up', 'set_drive_down', 'set_drive_halt']); \n\n    \n//##################### aktor templates ##################### \n//#########################################################\n\n//aktor cmd -light-\nflow.set('conf.aktor.light.get',[\n    'all',\n    'AutoOffLuxEnable',\n    'AutoOffLux',\n    'AutoOffTimeEnable',\n    'AutoOffTime',\n    'switch state']);\nflow.set('conf.aktor.light.set_switch_value',[\n    'switch',\n    'on',\n    'off',\n    'toggle']);\nflow.set('conf.aktor.light.set_AutoOffLuxEnable',[\n    'true',\n    'false']);\nflow.set('conf.aktor.light.set_AutoOffLux',[\n    '5','10','20','50','100','200','500']);\nflow.set('conf.aktor.light.set_AutoOffTimeEnable',[\n    'true',\n    'false']);\nflow.set('conf.aktor.light.set_AutoOffTime',[\n    '60','300','600','1800','3600','7200','14400']);\n    \n//aktor cmd -heater-\nflow.set('conf.aktor.heater.get',[\n    'all']);\nflow.set('conf.aktor.heater.set_ctrl_mode',[\n    'on',\n    'off',\n    'automatic']);\nflow.set('conf.aktor.heater.set_stop_at_degree',[\n    '15','18','19','20','21','22','23','24','26','30']);\n    \n//aktor cmd -jalousie-\nflow.set('conf.aktor.jalousie.get',[\n    'all']);\nflow.set('conf.aktor.jalousie.set_DriveUpAtWindSpeed',[\n    '10','12','14','16']);\nflow.set('conf.aktor.jalousie.set_position',[\n    '0','10','20','35','50','75','90','100']);\nflow.set('conf.aktor.jalousie.set_angle',[\n    '0','10','20','35','50','75','90','100']);\nflow.set('conf.aktor.jalousie.set_init_motor',[\n    'set']);\nflow.set('conf.aktor.jalousie.set_drive_up',[\n    'set']);\nflow.set('conf.aktor.jalousie.set_drive_down',[\n    'set']);\nflow.set('conf.aktor.jalousie.set_drive_halt',[\n    'set']);\n\n//##################### aktor names EG #################### \n//#########################################################\nflow.set('conf.aktor.light.eg',[\n'light/office_ceiling', 'light/bath_ceiling', 'light/bath_mirror',\n'light/dining_ceiling', 'light/dining_west', 'light/living_east_north',\n'light/living_east_south', 'light/living_south', 'light/living_ceiling_corner_led', \n'light/floor_west', 'light/floor_east', 'light/kitchen_ceiling',\n'light/kitchen_closet', 'light/kitchen_store', 'light/kitchen_wallboard',\n'light/basement_stairs', 'light/basement_floor', 'light/basement_server',\n'light/basement_heater', 'light/basement_hobby_east', 'light/basement_hobby_west',\n'light/basement_washroom', 'light/entry_door_up', 'light/terrace_south',\n'light/terrace_west', 'light/terrace_east']);\n\nflow.set('conf.aktor.heater.eg',[\n    'heater/bath', 'heater/dining', 'heater/entrance',\n    'heater/kitchen', 'heater/living', 'heater/office',\n    'heater/basement_floor', 'heater/basement_hobbyEast',\n    'heater/basement_hobbyWest', 'heater/basement_washroom',\n    'heater/basement_serverroom']);\n\nflow.set('conf.aktor.jalousie.eg',[\n    'jalousie/office', 'jalousie/kitchen',\n    'jalousie/living', 'jalousie/diningSouth', \n    'jalousie/diningWest']);\n\n//##################### aktor names OG #################### \n//#########################################################\nflow.set('conf.aktor.light.og',[\n    'light/bath_ceiling',\n    'light/bath_shower',\n    'light/bath_mirror',\n    'light/bath_starrysky',\n    'light/parents_ceiling',\n    'light/parents_bed',\n    'light/childEast_gallery',\n    'light/childWest_gallery',\n    'light/childEast_ceiling',\n    'light/childWest_ceiling',\n    'light/floor_south',\n    'light/stairs_east',\n    'light/stairs_west']);\n\nflow.set('conf.aktor.heater.og',[\n    'heater/bath_wall',\n    'heater/bath_floor',\n    'heater/child_east',\n    'heater/child_west',\n    'heater/parents']);\n\nflow.set('conf.aktor.jalousie.og',[\n    'jalousie/parents',\n    'jalousie/bath',\n    'jalousie/childEastEast',\n    'jalousie/childEastSouth',\n    'jalousie/childWestSouth',\n    'jalousie/childWestWest',\n    'jalousie/floor'\n    ]);\n\n//##################### aktor names car #################### \n//#########################################################\nflow.set('conf.aktor.light.car',[\n    'light/led_stripes',\n    'light/drive',\n    'light/warehouse'\n    ]);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 552.5,
+        "y": 1199,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7c860633.8db1f8",
+        "type": "ui_text",
+        "z": "803c8493.065728",
+        "group": "7c5058cf.b16d38",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "send frame:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 530,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "938d4e5d.db02d",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "remote",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7c5058cf.b16d38",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 368.5,
+        "y": 1270.4100341796875,
+        "wires": [
+            [
+                "4bf71d8.63dcbe4"
+            ]
+        ]
+    },
+    {
+        "id": "4bf71d8.63dcbe4",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "actuator_cmd.remote_name",
+        "func": "\nflow.set('actuator_cmd.remote_name', msg.payload);\n\n\nmsg.options = flow.get('conf.options.aktor_types');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590.5,
+        "y": 1270.4100341796875,
+        "wires": [
+            [
+                "8b29dea2.aa7f6"
+            ]
+        ]
+    },
+    {
+        "id": "c58718a5.a55248",
+        "type": "inject",
+        "z": "803c8493.065728",
+        "name": "init",
+        "topic": "",
+        "payload": "conf.options.remote",
+        "payloadType": "flow",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "x": 114.5,
+        "y": 1270.4100341796875,
+        "wires": [
+            [
+                "1fb47fbd.f9384"
+            ]
+        ]
+    },
+    {
+        "id": "1fb47fbd.f9384",
+        "type": "change",
+        "z": "803c8493.065728",
+        "name": "mv",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "options",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 246.5,
+        "y": 1270.4100341796875,
+        "wires": [
+            [
+                "938d4e5d.db02d"
+            ]
+        ]
+    },
+    {
+        "id": "8b29dea2.aa7f6",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "type",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7c5058cf.b16d38",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 372.5,
+        "y": 1321.4100341796875,
+        "wires": [
+            [
+                "e18a639c.4fc8a"
+            ]
+        ]
+    },
+    {
+        "id": "c64eaea5.e03cf",
+        "type": "comment",
+        "z": "803c8493.065728",
+        "name": "cmd to aktor",
+        "info": "",
+        "x": 151.25,
+        "y": 1192.1600341796875,
+        "wires": []
+    },
+    {
+        "id": "e9dc7349.8c6f2",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "name",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7c5058cf.b16d38",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 377.25,
+        "y": 1374.1600341796875,
+        "wires": [
+            [
+                "ae892b75.4326c8"
+            ]
+        ]
+    },
+    {
+        "id": "e18a639c.4fc8a",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "actuator_cmd.actuator_type",
+        "func": "var choise = msg.payload; //light, heater, jalousie\nflow.set('actuator_cmd.actuator_type', choise);\nvar opt_name = [];\nvar opt_cmd = [];\n\nopt_name = flow.get('conf.aktor.' + choise + '.' + flow.get('actuator_cmd.remote_name'));\nopt_cmd = flow.get('conf.options.aktor_cmd.' + choise);\n\n//node.warn('opt_name: ' + opt_name);\n//node.warn('opt_cmd: ' + opt_cmd);\n\n/*\nif (choise === 'light')\n{\n    opt_name = flow.get('conf.aktor.light.' + flow.get('actuator_cmd.remote_name'));\n}\nelse if (choise === \"heater\")\n{\n    opt_name = flow.get('conf.aktor.heater.' + flow.get('actuator_cmd.remote_name'));\n}\nelse if (choise === 'jalousie')\n{\n    opt_name = flow.get('conf.aktor.jalousie.' + flow.get('actuator_cmd.remote_name'));\n}\nelse {\n    node.error(\"unknown cmd at topic cmd interaction: \" + choise)\n}\n\n\n\nvar msg;\nvar msg2;\n\nmsg.options = opt_name;\nmsg2.options = opt_cmd;\nreturn msg;\n*/\n\nvar m1 = {options:opt_name};\nvar m2 = {options:opt_cmd};\nreturn [m1,m2];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 578.25,
+        "y": 1322.1600341796875,
+        "wires": [
+            [
+                "e9dc7349.8c6f2"
+            ],
+            [
+                "b0e9a571.ce79b8"
+            ]
+        ]
+    },
+    {
+        "id": "b0e9a571.ce79b8",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "cmd section",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7c5058cf.b16d38",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 366.25,
+        "y": 1427.1600341796875,
+        "wires": [
+            [
+                "34081ecb.a3d952"
+            ]
+        ]
+    },
+    {
+        "id": "34081ecb.a3d952",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "actuator_cmd.cmd_section",
+        "func": "var choise = msg.payload;\nvar opt = [];\nflow.set('actuator_cmd.cmd_section', choise);\n//node.error(\"rcv at set/get: \" + choise);\nvar tmp_type = flow.get('actuator_cmd.actuator_type');\n\nopt = flow.get('conf.aktor.'+ tmp_type + '.' + choise);\n\nmsg.options = opt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586.25,
+        "y": 1427.1600341796875,
+        "wires": [
+            [
+                "c7294a87.ca3d38"
+            ]
+        ]
+    },
+    {
+        "id": "c7294a87.ca3d38",
+        "type": "ui_dropdown",
+        "z": "803c8493.065728",
+        "name": "",
+        "label": "cmd selection",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7c5058cf.b16d38",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 353.25,
+        "y": 1489.1600341796875,
+        "wires": [
+            [
+                "d3d8bc42.1f4a9"
+            ]
+        ]
+    },
+    {
+        "id": "d3d8bc42.1f4a9",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "send",
+        "func": "\n\nmsg.payload = 'aktor/' + flow.get('actuator_cmd.name') + '/' + flow.get('actuator_cmd.cmd_section') + '#' + msg.payload;\nmsg.topic = flow.get('actuator_cmd.remote_name');\n\n//node.warn('send topic: ' + msg.topic + ' /send msg: ' + msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.25,
+        "y": 1490.1600341796875,
+        "wires": [
+            [
+                "f61e6716.a97ed8",
+                "7de70bf.8a42df4"
+            ]
+        ]
+    },
+    {
+        "id": "ae892b75.4326c8",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "actuator_cmd.name",
+        "func": "flow.set('actuator_cmd.name', msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550.25,
+        "y": 1375.1600341796875,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f61e6716.a97ed8",
+        "type": "link out",
+        "z": "803c8493.065728",
+        "name": "send msg",
+        "links": [
+            "47cfa47.8ea2a5c",
+            "c52c188e.a92f18"
+        ],
+        "x": 655.25,
+        "y": 1492.1600341796875,
+        "wires": []
+    },
+    {
+        "id": "7de70bf.8a42df4",
+        "type": "function",
+        "z": "803c8493.065728",
+        "name": "visualize",
+        "func": "msg.payload = msg.topic + '; ' + msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 343.25,
+        "y": 1539.1600341796875,
+        "wires": [
+            [
+                "7c860633.8db1f8"
+            ]
+        ]
+    },
+    {
+        "id": "6c2b8bf9.0a57c4",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "reboot",
+        "group": "66508880.9a79c8",
+        "order": 8,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reboot",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "By pressing OK the device will be rebooted.",
+        "payloadType": "str",
+        "topic": "",
+        "x": 970,
+        "y": 1080,
+        "wires": [
+            [
+                "cf305db2.fca35"
+            ]
+        ]
+    },
+    {
+        "id": "7a7e34a7.c5ea3c",
+        "type": "exec",
+        "z": "803c8493.065728",
+        "command": "sudo reboot",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1450,
+        "y": 1080,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "cf305db2.fca35",
+        "type": "ui_toast",
+        "z": "803c8493.065728",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "topic": "ATTENTION",
+        "name": "",
+        "x": 1130,
+        "y": 1080,
+        "wires": [
+            [
+                "745ac582.b5913c"
+            ]
+        ]
+    },
+    {
+        "id": "745ac582.b5913c",
+        "type": "switch",
+        "z": "803c8493.065728",
+        "name": "OK ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OK",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1290,
+        "y": 1080,
+        "wires": [
+            [
+                "7a7e34a7.c5ea3c"
+            ]
+        ]
+    },
+    {
+        "id": "d0aca4d7.bc15e8",
+        "type": "ui_button",
+        "z": "803c8493.065728",
+        "name": "shutdown",
+        "group": "66508880.9a79c8",
+        "order": 9,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "shutdown",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "By pressing OK the device will be shutdown.",
+        "payloadType": "str",
+        "topic": "",
+        "x": 980,
+        "y": 1137,
+        "wires": [
+            [
+                "f53ebb6b.2c5488"
+            ]
+        ]
+    },
+    {
+        "id": "9002f66a.5987e8",
+        "type": "exec",
+        "z": "803c8493.065728",
+        "command": "sudo shutdown",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1460,
+        "y": 1137,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f53ebb6b.2c5488",
+        "type": "ui_toast",
+        "z": "803c8493.065728",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "topic": "ATTENTION",
+        "name": "",
+        "x": 1130,
+        "y": 1137,
+        "wires": [
+            [
+                "5edf0c78.680894"
+            ]
+        ]
+    },
+    {
+        "id": "5edf0c78.680894",
+        "type": "switch",
+        "z": "803c8493.065728",
+        "name": "OK ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OK",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1290,
+        "y": 1137,
+        "wires": [
+            [
+                "9002f66a.5987e8"
+            ]
+        ]
+    },
+    {
+        "id": "572bd921.8c9988",
+        "type": "debug",
+        "z": "803c8493.065728",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1540,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "552d1bed.9df864",
+        "type": "ui_group",
+        "z": "",
+        "name": "send_free_msg",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "547a0c9f.32a094",
+        "type": "ui_group",
+        "z": "",
+        "name": "ctrl auto home",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "168c65c2.ece29a",
+        "type": "ui_group",
+        "z": "",
+        "name": "frames",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 6,
+        "disp": false,
+        "width": "18",
+        "collapse": false
+    },
+    {
+        "id": "6225bb60.70c934",
+        "type": "ui_group",
+        "z": "",
+        "name": "IBS PLC",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "98ec99e3.ad5758",
+        "type": "fritzbox-config",
+        "z": "",
+        "name": "",
+        "host": "192.168.1.1",
+        "port": "49000",
+        "ssl": false
+    },
+    {
+        "id": "60f7dc17.961d94",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "docker_mosquitto",
+        "broker": "broker",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b19cf213.bd3ad",
+        "type": "ui_group",
+        "z": "",
+        "name": "ibs mqtt",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "7c5058cf.b16d38",
+        "type": "ui_group",
+        "z": "",
+        "name": "cmd to aktor",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "66508880.9a79c8",
+        "type": "ui_group",
+        "z": "",
+        "name": "rpi data",
+        "tab": "f5ad8d49.0cdf1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f5ad8d49.0cdf1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "net_PLC",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

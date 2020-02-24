@@ -1,0 +1,605 @@
+[
+    {
+        "id": "125dcaef.a3ede5",
+        "type": "tab",
+        "label": "edit master data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "74c1aca8.62b5a4",
+        "type": "mysql",
+        "z": "125dcaef.a3ede5",
+        "mydb": "f37c9046.4fbf4",
+        "name": "",
+        "x": 530,
+        "y": 440,
+        "wires": [
+            [
+                "3dbb599d.6826a6"
+            ]
+        ]
+    },
+    {
+        "id": "3dbb599d.6826a6",
+        "type": "debug",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 690,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "8dd4aa3b.948128",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "set master data",
+        "func": "//var q = \"INSERT INTO master_data_device(name, type, ip_address) VALUES ( \\\"\"+ 'main_node' +  \"\\\", \\\"\" + 'rpi' +  \"\\\", \\\"\" + '192.168.1.211' + \"\\\")\"\nvar q = \"INSERT INTO master_data_device(name, type, ip_address, mac) VALUES ('\"+ \nflow.get('dev_name') + \"', '\" + flow.get('dev_type') + \"', '\" + flow.get('dev_ip') + \"', '\" + flow.get('dev_mac') + \"')\"\nreturn {topic:q};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 400,
+        "wires": [
+            [
+                "74c1aca8.62b5a4"
+            ]
+        ]
+    },
+    {
+        "id": "dab477fd.e62fb8",
+        "type": "ui_text_input",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "name:",
+        "tooltip": "",
+        "group": "dde95cd0.7f4b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "29c15437.45c38c"
+            ]
+        ]
+    },
+    {
+        "id": "4de80b67.10a314",
+        "type": "ui_text_input",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "type:",
+        "tooltip": "",
+        "group": "dde95cd0.7f4b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [
+                "ff0072d4.fd7e5"
+            ]
+        ]
+    },
+    {
+        "id": "f5577b6.95ce588",
+        "type": "ui_text_input",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "ip address:",
+        "tooltip": "",
+        "group": "dde95cd0.7f4b",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "ece2232c.57aed"
+            ]
+        ]
+    },
+    {
+        "id": "74f5fdd1.d8e774",
+        "type": "ui_button",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "group": "dde95cd0.7f4b",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "add device",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "8dd4aa3b.948128"
+            ]
+        ]
+    },
+    {
+        "id": "13af3cf.8e5edc3",
+        "type": "inject",
+        "z": "125dcaef.a3ede5",
+        "name": "10s",
+        "topic": "SELECT * FROM master_data_device",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 90,
+        "y": 120,
+        "wires": [
+            [
+                "686d0f04.ff1a1"
+            ]
+        ]
+    },
+    {
+        "id": "f9c3e945.d3a1d8",
+        "type": "ui_template",
+        "z": "125dcaef.a3ede5",
+        "group": "d5a103d7.52948",
+        "name": "devices",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<table id=\"table\" border=\"1\">\n    <tr>\n        <th>id</th>\n        <th>name</th>\n        <th>type</th>\n        <th>ip address</th>\n        <th>mac</th>\n    </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"item in row\" >{{item}}</td>\n </tr>\n </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5422a70.a330a8",
+        "type": "ui_button",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "group": "dde95cd0.7f4b",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "delete id",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "do you really want to delete?",
+        "payloadType": "str",
+        "topic": "",
+        "x": 100,
+        "y": 620,
+        "wires": [
+            [
+                "bb0e1397.ee3e1"
+            ]
+        ]
+    },
+    {
+        "id": "b291ac92.e4e1c",
+        "type": "ui_text_input",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "ID:",
+        "tooltip": "",
+        "group": "dde95cd0.7f4b",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 90,
+        "y": 540,
+        "wires": [
+            [
+                "e262e7e3.1f1cb8"
+            ]
+        ]
+    },
+    {
+        "id": "8ea947ac.26bb88",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "delete id",
+        "func": "//var q = \"INSERT INTO master_data_device(name, type, ip_address) VALUES ( \\\"\"+ 'main_node' +  \"\\\", \\\"\" + 'rpi' +  \"\\\", \\\"\" + '192.168.1.211' + \"\\\")\"\nvar q = \"INSERT INTO master_data_device(name, type, ip_address) VALUES ( \\\"\"+ \nflow.get('dev_name') +  \"\\\", \\\"\" + flow.get('dev_type') +  \"\\\", \\\"\" + flow.get('dev_ip') + \"\\\")\"\n\n\nvar dq = \"DELETE FROM master_data_device WHERE id = \" + flow.get('dev_delete_id') + \";\"\n\nreturn {topic:dq};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 660,
+        "wires": [
+            [
+                "74c1aca8.62b5a4"
+            ]
+        ]
+    },
+    {
+        "id": "686d0f04.ff1a1",
+        "type": "mysql",
+        "z": "125dcaef.a3ede5",
+        "mydb": "f37c9046.4fbf4",
+        "name": "",
+        "x": 250,
+        "y": 120,
+        "wires": [
+            [
+                "f9c3e945.d3a1d8",
+                "ab4b30e0.a6aff",
+                "b6621a0f.4d2878"
+            ]
+        ]
+    },
+    {
+        "id": "8528452e.ea5b08",
+        "type": "catch",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "scope": null,
+        "x": 80,
+        "y": 40,
+        "wires": [
+            [
+                "3c13330b.08cd9c"
+            ]
+        ]
+    },
+    {
+        "id": "3c13330b.08cd9c",
+        "type": "debug",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 260,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ab4b30e0.a6aff",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "fill global master_data",
+        "func": "var data = global.get('master_data_v2');\n\nfor (let i of msg.payload) {\n    updateData(i);\n    set_status_object(i);\n}\nreturn null\n\nfunction updateData(obj){\n  var objFound_bool = false;\n  for (var i = 0; i < data.length; i++) {\n    if(obj.id === data[i].id){\n      objFound_bool = true;\n      data[i] =obj ;\n    }\n  }\n  if(!objFound_bool){\n    data.push(obj)\n  }\n}\n/*\nfunction updateStatus(obj){\n    if(!(tmp_status[obj.type]==null)){\n        if(!(tmp_status[obj.type[obj.name]]==null)){\n            node.warn('OK tmp_status[obj.type][obj.name]');\n            tmp_status[obj.type[obj.name]] = obj;\n        }else{tmp_status[obj.type[obj.name]] = obj.name;\n            node.warn('else{tmp_status[obj.type][obj.name] ');\n        }\n    }else{tmp_status[obj.type] = obj.type;\n        node.warn('else{tmp_status[obj.type]');\n    }\n}\n*/\n\n/*\n {\"id\":1,\n \"name\":\"main_node\",\n \"type\":\"rpi\",\n \"ip_address\":\"192.168.1.211\",\n \"mac\":\"dc:a6:32:29:51:45\"}\n*/\n\nfunction set_status_object(status_object){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    var global_var = 'tmp_status';\n    \n    var s_name = global_var + '.' + status_object['type'] + '.' + status_object['name']\n    //node.warn(\"at set_status_object [\" + status_object + \"] s_name: \" + s_name);\n    \n    var global_dev = global.get(s_name);\n    \n    //check if objects are existing\n    //of not -> initialise them\n    if(global_dev == null){\n        var s_name_sub = global_var + '.' + status_object['type']\n        if(global.get(s_name_sub) == null){\n            global.set(s_name_sub,{ var_type_created : getFormattedDate() });\n            if(global.get(s_name_sub) == null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_created : getFormattedDate() });\n    }\n    \n    global.set(s_name + '.meta', status_object);\n    global.set(s_name + '.meta.last_rcv_time', getFormattedDate());\n \n    /*\n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }*/\n    \n}\n\n/* TODO: with this code we only need one button add/update device\nINSERT INTO subs\n  (subs_name, subs_email, subs_birthday)\nVALUES\n  (?, ?, ?)\nON DUPLICATE KEY UPDATE\n  subs_name     = VALUES(subs_name),\n  subs_birthday = VALUES(subs_birthday)\n*/\n\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "b6621a0f.4d2878"
+            ]
+        ]
+    },
+    {
+        "id": "29c15437.45c38c",
+        "type": "change",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dev_name",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff0072d4.fd7e5",
+        "type": "change",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dev_type",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ece2232c.57aed",
+        "type": "change",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dev_ip",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e262e7e3.1f1cb8",
+        "type": "change",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dev_delete_id",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6621a0f.4d2878",
+        "type": "debug",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 590,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2c096e4c.6f7272",
+        "type": "ui_button",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "group": "dde95cd0.7f4b",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "update device",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 120,
+        "y": 580,
+        "wires": [
+            [
+                "3afd9b36.a4fa74"
+            ]
+        ]
+    },
+    {
+        "id": "3afd9b36.a4fa74",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "update master data",
+        "func": "var u = \"UPDATE master_data_device SET name='\"+flow.get('dev_name')+\"', type='\"+flow.get('dev_type')+\n\"', ip_address='\"+flow.get('dev_ip')+\n\"', mac='\"+flow.get('dev_mac')+\n\"' WHERE id=\"+flow.get('dev_delete_id');\n\n//var q = \"INSERT INTO master_data_device(name, type, ip_address) VALUES ( \\\"\"+ 'main_node' +  \"\\\", \\\"\" + 'rpi' +  \"\\\", \\\"\" + '192.168.1.211' + \"\\\")\"\n//var q = \"INSERT INTO master_data_device(name, type, ip_address) VALUES ( \\\"\"+ \n//flow.get('dev_name') +  \"\\\", \\\"\" + flow.get('dev_type') +  \"\\\", \\\"\" + flow.get('dev_ip') + \"\\\")\"\n\nreturn {topic:u};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 580,
+        "wires": [
+            [
+                "74c1aca8.62b5a4"
+            ]
+        ]
+    },
+    {
+        "id": "bb0e1397.ee3e1",
+        "type": "ui_toast",
+        "z": "125dcaef.a3ede5",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "topic": "ATTENTION",
+        "name": "",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "6497a0cb.f544a"
+            ]
+        ]
+    },
+    {
+        "id": "6497a0cb.f544a",
+        "type": "switch",
+        "z": "125dcaef.a3ede5",
+        "name": "OK ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OK",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 130,
+        "y": 660,
+        "wires": [
+            [
+                "8ea947ac.26bb88"
+            ]
+        ]
+    },
+    {
+        "id": "59c91f40.2ac0d",
+        "type": "ui_text_input",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "mac address:",
+        "tooltip": "",
+        "group": "dde95cd0.7f4b",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "b9a64.7d98359c8"
+            ]
+        ]
+    },
+    {
+        "id": "b9a64.7d98359c8",
+        "type": "change",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dev_mac",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f37c9046.4fbf4",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "192.168.1.200",
+        "port": "3306",
+        "db": "auto_home",
+        "tz": "Europe/Berlin (CEST, +0200)"
+    },
+    {
+        "id": "dde95cd0.7f4b",
+        "type": "ui_group",
+        "z": "",
+        "name": "edit device",
+        "tab": "aed8d467.e86958",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "d5a103d7.52948",
+        "type": "ui_group",
+        "z": "",
+        "name": "devices",
+        "tab": "aed8d467.e86958",
+        "order": 1,
+        "disp": false,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "aed8d467.e86958",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Master Data Config",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -2,3 +2,5 @@ site/
 img/
 !*/favicon.ico
 __pycache__
+node_red_flows/context_data_2020_02_24.json
+.pytest_cache
