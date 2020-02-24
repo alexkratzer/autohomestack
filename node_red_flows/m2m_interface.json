@@ -458,8 +458,8 @@
         "z": "e3a2c1ac.72282",
         "mydb": "f37c9046.4fbf4",
         "name": "auto home DB",
-        "x": 670.1166687011719,
-        "y": 377.1166687011719,
+        "x": 840,
+        "y": 300,
         "wires": [
             []
         ]
@@ -488,7 +488,7 @@
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "rule engine",
-        "func": "var t = msg.topic;\nvar p = msg.payload;\n//https://nodered.org/docs/user-guide/writing-functions\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\n\nvar info = 'not processed by rule_engine';\n\n//[v01/esp/basement/i/]\nvar basement = 'v01/esp/basement/'\n\nif(t.startsWith(basement + 'i')){\n    // node.warn(\"topic starts with v01/esp/basement/i\");\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        info = 'event from motion ' + basement + ' switch on light'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        info = 'event from motion ' + basement + ' no light turn on, lux: ' + lux\n    }\n}\n\nmsg.alarm = {\n        status : 'created',\n        info : info\n}\n\nreturn [msg, plc_cmd];\n\n\n\n\n\n\n/*\nvar m = msg.payload;\n\nif(p.startsWith('motion corridor')){\n    flow.set('trigger_motion_corridor', Date.now());\n}\n\n//going stairs up, turn light off\nif(p.startsWith('motion stairs')){\n    var t = flow.get('trigger_motion_corridor');\n    if(Math.abs(t - Date.now) < 2000){\n        return [{ payload: \"aktor/light/basement_floor/set value#off\", topic: \"eg\" },\n        { payload: \"aktor/light/basement_stairs/set value#off\", topic: \"eg\" }];\n    }\n    node.error(\"try to subtract \" );\n    node.error(\"goint up, calc time: \" + Math.abs(t - Date.now) );\n}\n*/",
+        "func": "var t = msg.topic;\nvar p = msg.payload;\n//https://nodered.org/docs/user-guide/writing-functions\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: should be for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\n\nvar info = 'event not processed by rule_engine';\n\n//[v01/esp/basement/i/]\nvar basement = 'v01/esp/basement/'\n\nif(t.startsWith(basement + 'i')){\n    // node.warn(\"topic starts with v01/esp/basement/i\");\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        info = 'event from motion ' + basement + ' switch on light'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        info = 'event from motion ' + basement + ' no light turn on, lux: ' + lux\n    }\n}else if(t.startsWith('v01/plc/car/sensor/event')){\n    var lux_weather = global.get('PD.plcog.weather.light_lux')\n    \n    //not a bug but a feature\n    //weather station sends never 0 value\n    //but 1 if no lux is detected\n    if(lux_weather!=1){\n        info = 'aktor/light set to value on'\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n    }else{\n        info = 'no action since it is not dark'\n    }\n}\n\nmsg.alarm = {\n    topic : t,\n    status : 'created',\n    time_created : getFormattedDate(),\n    info : info\n}\n\nmsg.topic = \"INSERT INTO node_log(topic, message) VALUES ( \\\"rule_engine/\"+t+\"\\\", \\\"\"+info+\"\\\" )\"\n\nreturn [msg, plc_cmd];\n\n\n\n/*\nvar m = msg.payload;\n\nif(p.startsWith('motion corridor')){\n    flow.set('trigger_motion_corridor', Date.now());\n}\n\n//going stairs up, turn light off\nif(p.startsWith('motion stairs')){\n    var t = flow.get('trigger_motion_corridor');\n    if(Math.abs(t - Date.now) < 2000){\n        return [{ payload: \"aktor/light/basement_floor/set value#off\", topic: \"eg\" },\n        { payload: \"aktor/light/basement_stairs/set value#off\", topic: \"eg\" }];\n    }\n    node.error(\"try to subtract \" );\n    node.error(\"goint up, calc time: \" + Math.abs(t - Date.now) );\n}\n*/\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 651.1166687011719,
@@ -496,7 +496,8 @@
         "wires": [
             [
                 "54065dc0.311964",
-                "78c02aad.e9c034"
+                "78c02aad.e9c034",
+                "45f20bc5.8d9cf4"
             ],
             [
                 "86a8d77e.745f08"
@@ -641,11 +642,11 @@
         "id": "13ee314c.a2165f",
         "type": "function",
         "z": "e3a2c1ac.72282",
-        "name": "init global prozessdata object",
-        "func": "//at global val status all devices status with topic containing /status/log are stored\nglobal.set('status',{});\nglobal.set('device_status',[]);\nglobal.set('master_data_v2',[]);\nglobal.set('tmp_status',{});\n\nglobal.set('PD.plceg.eta',\n{   \n    last_rcv_time : 'none',\n    kessel: {key:'ks',value:'none'},\n    abgas: {key:'ag',value:'none'},\n    pufferladezustand : {key:'pz',value:'none'},\n    puffer_oben: {key:'po',value:'none'},\n    puffer_mitte: {key:'pm',value:'none'},\n    puffer_unten: {key:'pu',value:'none'},\n    kesselruecklauf: {key:'kr',value:'none'},\n    kollektor: {key:'kt',value:'none'},\n    boiler_unten_solar: {key:'bu',value:'none'},\n    aussentemperatur: {key:'at',value:'none'},\n    vorlauf: {key:'vl',value:'none'}\n} );\n\nglobal.set('PD.plceg.sensor',\n{\n    last_rcv_time : 'none',\n    temperature_floor: {key:'tf',value:'none'},\n    humidity_floor: {key:'hf',value:'none'},\n    temperature_kitchen: {key:'tk',value:'none'},\n    temperature_office: {key:'to',value:'none'},\n    temperature_distributionbox: {key:'tdb',value:'none'},\n    temperature_dungeon: {key:'td',value:'none'}\n} );\n\nglobal.set('PD.plcog.weather',\n{   \n    last_rcv_time : 'none',\n    temperatur: {value:'none'},\n    sun_south:{value:'none'},\n    sun_west:{value:'none'},\n    sun_east:{value:'none'},\n    light_lux:{value:'none'},\n    wind:{value:'none'},\n    rain:{value:'none'},\n    wind_max:{value:'none'}\n} );\n\nglobal.set('PD.plcog.sensor',\n{\n    last_rcv_time : 'none',\n    lux_stairs: {value:'none'},\n    temperature_stairs:{value:'none'},\n    temperature_bath:{value:'none'},\n    temperature_child_east:{value:'none'},\n    temperature_child_west:{value:'none'},\n    temperature_DistributionBoxOg:{value:'none'}\n} );\n\nglobal.set('PD.espbasement',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.netatmo',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'}\n} );",
+        "name": "init global root object",
+        "func": "//at global val status all devices status with topic containing /status/log are stored\nglobal.set('status',{});\nglobal.set('device_status',[]);\nglobal.set('master_data_v2',[]);\nglobal.set('tmp_status',{});\nglobal.set('master_data_dic',{});\n\n\nglobal.set('PD.plceg.eta',\n{   \n    last_rcv_time : 'none',\n    kessel: {key:'ks',value:'none'},\n    abgas: {key:'ag',value:'none'},\n    pufferladezustand : {key:'pz',value:'none'},\n    puffer_oben: {key:'po',value:'none'},\n    puffer_mitte: {key:'pm',value:'none'},\n    puffer_unten: {key:'pu',value:'none'},\n    kesselruecklauf: {key:'kr',value:'none'},\n    kollektor: {key:'kt',value:'none'},\n    boiler_unten_solar: {key:'bu',value:'none'},\n    aussentemperatur: {key:'at',value:'none'},\n    vorlauf: {key:'vl',value:'none'}\n} );\n\nglobal.set('PD.plceg.sensor',\n{\n    last_rcv_time : 'none',\n    temperature_floor: {key:'tf',value:'none'},\n    humidity_floor: {key:'hf',value:'none'},\n    temperature_kitchen: {key:'tk',value:'none'},\n    temperature_office: {key:'to',value:'none'},\n    temperature_distributionbox: {key:'tdb',value:'none'},\n    temperature_dungeon: {key:'td',value:'none'}\n} );\n\nglobal.set('PD.plcog.weather',\n{   \n    last_rcv_time : 'none',\n    temperatur: {value:'none'},\n    sun_south:{value:'none'},\n    sun_west:{value:'none'},\n    sun_east:{value:'none'},\n    light_lux:{value:'none'},\n    wind:{value:'none'},\n    rain:{value:'none'},\n    wind_max:{value:'none'}\n} );\n\nglobal.set('PD.plcog.sensor',\n{\n    last_rcv_time : 'none',\n    lux_stairs: {value:'none'},\n    temperature_stairs:{value:'none'},\n    temperature_bath:{value:'none'},\n    temperature_child_east:{value:'none'},\n    temperature_child_west:{value:'none'},\n    temperature_DistributionBoxOg:{value:'none'}\n} );\n\nglobal.set('PD.espbasement',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.netatmo',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'}\n} );",
         "outputs": 1,
         "noerr": 0,
-        "x": 717.5,
+        "x": 697.5,
         "y": 45,
         "wires": [
             []
@@ -984,7 +985,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<h2>alarm info: {{msg.alarm.info}}</h2>\n\n\n<p>topic: {{msg.topic}}</p>\n<p>payload: {{msg.payload}}</p>\n<p>alarm_status: {{msg.alarm.status}}</p>",
+        "format": "<h1>topic: {{msg.alarm.topic}}</h1>\n<h3>info: {{msg.alarm.info}}</h3>\n\n<p>payload: {{msg.payload}}</p>\n<p>time: {{msg.alarm.time_created}}</p>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -1068,7 +1069,7 @@
         "id": "f5ad8d49.0cdf1",
         "type": "ui_tab",
         "z": "",
-        "name": "net_PLC",
+        "name": "control",
         "icon": "dashboard",
         "order": 2,
         "disabled": false,

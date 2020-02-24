@@ -35,8 +35,6 @@ Or to configure debug / control clients for different devices
 
 The rule engine is a function node that is triggered by the receipt of any message.
 
-If the topic 
-
 ![node red rule engine](https://www.plantuml.com/plantuml/svg/0/FOvB3i8m34JtFeNL5I3r2gWR5fm1TM6bKpLIubIEMwvF21BRcJUVgRgO7pdHvNRbSRopuiqueKxqN7a89UzYO2zx30Fx1gKlzihYOKET6s8G1qiIoqCtAtHf2JO4n1FMnJP0I1M_k1Rk3JE7eXxr03rqYUiVfQcLj6CV "node red rule engine")
 
 In this example rule a sensor event from the light barrier triggers the rule engine.
