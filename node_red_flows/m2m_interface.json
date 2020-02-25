@@ -207,8 +207,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 1030,
-        "y": 440,
+        "x": 1430,
+        "y": 420,
         "wires": []
     },
     {
@@ -246,24 +246,20 @@
         "checkall": "false",
         "repair": false,
         "outputs": 5,
-        "x": 807.5,
-        "y": 467,
+        "x": 1210,
+        "y": 440,
         "wires": [
             [
-                "c1554c4.232beb",
-                "70f028e4.7be048"
+                "c1554c4.232beb"
             ],
             [
-                "9d39b754.fae888",
-                "70f028e4.7be048"
+                "9d39b754.fae888"
             ],
             [
-                "2727308b.a84d9",
-                "70f028e4.7be048"
+                "2727308b.a84d9"
             ],
             [
-                "f2e3e644.965e78",
-                "70f028e4.7be048"
+                "f2e3e644.965e78"
             ],
             [
                 "a05707ed.6c9238"
@@ -276,8 +272,8 @@
         "z": "e3a2c1ac.72282",
         "name": "plc OG",
         "info": "",
-        "x": 1198.5,
-        "y": 395,
+        "x": 1598.5,
+        "y": 375,
         "wires": []
     },
     {
@@ -292,8 +288,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 1032,
-        "y": 394,
+        "x": 1432,
+        "y": 374,
         "wires": []
     },
     {
@@ -302,8 +298,8 @@
         "z": "e3a2c1ac.72282",
         "name": "plc EG",
         "info": "",
-        "x": 1196.5,
-        "y": 441,
+        "x": 1596.5,
+        "y": 421,
         "wires": []
     },
     {
@@ -318,8 +314,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 1030,
-        "y": 481,
+        "x": 1430,
+        "y": 461,
         "wires": []
     },
     {
@@ -328,22 +324,8 @@
         "z": "e3a2c1ac.72282",
         "name": "carport",
         "info": "",
-        "x": 1198.5,
-        "y": 481,
-        "wires": []
-    },
-    {
-        "id": "70f028e4.7be048",
-        "type": "debug",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1071,
-        "y": 350,
+        "x": 1598.5,
+        "y": 461,
         "wires": []
     },
     {
@@ -356,8 +338,8 @@
         "console": true,
         "tostatus": false,
         "complete": "true",
-        "x": 999.5,
-        "y": 559.9999694824219,
+        "x": 1380,
+        "y": 540,
         "wires": []
     },
     {
@@ -372,8 +354,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 1030,
-        "y": 521,
+        "x": 1430,
+        "y": 501,
         "wires": []
     },
     {
@@ -382,8 +364,8 @@
         "z": "e3a2c1ac.72282",
         "name": "net_plc",
         "info": "",
-        "x": 1198.5,
-        "y": 521,
+        "x": 1598.5,
+        "y": 501,
         "wires": []
     },
     {
@@ -399,12 +381,12 @@
             "3575dcd6.b9bcc4",
             "f61e6716.a97ed8"
         ],
-        "x": 610.5000305175781,
-        "y": 518.9999694824219,
+        "x": 695,
+        "y": 520,
         "wires": [
             [
-                "86a8d77e.745f08",
-                "ca6635d6.466a88"
+                "ca6635d6.466a88",
+                "42b9ed82.264494"
             ]
         ]
     },
@@ -414,8 +396,8 @@
         "z": "e3a2c1ac.72282",
         "name": "send msg to remote",
         "info": "",
-        "x": 970,
-        "y": 260,
+        "x": 1190,
+        "y": 300,
         "wires": []
     },
     {
@@ -431,8 +413,7 @@
         "y": 400,
         "wires": [
             [
-                "717615.32c139ec",
-                "51877a66.65ac64"
+                "717615.32c139ec"
             ]
         ]
     },
@@ -444,11 +425,11 @@
         "func": "\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"node_red/plc_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg\n\n/*\nif(global.get('ui_config.show_send_msg')){\n    return msg;\n}else{\n    return null;\n}\n*/",
         "outputs": 1,
         "noerr": 0,
-        "x": 804.86669921875,
-        "y": 615.8666687011719,
+        "x": 850,
+        "y": 520,
         "wires": [
             [
-                "89cd1756.68a788"
+                "45f20bc5.8d9cf4"
             ]
         ]
     },
@@ -458,8 +439,8 @@
         "z": "e3a2c1ac.72282",
         "mydb": "f37c9046.4fbf4",
         "name": "auto home DB",
-        "x": 840,
-        "y": 300,
+        "x": 1060,
+        "y": 400,
         "wires": [
             []
         ]
@@ -488,62 +469,37 @@
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "rule engine",
-        "func": "var t = msg.topic;\nvar p = msg.payload;\n//https://nodered.org/docs/user-guide/writing-functions\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: should be for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\n\nvar info = 'event not processed by rule_engine';\n\n//[v01/esp/basement/i/]\nvar basement = 'v01/esp/basement/'\n\nif(t.startsWith(basement + 'i')){\n    // node.warn(\"topic starts with v01/esp/basement/i\");\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        info = 'event from motion ' + basement + ' switch on light'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        info = 'event from motion ' + basement + ' no light turn on, lux: ' + lux\n    }\n}else if(t.startsWith('v01/plc/car/sensor/event')){\n    var lux_weather = global.get('PD.plcog.weather.light_lux')\n    \n    //not a bug but a feature\n    //weather station sends never 0 value\n    //but 1 if no lux is detected\n    if(lux_weather!=1){\n        info = 'aktor/light set to value on'\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n    }else{\n        info = 'no action since it is not dark'\n    }\n}\n\nmsg.alarm = {\n    topic : t,\n    status : 'created',\n    time_created : getFormattedDate(),\n    info : info\n}\n\nmsg.topic = \"INSERT INTO node_log(topic, message) VALUES ( \\\"rule_engine/\"+t+\"\\\", \\\"\"+info+\"\\\" )\"\n\nreturn [msg, plc_cmd];\n\n\n\n/*\nvar m = msg.payload;\n\nif(p.startsWith('motion corridor')){\n    flow.set('trigger_motion_corridor', Date.now());\n}\n\n//going stairs up, turn light off\nif(p.startsWith('motion stairs')){\n    var t = flow.get('trigger_motion_corridor');\n    if(Math.abs(t - Date.now) < 2000){\n        return [{ payload: \"aktor/light/basement_floor/set value#off\", topic: \"eg\" },\n        { payload: \"aktor/light/basement_stairs/set value#off\", topic: \"eg\" }];\n    }\n    node.error(\"try to subtract \" );\n    node.error(\"goint up, calc time: \" + Math.abs(t - Date.now) );\n}\n*/\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "func": "var t = msg.topic;\nvar p = msg.payload;\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: should be for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\nvar alarm_info = 'not_processed';\n\nvar basement = ''\n\n\t\n\nif(t.startsWith('v01/rpi/4/status')){\n    alarm_info = 'redeployment of node_red'\n}\n\nelse if(t.startsWith('v01/rule_engine/dbg')){\n    alarm_info = 'create dbg alarm'\n}\n\nelse if(t.startsWith('v01/esp/basement/i')){\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        alarm_info = 'event from motion ' + basement + ' switch on light'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        alarm_info = 'event from motion ' + basement + ' no light turn on, lux: ' + lux\n    }\n}\n\nelse if(t.startsWith('v01/plc/car/sensor/event')){\n    var lux_weather = global.get('PD.plcog.weather.light_lux.value')\n    \n    //not a bug but a feature\n    //weather station sends never 0 value\n    //but 1 if no lux is detected\n    if(lux_weather===1){\n        alarm_info = 'aktor/light set to value on [lux: ' + lux_weather + ']'\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n    }else{\n        alarm_info = 'no action since it is not dark [lux: ' + lux_weather + ']'\n    }\n}\n\n\n//Post processing\nif(alarm_info !== 'not_processed'){\n    msg.alarm = {\n        topic : t,\n        status : 'created',\n        time_created : getFormattedDate(),\n        info : alarm_info\n    }\n    \n    msg.topic = \"INSERT INTO node_log(topic, message) VALUES ( \\\"rule_engine/\"+t+\"\\\", \\\"\"+ alarm_info +\"\\\" )\"\n    return [msg, plc_cmd];\n}\n\n\n\n\n/*\nvar m = msg.payload;\n\nif(p.startsWith('motion corridor')){\n    flow.set('trigger_motion_corridor', Date.now());\n}\n\n//going stairs up, turn light off\nif(p.startsWith('motion stairs')){\n    var t = flow.get('trigger_motion_corridor');\n    if(Math.abs(t - Date.now) < 2000){\n        return [{ payload: \"aktor/light/basement_floor/set value#off\", topic: \"eg\" },\n        { payload: \"aktor/light/basement_stairs/set value#off\", topic: \"eg\" }];\n    }\n    node.error(\"try to subtract \" );\n    node.error(\"goint up, calc time: \" + Math.abs(t - Date.now) );\n}\n*/\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 651.1166687011719,
         "y": 429.1166687011719,
         "wires": [
             [
-                "54065dc0.311964",
                 "78c02aad.e9c034",
-                "45f20bc5.8d9cf4"
+                "45f20bc5.8d9cf4",
+                "5964ac3d.3f1884",
+                "b367b089.6c189"
             ],
             [
-                "86a8d77e.745f08"
+                "42b9ed82.264494"
             ]
         ]
-    },
-    {
-        "id": "54065dc0.311964",
-        "type": "debug",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 808.11669921875,
-        "y": 401.1166687011719,
-        "wires": []
     },
     {
         "id": "e8af5c2c.2a1b6",
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "netatmo logger",
-        "func": "// msg.topic = \"iot/v01/netatmo/data_logger\";\n// node.warn(\"netatmo [\" + msg.topic + \"] \" + msg.payload);\n\nvar dataset = [];\nvar node_log_prefix = 'v01/netatmo/'\n\nbase        = msg.payload.compact\nmodule1     = msg.payload.compact.outdoor\nrain        = msg.payload.compact.rain\n\nbase_detail = msg.payload.detailed[0]\nmodule1_detail = base_detail.modules[0]\nrain_detail = base_detail.modules[1]\n\nvar glob_netatmo = global.get('PD.netatmo');\n\nglob_netatmo.last_rcv_time  = Date.now();\nglob_netatmo.base           = base;\nglob_netatmo.module1        = module1;\nglob_netatmo.rain           = rain;\n\n//getIsoDate(); //for debugging\n\n/* //TODO: store maybe via prozess data channel\ndataset.push({ payload: \"node_data_logger_netatmo\", topic: \n\"INSERT INTO node_data_logger_netatmo(\" + \n\"base_time_utc, base_temperature, base_co2, base_humidity, base_pressure, base_noise, base_temp_trend, \" +\n\"module1_temperature, module1_humidity, rain_rain, rain_sum_rain_1, rain_sum_rain_24) VALUES ( \\\"\"+\ngetFormattedDate(base_detail.date_setup) + \"\\\", \\\"\"+\nbase.temperature +\"\\\", \\\"\"+\nbase.co2 +\"\\\", \\\"\"+\nbase.humidity +\"\\\", \\\"\"+\nbase.pressure +\"\\\", \\\"\"+\nbase.noise +\"\\\", \\\"\"+\nbase.temperatureTrend +\"\\\", \\\"\"+\nmodule1.temperature +\"\\\", \\\"\"+\nmodule1.humidity +\"\\\", \\\"\"+\nrain.rain +\"\\\", \\\"\"+\nrain.sum_rain_1 +\"\\\", \\\"\"+\nrain.sum_rain_24 +\n\"\\\" )\"\n});   \n*/\n\ndataset.push({ \n    payload: \n    \"date_setup=\" +             getFormattedDate(base_detail.date_setup) + \n    \", last_status_store=\" +    getFormattedDate(base.last_status_store) +\n    \", wifi_status=\" +          base_detail.wifi_status +\n    \", reachable=\" +            base_detail.reachable +\n    \", co2_calibrating=\" +      base_detail.co2_calibrating +\n    \", city=\" +                 base_detail.place.city, \n    topic:                      getLogTopic('base')\n});\n\n\ndataset.push({ \n    payload:\n    \"last_setup=\" +             getFormattedDate(module1_detail.last_setup) + \n    \", battery_percent=\" +      module1_detail.battery_percent +\n    \", reachable=\" +            module1_detail.reachable +\n    \", last_message=\" +         getFormattedDate(module1_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(module1_detail.last_seen) +\n    \", rf_status=\" +            module1_detail.rf_status +\n    \", battery_vp=\" +           module1_detail.battery_vp,\n    topic:                      getLogTopic('outdoor')\n});\n\n\ndataset.push({ \n    payload: \n    \"last_setup=\" +             getFormattedDate(rain_detail.last_setup) + \n    \", battery_percent=\" +      rain_detail.battery_percent +\n    \", reachable=\" +            rain_detail.reachable +\n    \", last_message=\" +         getFormattedDate(rain_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(rain_detail.last_seen) +\n    \", rf_status=\" +            rain_detail.rf_status +\n    \", battery_vp=\" +           rain_detail.battery_vp,\n    topic:                      getLogTopic('rain')\n});\n\n\nreturn [dataset];\n\nfunction getLogTopic(device){\n    return node_log_prefix + device + '/status/log'\n}\n\nfunction getFormattedDate(input){\n    var d = new Date(input*1000);\n    //var d = new Date(input);\n    //node.warn(\"getFormattedDate input: \" + input + \" date: \" + d);\n    return d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n}\n\nfunction getIsoDate(){\n    var date = new Date(); \n    var now_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),\n    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());\n\n    node.warn(\"isoDate \" + new Date(now_utc));\n    return new Date(now_utc);\n \n    //var isoDate = new Date().toISOString();\n    //node.warn(\"isoDate \" + isoDate);\n}",
+        "func": "// msg.topic = \"iot/v01/netatmo/data_logger\";\n// node.warn(\"netatmo [\" + msg.topic + \"] \" + msg.payload);\n\nvar dataset = [];\nvar node_log_prefix = 'v01/netatmo/'\n\nbase        = msg.payload.compact\nmodule1     = msg.payload.compact.outdoor\nrain        = msg.payload.compact.rain\n\nbase_detail = msg.payload.detailed[0]\nmodule1_detail = base_detail.modules[0]\nrain_detail = base_detail.modules[1]\n\nvar glob_netatmo = global.get('PD.netatmo');\n\nglob_netatmo.last_rcv_time  = Date.now();\nglob_netatmo.base           = base;\nglob_netatmo.module1        = module1;\nglob_netatmo.rain           = rain;\n\n\ndataset.push({ \n    payload: \n    \"date_setup=\" +             getFormattedDate(base_detail.date_setup) + \n    \", last_status_store=\" +    getFormattedDate(base.last_status_store) +\n    \", wifi_status=\" +          base_detail.wifi_status +\n    \", reachable=\" +            base_detail.reachable +\n    \", co2_calibrating=\" +      base_detail.co2_calibrating +\n    \", city=\" +                 base_detail.place.city, \n    topic:                      getLogTopic('base')\n});\n\n\ndataset.push({ \n    payload:\n    \"last_setup=\" +             getFormattedDate(module1_detail.last_setup) + \n    \", battery_percent=\" +      module1_detail.battery_percent +\n    \", reachable=\" +            module1_detail.reachable +\n    \", last_message=\" +         getFormattedDate(module1_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(module1_detail.last_seen) +\n    \", rf_status=\" +            module1_detail.rf_status +\n    \", battery_vp=\" +           module1_detail.battery_vp,\n    topic:                      getLogTopic('outdoor')\n});\n\n\ndataset.push({ \n    payload: \n    \"last_setup=\" +             getFormattedDate(rain_detail.last_setup) + \n    \", battery_percent=\" +      rain_detail.battery_percent +\n    \", reachable=\" +            rain_detail.reachable +\n    \", last_message=\" +         getFormattedDate(rain_detail.last_message) +\n    \", last_seen=\" +            getFormattedDate(rain_detail.last_seen) +\n    \", rf_status=\" +            rain_detail.rf_status +\n    \", battery_vp=\" +           rain_detail.battery_vp,\n    topic:                      getLogTopic('rain')\n});\n\n\nreturn [dataset];\n\nfunction getLogTopic(device){\n    return node_log_prefix + device + '/status/log'\n}\n\nfunction getFormattedDate(input){\n    var d = new Date(input*1000);\n    //var d = new Date(input);\n    //node.warn(\"getFormattedDate input: \" + input + \" date: \" + d);\n    return d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n}\n\nfunction getIsoDate(){\n    var date = new Date(); \n    var now_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),\n    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());\n\n    node.warn(\"isoDate \" + new Date(now_utc));\n    return new Date(now_utc);\n \n    //var isoDate = new Date().toISOString();\n    //node.warn(\"isoDate \" + isoDate);\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 160,
+        "x": 280,
         "y": 340,
         "wires": [
             [
                 "717615.32c139ec"
             ]
-        ]
-    },
-    {
-        "id": "89cd1756.68a788",
-        "type": "mysql",
-        "z": "e3a2c1ac.72282",
-        "mydb": "f37c9046.4fbf4",
-        "name": "auto home DB",
-        "x": 1006.61669921875,
-        "y": 616.1166687011719,
-        "wires": [
-            []
         ]
     },
     {
@@ -648,53 +604,6 @@
         "noerr": 0,
         "x": 697.5,
         "y": 45,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "171ae787.a26898",
-        "type": "netatmo-dashboard",
-        "z": "e3a2c1ac.72282",
-        "creds": "c16727b2.369608",
-        "x": 180,
-        "y": 300,
-        "wires": [
-            [
-                "e8af5c2c.2a1b6"
-            ]
-        ]
-    },
-    {
-        "id": "f0bab2fa.2622f",
-        "type": "inject",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": "1",
-        "x": 159,
-        "y": 258,
-        "wires": [
-            [
-                "171ae787.a26898"
-            ]
-        ]
-    },
-    {
-        "id": "2b3afc71.c75b74",
-        "type": "function",
-        "z": "e3a2c1ac.72282",
-        "name": "netatmo logger",
-        "func": "// msg.topic = \"iot/v01/netatmo/data_logger\";\n// node.warn(\"netatmo [\" + msg.topic + \"] \" + msg.payload);\n\nvar dataset = [];\nvar node_log_prefix = 'v01/netatmo/'\n\nbase        = msg.payload.compact\nmodule1     = msg.payload.compact.outdoor\nrain        = msg.payload.compact.rain\n\nbase_detail = msg.payload.detailed[0]\nmodule1_detail = base_detail.modules[0]\nrain_detail = base_detail.modules[1]\n\nvar glob_netatmo = global.get('PD.netatmo');\n\nglob_netatmo.last_rcv_time  = Date.now();\nglob_netatmo.base           = base;\nglob_netatmo.module1        = module1;\nglob_netatmo.rain           = rain;\n\n//getIsoDate(); //for debugging\n\ndataset.push({ payload: \"node_data_logger_netatmo\", topic: \n\"INSERT INTO node_data_logger_netatmo(\" + \n\"base_time_utc, base_temperature, base_co2, base_humidity, base_pressure, base_noise, base_temp_trend, \" +\n\"module1_temperature, module1_humidity, rain_rain, rain_sum_rain_1, rain_sum_rain_24) VALUES ( \\\"\"+\ngetFormattedDate(base_detail.date_setup) + \"\\\", \\\"\"+\nbase.temperature +\"\\\", \\\"\"+\nbase.co2 +\"\\\", \\\"\"+\nbase.humidity +\"\\\", \\\"\"+\nbase.pressure +\"\\\", \\\"\"+\nbase.noise +\"\\\", \\\"\"+\nbase.temperatureTrend +\"\\\", \\\"\"+\nmodule1.temperature +\"\\\", \\\"\"+\nmodule1.humidity +\"\\\", \\\"\"+\nrain.rain +\"\\\", \\\"\"+\nrain.sum_rain_1 +\"\\\", \\\"\"+\nrain.sum_rain_24 +\n\"\\\" )\"\n});   \n\ndataset.push({ payload: \"base_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"base\\\", \\\"\"+\n\"{date_setup:\" +   getFormattedDate(base_detail.date_setup) + \n\", last_status_store:\" +    getFormattedDate(base.last_status_store) +\n\", wifi_status:\" +          base_detail.wifi_status +\n\", reachable:\" +            base_detail.reachable +\n\", co2_calibrating:\" +      base_detail.co2_calibrating +\n\", city:\" +                 base_detail.place.city +\n\"}\\\" )\"\n});\n\n\ndataset.push({ payload: \"modul1_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"module1\\\", \\\"\"+ \n\n\"{last_setup:\" +             getFormattedDate(module1_detail.last_setup) + \n\", battery_percent:\" +      module1_detail.battery_percent +\n\", reachable:\" +            module1_detail.reachable +\n\", last_message:\" +         getFormattedDate(module1_detail.last_message) +\n\", last_seen:\" +            getFormattedDate(module1_detail.last_seen) +\n\", rf_status:\" +            module1_detail.rf_status +\n\", battery_vp:\" +           module1_detail.battery_vp +\n\"}\\\" )\"\n});\n\n\ndataset.push({ payload: \"rain_status\", topic: \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + node_log_prefix + \"rain\\\", \\\"\"+ \n\n\"{last_setup:\" +             getFormattedDate(rain_detail.last_setup) + \n\", battery_percent:\" +      rain_detail.battery_percent +\n\", reachable:\" +            rain_detail.reachable +\n\", last_message:\" +         getFormattedDate(rain_detail.last_message) +\n\", last_seen:\" +            getFormattedDate(rain_detail.last_seen) +\n\", rf_status:\" +            rain_detail.rf_status +\n\", battery_vp:\" +           rain_detail.battery_vp +\n\"}\\\" )\"\n});\n\n\nreturn [dataset];\n\n\nfunction getFormattedDate(input){\n    var d = new Date(input*1000);\n    //var d = new Date(input);\n    //node.warn(\"getFormattedDate input: \" + input + \" date: \" + d);\n    return d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n}\n\nfunction getIsoDate(){\n    var date = new Date(); \n    var now_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),\n    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());\n\n    node.warn(\"isoDate \" + new Date(now_utc));\n    return new Date(now_utc);\n \n    //var isoDate = new Date().toISOString();\n    //node.warn(\"isoDate \" + isoDate);\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 160,
-        "y": 220,
         "wires": [
             []
         ]
@@ -829,21 +738,6 @@
                 "3e80ce81.5cef22"
             ]
         ]
-    },
-    {
-        "id": "51877a66.65ac64",
-        "type": "debug",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 380,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "a7f97b3d.5086f8",
@@ -989,10 +883,121 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 870,
-        "y": 340,
+        "x": 890,
+        "y": 360,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "b367b089.6c189",
+        "type": "ui_toast",
+        "z": "e3a2c1ac.72282",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 890,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5964ac3d.3f1884",
+        "type": "ui_template",
+        "z": "e3a2c1ac.72282",
+        "group": "720145b.5088cbc",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<div id=\"{{'my_'+$id}}\" style=\"{{'color:'+theme.base_color}}\">Some text</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n      $(\"#my_\"+scope.$id).html(msg.payload);\n    }\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 860,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e892a5b.7ec634",
+        "type": "ui_button",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "group": "720145b.5088cbc",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "dbg alarm",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "this is a debug alarm",
+        "payloadType": "str",
+        "topic": "v01/rule_engine/dbg",
+        "x": 480,
+        "y": 460,
+        "wires": [
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "42b9ed82.264494",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "convert to send",
+        "func": "/*\n{\"payload\":\"aktor/light/basement_hobby_east/set_switch_value#off\",\n\"socketid\":\"U48wVSmIv9xwOpDEAABl\",\n\"_msgid\":\"77041d9e.fe3674\",\n\"topic\":\"eg\",\n\"_event\":\"node:f61e6716.a97ed8\"}\n*/\n\n\n//get master data\n//find ip to name (topic)\n//send msg to udp receiver\n\nlet data_dic = global.get('master_data_dic') || {};\n\nif (data_dic===undefined){\n    node.error('try to access undefined master_data_dic')\n}\n\nmsg.ip = global.get('master_data_dic.plc.' + msg.topic + '.meta.ip_address')\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 460,
+        "wires": [
+            [
+                "2b033f12.5601d"
+            ]
+        ]
+    },
+    {
+        "id": "2b033f12.5601d",
+        "type": "udp out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "addr": "",
+        "iface": "",
+        "port": "7724",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1020,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "59ab72fd.a5ac2c",
+        "type": "link in",
+        "z": "e3a2c1ac.72282",
+        "name": "netatmo_in",
+        "links": [
+            "9e969f7d.f7de2"
+        ],
+        "x": 135,
+        "y": 340,
+        "wires": [
+            [
+                "e8af5c2c.2a1b6"
+            ]
         ]
     },
     {
@@ -1045,15 +1050,6 @@
         "disp": false,
         "width": "18",
         "collapse": false
-    },
-    {
-        "id": "c16727b2.369608",
-        "type": "netatmo-config-node",
-        "z": "",
-        "client_id": "xxx",
-        "client_secret": "xxx",
-        "username": "xxx@xxx.de",
-        "password": "xxx"
     },
     {
         "id": "720145b.5088cbc",
