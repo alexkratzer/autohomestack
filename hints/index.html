@@ -600,24 +600,18 @@
     usage MkDocs
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
   <a href="#web-apps" class="md-nav__link">
     web apps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-red" class="md-nav__link">
+    node red
   </a>
   
 </li>
@@ -699,24 +693,18 @@
     usage MkDocs
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
   <a href="#web-apps" class="md-nav__link">
     web apps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-red" class="md-nav__link">
+    node red
   </a>
   
 </li>
@@ -743,28 +731,27 @@
 <ul>
 <li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
 <li><code>mkdocs build</code> - Build the documentation site.</li>
+<li><code>aws s3 sync ./site s3://autohomestack.de</code> Deploy to s3 bucket</li>
 <li><code>mkdocs gh-deploy</code>  Deploy your documentation to GitHub Pages</li>
 <li><code>localhost:8000</code> to view it in browser</li>
 <li><a href="https://autohomestack.github.io/website/">https://autohomestack.github.io/website/</a></li>
-<li><a href="https://autohomestack.de">https://autohomestack.de</a></li>
 </ul>
-<h3 id="project-layout">Project layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="err">mkdocs.yml    # The configuration file.</span>
-<span class="err">docs/</span>
-<span class="err">    index.md  # The documentation homepage.</span>
-<span class="err">    ...       # Other markdown pages, images and other files.</span>
-</code></pre></div>
-
-
 <h2 id="web-apps">web apps<a class="headerlink" href="#web-apps" title="Permanent link">&para;</a></h2>
 <ul>
-<li>
-<p>to draw some images: <a href="https://www.draw.io/">https://www.draw.io/</a></p>
-</li>
-<li>
-<p>create some 3d models:</p>
-</li>
+<li>to draw some images: <a href="https://www.draw.io/">https://www.draw.io/</a></li>
 </ul>
+<h2 id="node-red">node red<a class="headerlink" href="#node-red" title="Permanent link">&para;</a></h2>
+<p>Initialising Variable</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">count</span><span class="o">=</span><span class="nx">context</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">count2</span><span class="o">=</span><span class="nx">context</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;count2&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// You can also use an object e.g</span>
+<span class="kd">var</span> <span class="nx">local</span><span class="o">=</span><span class="nx">context</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="p">{};</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">local</span><span class="p">.</span><span class="nx">count</span><span class="o">===</span><span class="kc">undefined</span><span class="p">)</span> <span class="c1">//test exists</span>
+<span class="p">{</span>
+  <span class="nx">local</span><span class="p">.</span><span class="nx">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
                 
                   
                 
