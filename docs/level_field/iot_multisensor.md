@@ -38,7 +38,15 @@ topic|meaning
 /config/send_intervall_status|watchdog with status information
 /config/reset [dht, setup, vars]|
 
-GPIO usage
+## NodeMCU GPIO
+
+[node gpio pinout](https://www.instructables.com/id/NodeMCU-ESP8266-Details-and-Pinout/)
+
+digitalWrite did NOT work with GPIOs 6, 7, 8, 11, and ADC (A0)
+
+digitalRead did NOT work with GPIOs 1, 3, 6, 7, 8, 11, and the ADC (A0)
+
+### GPIO sensoric
 
 pin|DHT22|AM312|KY-018
 -|-|-|-
@@ -46,6 +54,44 @@ pin|DHT22|AM312|KY-018
 2|DATA=D7|OUT=D2/D5|VCC
 3|nc|GND|DATA=A0
 4|GND||
+
+### NODE mcu platine soldered
+
+GPIO|platine-color|device
+-|-|-
+D2|orange|pir 1 -> pin_2 (stairs)
+D5|yellow|pir 2 -> pin_2 (corridor)
+3V|red|pir1/2 -> pin_1
+3V|violett|pir1/2 -> pin_1
+gnd|blue|pir1/2 -> pin_3
+gnd|grey|pir1/2 -> pin_3
+A0|green|S
+g|yellow|middle
+VV|orange|-
+D7|grey|DHT_2
+3V|black|DHT_1
+g|white|DHT_4
+
+### NODE mcu general
+
+GPIO|device|GPIO|device
+-|-|-|-
+A0|KY-S [black]|D0|
+G|KY-middle [brown]|D1|
+VV|KY - [red] |D2|pir middle [orange]
+S3||D3|
+S2||D4|
+S1||3V|
+SC||G|
+S0||D5|pir middle [yellow]
+SK||D6|
+G|pir 3 [white/brown]|D7|DHT22 2 (signal) [orange]
+3V|pir 1 [black/gray]|D8|
+EN||RX|
+RST||TX|
+G||G|DHT22 4 [red]
+VIN||3V|DHT22 1 [brown]
+-|===|===|-
 
 ## 3D case
 

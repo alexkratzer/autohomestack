@@ -1,6 +1,5 @@
 # Field level
 
-
 ## Wetter station
 
 For the weather station I decided for the P03/3-Modbus from Elsner.
