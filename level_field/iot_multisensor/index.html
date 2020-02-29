@@ -500,6 +500,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#install-arduino-ide" class="md-nav__link">
+    Install Arduino IDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#esp8266" class="md-nav__link">
     ESP8266
   </a>
@@ -723,6 +730,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#install-arduino-ide" class="md-nav__link">
+    Install Arduino IDE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#esp8266" class="md-nav__link">
     ESP8266
   </a>
@@ -795,6 +809,18 @@
                 
                 
                 <h1 id="iot-multisensor">IoT multisensor<a class="headerlink" href="#iot-multisensor" title="Permanent link">&para;</a></h1>
+<h2 id="install-arduino-ide">Install Arduino IDE<a class="headerlink" href="#install-arduino-ide" title="Permanent link">&para;</a></h2>
+<p>The Arduino IDE from the package repository is very old.</p>
+<p>To install Arduino IDE from the <a href="https://www.arduino.cc/en/Main/software">Official Website</a> download your package.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> ./Downloads
+sudo tar xvJf arduino-1.8.12-linux64.tar.xz -C /opt
+ls -lh /opt/
+sudo -E /opt/arduino-1.8.12/install.sh
+</code></pre></div>
+
+
+<p>Now, you have to add the Debian 10 login user to the dialout, tty, uucp and plugdev group.
+<a href="https://linuxhint.com/install_arduino_ide_debian_10/">https://linuxhint.com/install_arduino_ide_debian_10/</a></p>
 <h2 id="esp8266">ESP8266<a class="headerlink" href="#esp8266" title="Permanent link">&para;</a></h2>
 <p>To enable the esp8266 libs at Arduino IDE</p>
 <ul>
@@ -1048,13 +1074,13 @@
 </tr>
 <tr>
 <td>G</td>
-<td>pir 3 [white/brown]</td>
+<td>pir 3 [red/grey]</td>
 <td>D7</td>
 <td>DHT22 2 (signal) [orange]</td>
 </tr>
 <tr>
 <td>3V</td>
-<td>pir 1 [black/gray]</td>
+<td>pir 1 [blue/green]</td>
 <td>D8</td>
 <td></td>
 </tr>
