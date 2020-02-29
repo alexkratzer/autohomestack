@@ -1,5 +1,21 @@
 # IoT multisensor
 
+## Install Arduino IDE
+
+The Arduino IDE from the package repository is very old.
+
+To install Arduino IDE from the [Official Website](https://www.arduino.cc/en/Main/software) download your package.
+
+```bash
+cd ./Downloads
+sudo tar xvJf arduino-1.8.12-linux64.tar.xz -C /opt
+ls -lh /opt/
+sudo -E /opt/arduino-1.8.12/install.sh
+```
+
+Now, you have to add the Debian 10 login user to the dialout, tty, uucp and plugdev group.
+[https://linuxhint.com/install_arduino_ide_debian_10/](https://linuxhint.com/install_arduino_ide_debian_10/)
+
 ## ESP8266
 
 To enable the esp8266 libs at Arduino IDE
@@ -85,8 +101,8 @@ S1||3V|
 SC||G|
 S0||D5|pir middle [yellow]
 SK||D6|
-G|pir 3 [white/brown]|D7|DHT22 2 (signal) [orange]
-3V|pir 1 [black/gray]|D8|
+G|pir 3 [red/grey]|D7|DHT22 2 (signal) [orange]
+3V|pir 1 [blue/green]|D8|
 EN||RX|
 RST||TX|
 G||G|DHT22 4 [red]

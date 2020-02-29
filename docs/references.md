@@ -10,5 +10,6 @@ component|link
 -|-
 docu at s3 | [autohomestack.de](http://autohomestack.de)
 this repo at github|[github.com/alexkratzer/autohomestack](https://github.com/alexkratzer/autohomestack)
+docu at github|[alexkratzer.github.io/autohomestack/](https://alexkratzer.github.io/autohomestack/)
 dotNet pc tool (outdated)|[github.com/alexkratzer/ahGUI](https://github.com/alexkratzer/ahGUI)
 pc - plc adapter|[github.com/alexkratzer/CpuPcStack](https://github.com/alexkratzer/CpuPcStack)
