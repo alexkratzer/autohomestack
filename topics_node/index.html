@@ -627,8 +627,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#general-structure-examples" class="md-nav__link">
-    general structure examples
+  <a href="#general-structure-of-messages" class="md-nav__link">
+    general structure of messages
   </a>
   
 </li>
@@ -717,8 +717,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#general-structure-examples" class="md-nav__link">
-    general structure examples
+  <a href="#general-structure-of-messages" class="md-nav__link">
+    general structure of messages
   </a>
   
 </li>
@@ -847,7 +847,7 @@
 <li>v01/rpi/EG_living/status/log</li>
 <li>v01/rpi/OG_bath/status/log</li>
 </ul>
-<h2 id="general-structure-examples">general structure examples<a class="headerlink" href="#general-structure-examples" title="Permanent link">&para;</a></h2>
+<h2 id="general-structure-of-messages">general structure of messages<a class="headerlink" href="#general-structure-of-messages" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -905,6 +905,11 @@
 <h2 id="plc-node_red">plc -&gt; node_red<a class="headerlink" href="#plc-node_red" title="Permanent link">&para;</a></h2>
 <p>plc function <strong>NodeSend___send()</strong> add prefix to topic <strong>v01/plc/</strong>
 device-value is added from node_red while receiving (from IP address)</p>
+<p>example</p>
+<ul>
+<li><code>v01/plc/og/o/light/stairs_west</code></li>
+<li><code>v01/plc/eg/i/NodeDiFlag</code></li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -938,6 +943,24 @@ device-value is added from node_red while receiving (from IP address)</p>
 <td>heater/bath</td>
 <td></td>
 <td></td>
+</tr>
+<tr>
+<td>i</td>
+<td>[input name]</td>
+<td>{switches:value}</td>
+<td>plc detected input change (button, pir sensor, and so on...)</td>
+</tr>
+<tr>
+<td>i</td>
+<td>cmd_local</td>
+<td>[cmd name]</td>
+<td>cmd from local input</td>
+</tr>
+<tr>
+<td>i</td>
+<td>cmd_remote</td>
+<td>[cmd name]</td>
+<td>cmd from remote plc input</td>
 </tr>
 </tbody>
 </table>
