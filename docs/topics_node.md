@@ -28,7 +28,7 @@ All topics containing /status/log will be stored at table **node_status_log**
 * v01/rpi/EG_living/status/log
 * v01/rpi/OG_bath/status/log
 
-## general structure examples
+## general structure of messages
 
 |version    |device-type    |device-value   |component-type |component-value    |example msg
 |-          |-              |-              |-              |-                  |-
@@ -43,12 +43,20 @@ All topics containing /status/log will be stored at table **node_status_log**
 plc function **NodeSend___send()** add prefix to topic **v01/plc/**
 device-value is added from node_red while receiving (from IP address)
 
+example
+
+* `v01/plc/og/o/light/stairs_west`
+* `v01/plc/eg/i/NodeDiFlag`
+
 |component-type     |component-value    |message                |description
 |-                  |-                  |-                      |-
 |pd                 |eta                |values of ProzessData  |all pd components are filtert from node_log
 |status             |error              |name + value           |description of error status => use FC NodeSend_status/error
 |dl                 |eta                |values                 |maybe redundant to pd/eta ==> current deactivated at PLC
 |o                  |heater/bath        |                       |
+|i                  |[input name]       |{switches:value}       |plc detected input change (button, pir sensor, and so on...)
+|i                  |cmd_local          |[cmd name]             |cmd from local input
+|i                  |cmd_remote         |[cmd name]             |cmd from remote plc input
 
 ## node_red -> plc
 
