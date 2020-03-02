@@ -261,8 +261,7 @@
         "wires": [
             [
                 "f9c3e945.d3a1d8",
-                "ab4b30e0.a6aff",
-                "b6621a0f.4d2878"
+                "ab4b30e0.a6aff"
             ]
         ]
     },
@@ -299,15 +298,13 @@
         "type": "function",
         "z": "125dcaef.a3ede5",
         "name": "fill global master_data",
-        "func": "var data = global.get('master_data_v2');\n\nfor (let i of msg.payload) {\n    updateData(i); //makes a array of objects (master_data_v2)\n    set_master_data_dic(i); //makes a dict of objects (master_data_dic)\n}\nreturn null\n\nfunction updateData(obj){\n  var objFound_bool = false;\n  for (var i = 0; i < data.length; i++) {\n    if(obj.id === data[i].id){\n      objFound_bool = true;\n      data[i] =obj ;\n    }\n  }\n  if(!objFound_bool){\n    data.push(obj)\n  }\n}\n/*\nfunction updateStatus(obj){\n    if(!(tmp_status[obj.type]==null)){\n        if(!(tmp_status[obj.type[obj.name]]==null)){\n            node.warn('OK tmp_status[obj.type][obj.name]');\n            tmp_status[obj.type[obj.name]] = obj;\n        }else{tmp_status[obj.type[obj.name]] = obj.name;\n            node.warn('else{tmp_status[obj.type][obj.name] ');\n        }\n    }else{tmp_status[obj.type] = obj.type;\n        node.warn('else{tmp_status[obj.type]');\n    }\n}\n*/\n\n/*\n {\"id\":1,\n \"name\":\"main_node\",\n \"type\":\"rpi\",\n \"ip_address\":\"192.168.1.211\",\n \"mac\":\"dc:a6:32:29:51:45\"}\n*/\n\nfunction set_master_data_dic(status_object){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    var global_var = 'master_data_dic';\n\n    var s_name = global_var + '.' + status_object['type'] + '.' + status_object['name']\n    //node.warn(\"at set_status_object [\" + status_object + \"] s_name: \" + s_name);\n    \n    var global_dev = global.get(s_name);\n    \n    //check if objects are existing\n    //of not -> initialise them\n    if(global_dev == null){\n        var s_name_sub = global_var + '.' + status_object['type']\n        if(global.get(s_name_sub) == null){\n            global.set(s_name_sub,{ var_type_created : getFormattedDate() });\n            if(global.get(s_name_sub) == null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_created : getFormattedDate() });\n    }\n    \n    global.set(s_name + '.meta', status_object);\n    global.set(s_name + '.meta.last_rcv_time', getFormattedDate());\n \n    /*\n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }*/\n    \n}\n\n/* TODO: with this code we only need one button add/update device\nINSERT INTO subs\n  (subs_name, subs_email, subs_birthday)\nVALUES\n  (?, ?, ?)\nON DUPLICATE KEY UPDATE\n  subs_name     = VALUES(subs_name),\n  subs_birthday = VALUES(subs_birthday)\n*/\n\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "func": "var data = global.get('master_data_v2') || [];\n\nfor (let i of msg.payload) {\n    updateData(i); //makes a array of objects (master_data_v2)\n    set_master_data_dic(i); //makes a dict of objects (master_data_dic)\n}\nreturn null\n\nfunction updateData(obj){\n  var objFound_bool = false;\n  for (var i = 0; i < data.length; i++) {\n    if(obj.id === data[i].id){\n      objFound_bool = true;\n      data[i] =obj ;\n    }\n  }\n  if(!objFound_bool){\n    data.push(obj)\n  }\n}\n\n\n/*\n {\"id\":1,\n \"name\":\"main_node\",\n \"type\":\"rpi\",\n \"ip_address\":\"192.168.1.211\",\n \"mac\":\"dc:a6:32:29:51:45\"}\n*/\n\nfunction set_master_data_dic(status_object){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    var global_var = 'master_data_dic';\n\n    var s_name = global_var + '.' + status_object['type'] + '.' + status_object['name']\n    //node.warn(\"at set_status_object [\" + status_object + \"] s_name: \" + s_name);\n    \n    var global_dev = global.get(s_name);\n    \n    //check if objects are existing\n    //of not -> initialise them\n    if(global_dev == null){\n        var s_name_sub = global_var + '.' + status_object['type']\n        if(global.get(s_name_sub) == null){\n            global.set(s_name_sub,{ var_type_created : getFormattedDate() });\n            if(global.get(s_name_sub) == null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_created : getFormattedDate() });\n    }\n    \n    global.set(s_name + '.meta', status_object);\n    global.set(s_name + '.meta.last_rcv_time', getFormattedDate());\n \n    /*\n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }*/\n    \n}\n\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 440,
         "y": 160,
         "wires": [
-            [
-                "b6621a0f.4d2878"
-            ]
+            []
         ]
     },
     {
@@ -409,21 +406,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "b6621a0f.4d2878",
-        "type": "debug",
-        "z": "125dcaef.a3ede5",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 590,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "2c096e4c.6f7272",
@@ -566,19 +548,19 @@
         "id": "aea50cc6.908e6",
         "type": "inject",
         "z": "125dcaef.a3ede5",
-        "name": "used_topics",
-        "topic": "SELECT * FROM used_topics ORDER BY timestamp",
+        "name": "5s",
+        "topic": "",
         "payload": "",
         "payloadType": "date",
-        "repeat": "10",
+        "repeat": "5",
         "crontab": "",
         "once": true,
         "onceDelay": "3",
-        "x": 710,
-        "y": 140,
+        "x": 690,
+        "y": 180,
         "wires": [
             [
-                "432f0679.2b5008"
+                "e0b0e2a0.4f134"
             ]
         ]
     },
@@ -595,8 +577,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 1060,
-        "y": 140,
+        "x": 1280,
+        "y": 120,
         "wires": [
             []
         ]
@@ -607,12 +589,127 @@
         "z": "125dcaef.a3ede5",
         "mydb": "f37c9046.4fbf4",
         "name": "",
-        "x": 890,
-        "y": 140,
+        "x": 1110,
+        "y": 120,
         "wires": [
             [
                 "d1bd0a89.96b848"
             ]
+        ]
+    },
+    {
+        "id": "352007e8.185d78",
+        "type": "ui_dropdown",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "sort by",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "a32a4600.767838",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "options": [
+            {
+                "label": "",
+                "value": "timestamp",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "topic",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "counter",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 690,
+        "y": 100,
+        "wires": [
+            [
+                "1f93742b.3a74ac"
+            ]
+        ]
+    },
+    {
+        "id": "1f93742b.3a74ac",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "set sort_by",
+        "func": "flow.set('sort_by', msg.payload);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0b0e2a0.4f134",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "set sort_by",
+        "func": "var sort_by = flow.get('sort_by') || 'timestamp';\nvar sort_order = flow.get('sort_order') || '';\n\nt = 'SELECT * FROM used_topics ORDER BY ' + sort_by + ' ' + sort_order;\nreturn {topic : t};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 180,
+        "wires": [
+            [
+                "432f0679.2b5008"
+            ]
+        ]
+    },
+    {
+        "id": "c017324b.80387",
+        "type": "ui_switch",
+        "z": "125dcaef.a3ede5",
+        "name": "",
+        "label": "sort order",
+        "tooltip": "Ascending",
+        "group": "a32a4600.767838",
+        "order": 13,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 700,
+        "y": 40,
+        "wires": [
+            [
+                "1b42a546.0d66db"
+            ]
+        ]
+    },
+    {
+        "id": "1b42a546.0d66db",
+        "type": "function",
+        "z": "125dcaef.a3ede5",
+        "name": "set sort_order",
+        "func": "if(msg.payload === true){\n    flow.set('sort_order', 'desc');\n}else{\n    flow.set('sort_order', '');\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 880,
+        "y": 40,
+        "wires": [
+            []
         ]
     },
     {

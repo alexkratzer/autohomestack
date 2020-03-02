@@ -2175,7 +2175,7 @@
         "type": "function",
         "z": "2add6854.c048c8",
         "name": "get status vars",
-        "func": "var dataset = [];\n//var now = new Date().toLocaleString(\"de-DE\");\nvar now = new Date()\n\nvar var_status = global.get('status');\n\nvar dev_list = global.get('master_data_v2');\n//node.warn('dev_list: ' + dev_list);\n\nfor (let i of dev_list){\n    get_last_rcv_time(i.type, i.name);\n}\n\nmsg.payload = dataset\nreturn msg;\n\n\nfunction get_last_rcv_time(t1, t2){\n    var time_diff = '';\n    var var_last_rcv_time = 'undef'\n    if(!(var_status[t1]==null)){\n        if(!(var_status[t1][t2]==null)){\n            var_last_rcv_time = var_status[t1][t2].last_rcv_time;\n            var parsed_date = new Date(var_last_rcv_time);\n            var diff = now - parsed_date;\n\n            var tag = Math.floor(diff / (1000*60*60*24));\n            diff = diff % (1000*60*60*24);\n            if(tag>0){time_diff += \"d:\" + tag;}\n            \n            var std = Math.floor(diff / (1000*60*60));\n            diff = diff % (1000*60*60);\n            if(std>0){time_diff += \" h:\" + std;}\n            \n            var min = Math.floor(diff / (1000*60));\n            diff = diff % (1000*60);\n            if(min>0){time_diff += \" m:\" + min;}\n            \n            var sec = Math.floor(diff / 1000);\n            time_diff += \" s:\" + sec;\n            //var mSec = diff % 1000;\n            //time_diff += \".\" + mSec;\n            \n            //time_diff += \" h: \" + std + \" m: \" + min + \" s: \" + sec + \" ms: \" + mSec\n            //node.warn(time_diff);\n        }\n    }\n    dataset.push([t1, t2, var_last_rcv_time, time_diff]);\n}\n\n/*\nif(!(var_status['rpi']==null)){node.warn(\"WORKS 1\");}\nelse{  node.error('CAN HAPPEN AT START 1'); }\n*/\n\n/*\nvar display_value = '';\nfor (var key in var_status) {\n    \n    if (!var_status.hasOwnProperty(key)) continue;\n\n    var obj = var_status[key];\n    \n    for (var prop in obj) {\n        // skip loop if the property is from prototype\n        if (!obj.hasOwnProperty(prop)) continue;\n\n        display_value = display_value + prop + ' = ' + obj[prop] + \"\\n\";\n        dataset.push([now, prop + ' = ' + obj[prop]]);  \n    }\n}\n*/",
+        "func": "var dataset = [];\n//var now = new Date().toLocaleString(\"de-DE\");\nvar now = new Date()\n\nvar var_status = global.get('status') || {};\n\nvar dev_list = global.get('master_data_v2') || {};\n//node.warn('dev_list: ' + dev_list);\n\nfor (let i of dev_list){\n    get_last_rcv_time(i.type, i.name);\n}\n\nmsg.payload = dataset\nreturn msg;\n\n\nfunction get_last_rcv_time(t1, t2){\n    var time_diff = '';\n    var var_last_rcv_time = 'undef'\n    if(!(var_status[t1]==null)){\n        if(!(var_status[t1][t2]==null)){\n            var_last_rcv_time = var_status[t1][t2].last_rcv_time;\n            var parsed_date = new Date(var_last_rcv_time);\n            var diff = now - parsed_date;\n\n            var tag = Math.floor(diff / (1000*60*60*24));\n            diff = diff % (1000*60*60*24);\n            if(tag>0){time_diff += \"d:\" + tag;}\n            \n            var std = Math.floor(diff / (1000*60*60));\n            diff = diff % (1000*60*60);\n            if(std>0){time_diff += \" h:\" + std;}\n            \n            var min = Math.floor(diff / (1000*60));\n            diff = diff % (1000*60);\n            if(min>0){time_diff += \" m:\" + min;}\n            \n            var sec = Math.floor(diff / 1000);\n            time_diff += \" s:\" + sec;\n            //var mSec = diff % 1000;\n            //time_diff += \".\" + mSec;\n            \n            //time_diff += \" h: \" + std + \" m: \" + min + \" s: \" + sec + \" ms: \" + mSec\n            //node.warn(time_diff);\n        }\n    }\n    dataset.push([t1, t2, var_last_rcv_time, time_diff]);\n}\n\n/*\nif(!(var_status['rpi']==null)){node.warn(\"WORKS 1\");}\nelse{  node.error('CAN HAPPEN AT START 1'); }\n*/\n\n/*\nvar display_value = '';\nfor (var key in var_status) {\n    \n    if (!var_status.hasOwnProperty(key)) continue;\n\n    var obj = var_status[key];\n    \n    for (var prop in obj) {\n        // skip loop if the property is from prototype\n        if (!obj.hasOwnProperty(prop)) continue;\n\n        display_value = display_value + prop + ' = ' + obj[prop] + \"\\n\";\n        dataset.push([now, prop + ' = ' + obj[prop]]);  \n    }\n}\n*/",
         "outputs": 1,
         "noerr": 0,
         "x": 320,
@@ -2187,52 +2187,19 @@
         ]
     },
     {
-        "id": "55fc7ca6.0226a4",
-        "type": "function",
-        "z": "2add6854.c048c8",
-        "name": "get dynamic var",
-        "func": "var dataset = [];\nvar now = new Date().toLocaleString(\"de-DE\"); //\"en-GB\"\n//dataset.push([now, 'processing... ', '....']);\ndataset.push({ payload: now + ' processing... ', topic: \"dbg\" });\n\nvar var_status = global.get('status');\n//var var_status = global.get('status.rpi.OG_floor.last_rcv_time');\n//node.warn(\"var_status [\" + var_status + \"] \");\n\nif(var_status==null){\n    node.error('global.get(status)==null');\n}\n/*\nif(!(var_status.rpi==null)){ node.warn(\"WORKS 0\");}\nelse{ node.error('CAN HAPPEN AT START 0'); }\n\nif(!(var_status['rpi']==null)){node.warn(\"WORKS 1\");}\nelse{  node.error('CAN HAPPEN AT START 1'); }\n*/\n\nobject_var = 'rpi'\n\n\nif(!(var_status[object_var]==null)){\n    //dataset.push([now, 'var_status[rpi].var_parent_created', var_status[rpi].var_parent_created]);\n    dataset.push({ payload: + \"var_status[rpi].var_parent_created\" + var_status[object_var].var_parent_created, topic: \"dbg\" });\n    //node.warn(\"WORKS: var_status [\" + var_status + \"] \");\n}\n\nvar rpi_OG_floor_last_rcv_time = global.get('status.rpi.OG_floor.last_rcv_time');\n\nif(!(rpi_OG_floor_last_rcv_time==null)){\n    node.warn('var_status_dbg: ' + rpi_OG_floor_last_rcv_time);\n    //node.error('CAN HAPPEN AT START status.rpi.OG_floor.last_rcv_time==null');\n}\n/*\nelse{\n    node.warn('var_status_dbg: ' + var_status_dbg);\n}*/\n\nmsg.payload = dataset\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 380,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "940c30a8.f9962",
-        "type": "inject",
-        "z": "2add6854.c048c8",
-        "name": "",
-        "topic": "",
-        "payload": "status",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 130,
-        "y": 320,
-        "wires": [
-            [
-                "cb8ecb73.302e68"
-            ]
-        ]
-    },
-    {
         "id": "cb8ecb73.302e68",
         "type": "json",
         "z": "2add6854.c048c8",
         "name": "",
         "property": "payload",
-        "action": "",
+        "action": "obj",
         "pretty": false,
         "x": 290,
         "y": 320,
         "wires": [
             [
-                "1ad2944c.7f915c"
+                "1ad2944c.7f915c",
+                "251996fd.a6311a"
             ]
         ]
     },
@@ -2241,13 +2208,14 @@
         "type": "debug",
         "z": "2add6854.c048c8",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
-        "x": 450,
-        "y": 320,
+        "complete": "true",
+        "targetType": "full",
+        "x": 590,
+        "y": 380,
         "wires": []
     },
     {
@@ -2269,7 +2237,7 @@
         "type": "function",
         "z": "2add6854.c048c8",
         "name": "query",
-        "func": "var dataset_count = 10;\n\nreturn {topic:\"SELECT * from node_log ORDER BY id DESC LIMIT \" + dataset_count};\n",
+        "func": "var dataset_count = 10;\n\nreturn {topic:\"SELECT * from node_log WHERE topic LIKE \\\"rule_engine%\\\" ORDER BY id DESC LIMIT \" + dataset_count};\n// WHERE message LIKE \\'\" + display_message_from_input + \"%\\' ORDER",
         "outputs": 1,
         "noerr": 0,
         "x": 290,
@@ -2297,6 +2265,84 @@
         "y": 181,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "251996fd.a6311a",
+        "type": "ui_template",
+        "z": "2add6854.c048c8",
+        "group": "47d99cfb.c37d74",
+        "name": "prozess data",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "format": "<p>{{msg.payload}}</p>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "1ad2944c.7f915c"
+            ]
+        ]
+    },
+    {
+        "id": "3862628a.9e963e",
+        "type": "function",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "func": "var var_pd = global.get('PD');\nmsg.payload = var_pd;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "251996fd.a6311a",
+                "1ad2944c.7f915c"
+            ]
+        ]
+    },
+    {
+        "id": "ac6c6b45.651ad8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD",
+        "payloadType": "global",
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "cb8ecb73.302e68"
+            ]
+        ]
+    },
+    {
+        "id": "6ec668cd.4d91f8",
+        "type": "inject",
+        "z": "2add6854.c048c8",
+        "name": "",
+        "topic": "",
+        "payload": "PD.plceg",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "cb8ecb73.302e68"
+            ]
         ]
     },
     {
@@ -2405,12 +2451,32 @@
         "collapse": false
     },
     {
+        "id": "47d99cfb.c37d74",
+        "type": "ui_group",
+        "z": "",
+        "name": "prozess data dashboard",
+        "tab": "53866e10.c18ea",
+        "disp": true,
+        "width": "32",
+        "collapse": false
+    },
+    {
         "id": "4e0c8ed6.89c15",
         "type": "ui_tab",
         "z": "",
         "name": "status",
         "icon": "dashboard",
         "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "53866e10.c18ea",
+        "type": "ui_tab",
+        "z": "",
+        "name": "status log",
+        "icon": "history",
+        "order": 6,
         "disabled": false,
         "hidden": false
     }
