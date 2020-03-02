@@ -1,0 +1,786 @@
+﻿FUNCTION "NodeSend___send" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      topic : String;
+      msg : String;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_send_string : String;
+   END_VAR
+
+
+BEGIN
+	IF "NodeBuffer".index_send < 10 THEN
+	
+	    #tmp_send_string := CONCAT(IN1 := 'v01/plc/', IN2 := "NodeBuffer".global.plc_name);
+	    #tmp_send_string := CONCAT(IN1 := #tmp_send_string, IN2 := '/');
+	    #tmp_send_string := CONCAT(IN1 := #tmp_send_string, IN2 := #topic);
+	    #tmp_send_string := CONCAT(IN1 := #tmp_send_string, IN2 := '#');
+	    #tmp_send_string := CONCAT(IN1 := #tmp_send_string, IN2 := #msg);
+	    
+	    "NodeBuffer".send_data["NodeBuffer".index_send] := #tmp_send_string;
+	(*
+	if the source address should be safed to answer this one
+	#remote.REM_IP_ADDR[1] := 192;
+	#remote.REM_IP_ADDR[2] := 168;
+	#remote.REM_IP_ADDR[3] := 1;
+	#remote.REM_IP_ADDR[4] := 210;
+	#remote.REM_PORT_NR := 7725;
+	
+	"NodeBuffer".send_data["NodeBuffer".index_send].remoteAddr := #remote;
+	*)
+	"NodeBuffer".index_send := "NodeBuffer".index_send + 1;
+	
+	END_IF;
+END_FUNCTION
+
+FUNCTION "NodeSend_HelperSplitStringByIn" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      split_string : String;
+      delimiter : Char;
+   END_VAR
+
+   VAR_IN_OUT 
+      left : String;
+      right : String;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_index : Int;
+   END_VAR
+
+
+BEGIN
+	
+	#tmp_index := FIND(IN1 := #split_string, IN2 := #delimiter);
+	IF #tmp_index > 0 THEN
+	    #left := LEFT(IN := #split_string, L := #tmp_index - 1);
+	    #right := RIGHT(IN := #split_string, L := LEN(#split_string) - #tmp_index);
+	    //#NodeHelperSplitStringByIn := true;
+	    
+	ELSE
+	    #left := #split_string;
+	    #right := '';
+	    //#NodeHelperSplitStringByIn := false;
+	END_IF;
+END_FUNCTION
+
+FUNCTION "NodeSend_ERROR" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      module : String;
+      message : String;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_send_string : String;
+      tmp_countIdx : Int;
+   END_VAR
+
+
+BEGIN
+	"NodeSend___send"(topic:= CONCAT(IN1:= 'ERROR/',IN2:=#module), msg:=#message);
+END_FUNCTION
+
+FUNCTION "NodeSend_input" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "name" : String;
+      message : String;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_send_string : String;
+      tmp_countIdx : Int;
+   END_VAR
+
+
+BEGIN
+	"NodeSend___send"(topic := CONCAT(IN1 := 'i/', IN2 := #name),
+	                  msg := #message);
+END_FUNCTION
+
+FUNCTION "NodeSend_output" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "name" : String;
+      message : String;
+   END_VAR
+
+
+BEGIN
+	"NodeSend___send"(topic:=CONCAT(IN1 := 'o/', IN2 := #name),
+	                          msg:=#message);
+	
+END_FUNCTION
+
+FUNCTION "NodeUdp_check_aktor_req" : Bool
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "type/name" : String;   // e. g. heater/office
+   END_VAR
+
+   VAR_IN_OUT 
+      cmd : String;   // set param, get param, set value, get value,...
+      msg : String;   // ctrl_mode=3, switch
+      msg_key : String;   // e.g. ctrl_mode
+      msg_value : String;   // e.g. 3
+   END_VAR
+
+   VAR_TEMP 
+      tmp_aktor_type : String;
+      tmp_aktor_name_cmd : String;
+      tmp_aktor_name : String;
+      tmp_input_type : String;
+      tmp_input_name : String;
+      tmp_cmd : String;
+   END_VAR
+
+
+BEGIN
+	//## use this fc at the aktor instances [heater, light, jalouse, ...] 
+	//## if a new request is stored at node udp buffer return -> true
+	//## input is type[light,heater,jalousie]/name[office,kitchen,aso]
+	//## 
+	
+	//first topic part 'aktor' is cut by putting the msg to buffer
+	//
+	//[aktor/] heater/office/set_param#ctrl_mode=3
+	//[aktor/] light/warehouse/set_value#switch
+	//
+	#NodeUdp_check_aktor_req := FALSE;
+	IF "NodeBuffer".interprete_aktor.working THEN
+	    //split input string
+	    "NodeSend_HelperSplitStringByIn"(split_string := #"type/name",
+	                         delimiter := '/',
+	                         left := #tmp_input_type,
+	                         right := #tmp_input_name);
+	    
+	    //split the topic of the message which is stored at buffer 
+	"NodeSend_HelperSplitStringByIn"(split_string := "NodeBuffer".interprete_aktor.topic,
+	                         delimiter := '/',
+	                         left := #tmp_aktor_type,
+	                         right := #tmp_aktor_name_cmd);
+	    
+	    IF #tmp_aktor_name_cmd <> '' THEN //if not set it cant match 
+	        IF #tmp_aktor_type = #tmp_input_type THEN //type matches, continue
+	            //extract aktor name from topic
+	            "NodeSend_HelperSplitStringByIn"(split_string := #tmp_aktor_name_cmd,
+	                                 delimiter := '/',
+	                                 left := #tmp_aktor_name,
+	                                 right:=#tmp_cmd);
+	            IF #tmp_aktor_name = #tmp_input_name THEN
+	                #msg := "NodeBuffer".interprete_aktor.msg;
+	                #cmd := #tmp_cmd;
+	                #NodeUdp_check_aktor_req := TRUE;
+	                "NodeBuffer".interprete_aktor.working := FALSE;
+	                
+	                //split message if used with '=' as delimiter. e.g. -> aktor/heater/office/set_param#ctrl_mode=3
+	                //will mainly be used with set param or set value
+	                "NodeSend_HelperSplitStringByIn"(split_string := "NodeBuffer".interprete_aktor.msg,
+	                                     delimiter := '=',
+	                                     left := #msg_key,
+	                                     right := #msg_value);
+	                
+	            END_IF;
+	        END_IF;
+	    END_IF;
+	END_IF;
+END_FUNCTION
+
+FUNCTION "NodeSend_HelperGetDTLstring" : String
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      str : String;
+      tmp_index : Int;
+      tmp_dtl {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+   END_VAR
+
+
+BEGIN
+	#tmp_index := RD_LOC_T(#tmp_dtl);
+	#str := '';
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := UINT_TO_STRING(#tmp_dtl.YEAR)), IN2 := '_');
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := USINT_TO_STRING(#tmp_dtl.MONTH)), IN2 := '_');
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := USINT_TO_STRING(#tmp_dtl.DAY)), IN2 := ' ');
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := USINT_TO_STRING(#tmp_dtl.HOUR)), IN2 := ':');
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := USINT_TO_STRING(#tmp_dtl.MINUTE)), IN2 := ':');
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := USINT_TO_STRING(#tmp_dtl.SECOND)), IN2 := '');
+	
+	#NodeSend_HelperGetDTLstring := #str;
+	
+END_FUNCTION
+
+FUNCTION "NodeSend_HelperStringToTime" : Time
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "time" : String;
+   END_VAR
+
+
+BEGIN
+	#NodeSend_HelperStringToTime := INT_TO_TIME(STRING_TO_INT(#time))*1000;
+END_FUNCTION
+
+FUNCTION "NodeSend_HelperTimeToString" : String
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "time" : Time;
+   END_VAR
+
+
+BEGIN
+	#NodeSend_HelperTimeToString := INT_TO_STRING(TIME_TO_INT(#time / 1000));
+	
+END_FUNCTION
+
+FUNCTION_BLOCK "Node_DI_flag"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      signal_input : Bool;
+      ignore_jitter : Time := T#1s;
+      input_name : String;
+      message : String;
+   END_VAR
+
+   VAR_OUTPUT 
+      signal_changed : Bool;
+   END_VAR
+
+   VAR 
+      mem_last_signal : Bool;
+      next_valid_jitter {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      counter_val : Int;
+   END_VAR
+
+   VAR_TEMP 
+      read_time_err : Int;
+      timestamp {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      time_diff : Time;
+   END_VAR
+
+
+BEGIN
+	#read_time_err := RD_LOC_T(#timestamp);
+	#signal_changed := FALSE;
+	
+	//check rising flag 
+	IF #signal_input AND NOT #mem_last_signal THEN
+	    //ignore if jitter time > 0; only fire new event if jitter time is over
+	    IF #timestamp > #next_valid_jitter THEN
+	        #next_valid_jitter := #timestamp + #ignore_jitter;
+	        #counter_val := #counter_val + 1;
+	        #signal_changed := TRUE;
+	        
+	        "NodeSend_input"(name := #input_name,
+	                         message := CONCAT(IN1:=CONCAT(IN1:='{', IN2:='switches:'), IN2:=CONCAT(IN1:=INT_TO_STRING(#counter_val), IN2:='}'))
+	        );
+	    END_IF;
+	END_IF;
+	#mem_last_signal := #signal_input;
+	
+END_FUNCTION_BLOCK
+
+FUNCTION "NodeUdp_interprete_rcv_frame" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      topic : String;
+      payload : String;
+   END_VAR
+
+   VAR_TEMP 
+      topic_first_part : String;
+      topic_rest_of_first_part : String;
+      topic_second_part : String;
+      topic_rest_of_second_part : String;
+      str : String;
+      tmp_dtl {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      tmp_index : Int;
+      tmp_loop : Int;
+   END_VAR
+
+
+BEGIN
+	(*#######################################################################################
+	
+	    NodeUdp_interprete_rcv_frame      
+	        every NodeUdp frame received by this PLC will be interpreted in this FC
+	             
+	        V00.01      - creation
+	        V00.02      - change burst to repeat with x frames (defined by integer in msg)
+	########################################################################################*)
+	
+	
+	//###############################################################
+	//##################### get first part of topic #################
+	"NodeSend_HelperSplitStringByIn"(split_string:=#topic,
+	                            delimiter:='/',
+	                            left:=#topic_first_part,
+	                            right:=#topic_rest_of_first_part);
+	
+	//interact global with Remote plc
+	IF #topic_first_part = 'plc_get' THEN
+	    "NodeSend_HelperSplitStringByIn"(split_string := #topic_rest_of_first_part,
+	                                delimiter := '/',
+	                                left := #topic_second_part,
+	                                right := #topic_rest_of_second_part);
+	
+	    IF #topic_second_part = 'timestamp' THEN
+	        //-> return current timestamp from PLC
+	        #str := "NodeSend_HelperGetDTLstring"();
+	    ELSIF #topic_second_part = 'verbose' THEN
+	        #str := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.verbose));
+	    ELSIF #topic_second_part = 'DataLoggerEnabled' THEN
+	        #str := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.DataLoggerEnabled));
+	        
+	    ELSIF #topic_second_part = 'all' THEN
+	        #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'verbose='),
+	                       IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.verbose)), IN2 := ', '));
+	        #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'DataLoggerEnabled='),
+	                       IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.DataLoggerEnabled)), IN2 := ', '));
+	        #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'max_send_msg_NodeBuffer='),
+	                       IN2 := CONCAT(IN1 := INT_TO_STRING("NodeBuffer".max_send_msg_NodeBuffer), IN2 := ', '));
+	        #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'DL_max_buffer_index='),
+	                       IN2 := CONCAT(IN1 := INT_TO_STRING("dl_buffer".max_buffer_index), IN2 := ', '));
+	        
+	        "NodeSend___send"(topic := #topic,
+	                                  msg := #str);
+	                
+	    ELSE
+	        "NodeSend_ERROR"(module := 'NodeUdp_interprete_rcv_frame',
+	                             message := CONCAT(IN1 := 'unknown topic second part plc_get/', IN2 := #topic_second_part));
+	    END_IF;
+	    "NodeSend___send"(topic := #topic,
+	                      msg := #str);
+	    
+	ELSIF #topic_first_part = 'plc_set' THEN
+	    //-> set a global value in plc (NodeUdpBuffer)
+	    "NodeSend_HelperSplitStringByIn"(split_string := #topic_rest_of_first_part,
+	                                     delimiter := '/',
+	                                     left := #topic_second_part,
+	                                     right := #topic_rest_of_second_part);
+	      
+	    IF #topic_second_part = 'verbose' THEN
+	        "NodeBuffer".global.verbose := INT_TO_BOOL(STRING_TO_INT(#payload));
+	    ELSIF #topic_second_part = 'DataLoggerEnabled' THEN
+	        "NodeBuffer".global.DataLoggerEnabled := INT_TO_BOOL(STRING_TO_INT(#payload));
+	    ELSIF #topic_second_part = 'AtDayKeepLightOff' THEN
+	        "NodeBuffer".global.AtDayKeepLightOff := INT_TO_BOOL(STRING_TO_INT(#payload));
+	    ELSIF #topic_second_part = 'reset_counter' THEN
+	        "dl_buffer".max_buffer_index := 0;
+	        "NodeBuffer".max_send_msg_NodeBuffer := 0;
+	    ELSIF #topic_second_part = 'node_red_ip' THEN
+	        //example 192.168.1.211:77
+	        "NodeSend_HelperSplitStringByIn"(split_string := #payload,
+	                                         delimiter := ':',
+	                                         left := #str, //example 192.168.1.211
+	                                         right := #topic_rest_of_second_part);
+	        //set port
+	        IF #topic_rest_of_second_part <> '' THEN
+	            "NodeBuffer".global.node_red_ip.REM_PORT_NR := STRING_TO_UINT(#topic_rest_of_second_part);
+	        END_IF;
+	        //set ip oktet 1
+	        "NodeSend_HelperSplitStringByIn"(split_string := #str,
+	                                         delimiter := '.',
+	                                         left := #topic_rest_of_second_part,
+	                                         right := #str);
+	        "NodeBuffer".global.node_red_ip.REM_IP_ADDR[1] := STRING_TO_USINT(#topic_rest_of_second_part);
+	        //set ip oktet 2
+	        "NodeSend_HelperSplitStringByIn"(split_string := #str,
+	                                         delimiter := '.',
+	                                         left := #topic_rest_of_second_part,
+	                                         right := #str);
+	        "NodeBuffer".global.node_red_ip.REM_IP_ADDR[2] := STRING_TO_USINT(#topic_rest_of_second_part);
+	        "NodeSend_HelperSplitStringByIn"(split_string := #str,
+	                                         delimiter := '.',
+	                                         left := #topic_rest_of_second_part,
+	                                         right := #str);
+	        "NodeBuffer".global.node_red_ip.REM_IP_ADDR[3] := STRING_TO_USINT(#topic_rest_of_second_part);
+	        "NodeSend_HelperSplitStringByIn"(split_string := #str,
+	                                         delimiter := '.',
+	                                         left := #topic_rest_of_second_part,
+	                                         right := #str);
+	        "NodeBuffer".global.node_red_ip.REM_IP_ADDR[4] := STRING_TO_USINT(#topic_rest_of_second_part);
+	        
+	        
+	    ELSE
+	        "NodeSend_ERROR"(module := 'NodeUdp_interprete_rcv_frame',
+	                             message := CONCAT(IN1 := 'unknown topic second part plc_set/', IN2 := #topic_second_part));
+	    END_IF;
+	    
+	    IF "NodeBuffer".global.verbose THEN
+	        "NodeSend___send"(topic := #topic,
+	                          msg := CONCAT(IN1:=' acknowledge=',IN2:= #payload));
+	    END_IF;
+	    
+	    
+	    (*****************************************
+	    reserved for custom plc behavior
+	    this options are not available at 
+	    other plc´s
+	    ******************************************)
+	ELSIF #topic_first_part = 'plc_custom' THEN
+	    "NodeUdp_custom(1)_1"(topic:=#topic_rest_of_first_part,
+	                          message:=#payload);
+	    
+	    
+	    //################################################################
+	    //just for dbg purpose, answer with received frame
+	ELSIF #topic_first_part = 'mirror' THEN
+	        "NodeSend___send"(topic := 'mirror',
+	                          msg := #payload);
+	   
+	   
+	    //################################################################
+	    //just for dbg purpose, answer with msg.msg frames
+	ELSIF #topic_first_part = 'burst' THEN
+	    #tmp_index := STRING_TO_INT(#payload);
+	    FOR #tmp_loop := 1 TO #tmp_index DO
+	        "NodeSend___send"(topic := #topic,
+	                                  msg := CONCAT(IN1 := 'number: ', IN2 := INT_TO_STRING(#tmp_loop)));
+	    END_FOR;
+	    
+	    
+	    //################################################################
+	    //remove aktor from topic and store message for later interpreting
+	ELSIF #topic_first_part = 'aktor' THEN
+	    IF "NodeBuffer".interprete_aktor.working THEN
+	        "NodeSend_ERROR"(module := 'NodeUdp_interprete_rcv_frame',
+	                                message := CONCAT(IN1:='NodeUdpBuffer.interprete_aktor_working, delete topic: ',
+	                                                  IN2:= "NodeBuffer".interprete_aktor.topic));
+	        
+	        //######## reset "interprete_aktor_working "
+	        //this can be changed, e.g. with aknowledge message from remote
+	        //"NodeUdpBuffer_V0.1".interprete_aktor.working := false;
+	    //ELSE
+	        //"NodeUdp_send_frame"(topic :=  CONCAT(IN1 := 'store at buffer: ', IN2 := #topic_rest), msg := #msg.msg);
+	    END_IF;
+	    
+	    "NodeBuffer".interprete_aktor.working := true;
+	    "NodeBuffer".interprete_aktor.topic := #topic_rest_of_first_part;
+	    "NodeBuffer".interprete_aktor.msg := #payload;
+	    
+	    //watchdog function    
+	ELSIF #topic_first_part = 'watchdog' THEN
+	    "NodeSend___send"(topic := 'watchdog',
+	                      msg := '');
+	ELSE
+	    //received topic is unknown, no interpreting of message
+	    "NodeSend_ERROR"(module := 'NodeUdp_interprete_rcv_frame',
+	                            message := CONCAT(IN1:= 'unknown topic: ',IN2:=#topic));
+	END_IF;
+	
+END_FUNCTION
+
+FUNCTION_BLOCK "NodeUdp_1"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      port_receive : UInt;
+      port_send : UInt;
+      send_status_cycle : Time;
+   END_VAR
+
+   VAR 
+      SENDstate : Int;
+      SENDTCON {OriginalPartName := 'T_CON'; LibVersion := '4.0'} : TCON;
+      SENDconn {OriginalPartName := 'TCON_Param'; LibVersion := '1.0'} : TCON_Param;
+      SENDTUSEND {OriginalPartName := 'T_SEND'; LibVersion := '4.0'} : TUSEND;
+   END_VAR
+   VAR DB_SPECIFIC
+      SENDdata : String;
+   END_VAR
+   VAR 
+      SENDdataLength : UInt;
+      SENDremote_addr {OriginalPartName := 'TADDR_Param'; LibVersion := '1.0'} : TADDR_Param;
+      SENDdataChar { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Array[0..255] of Char;
+      RCVTCON {OriginalPartName := 'T_CON'; LibVersion := '4.0'} : TCON;
+      RCVTURCV {OriginalPartName := 'T_RCV'; LibVersion := '4.0'} : TURCV;
+      RCVconn {OriginalPartName := 'TCON_Param'; LibVersion := '1.0'} : TCON_Param;
+      RCVstate : Int;
+      RCVdata : String;
+      RCVRemoteAddr {OriginalPartName := 'TADDR_Param'; LibVersion := '1.0'} : TADDR_Param;
+   END_VAR
+   VAR DB_SPECIFIC
+      RCVdataByte : Array[0..255] of Byte;
+      RCVdataChar { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT RCVdataByte : Array[0..255] of Char;
+   END_VAR
+   VAR 
+      RCVdataByte_length : UDInt;
+      TDISCON_SEND {OriginalPartName := 'T_DISCON'; LibVersion := '2.1'} : TDISCON;
+      TDISCON_RCV {OriginalPartName := 'T_DISCON'; LibVersion := '2.1'} : TDISCON;
+      next_send_status {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      send_status_count : Int;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_index : Int;
+      tmp_uint : UInt;
+      tmp_RCVdata_topic : String;
+      tmp_now_DT {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      tmp_RD_LOC_T_err : Int;
+      tmp_str : String;
+   END_VAR
+
+   VAR CONSTANT 
+      INIT : Int := 0;
+      WORKING : Int := 1;
+      RESET : Int := 2;
+      port_send_default : UInt := 7725;
+      port_receive_default : UInt := 7724;
+      CONNSEND_ID : Word := 16#25;
+      CONNRCV_ID : Word := 16#24;
+   END_VAR
+
+
+BEGIN
+	(*####################################################################################                                                                 
+	## handles all communication to NodeRed webserver at raspberry 3
+	## 
+	
+	    NodeUdp         V00.01 - creation        
+	                    V00.011 - set conn IDs from FB Input
+	                    V00.02  - add dbg prints with old connection
+	                    V00.021 - use send port from input
+	                    V00.03  - remove dbg prints
+	                    V00.04  - add send_status_cycle / watchdog
+	      
+	#####################################################################################*)
+	
+	
+	//+++++++++++++++++++++++++++++++++++++++ SEND +++++++++++++++++++++++++++++++++++++
+	#SENDTCON(ID := #CONNSEND_ID,
+	          CONNECT := #SENDconn);
+	
+	#SENDTUSEND(ID := #CONNSEND_ID,
+	            //LEN :=  INT_TO_UINT( LEN(#SENDdata)-2),,,
+	            DATA := #SENDdataChar , //tmp_msg        #SENDdata
+	            ADDR := #SENDremote_addr);
+	
+	IF #SENDTUSEND.REQ = TRUE THEN
+	    #SENDTUSEND.REQ := FALSE;
+	END_IF;
+	
+	#TDISCON_SEND(ID:=#CONNSEND_ID);
+	
+	
+	//+++++++++++++++++++++++++++++++++++++++ RCV +++++++++++++++++++++++++++++++++++++
+	#RCVTCON(ID := #CONNRCV_ID,
+	         CONNECT := #RCVconn);
+	
+	#RCVTURCV(EN_R := true,
+	          ID := #CONNRCV_ID,
+	          LEN := 0,
+	          RCVD_LEN => #RCVdataByte_length,
+	          DATA := #RCVdataByte,
+	          ADDR := #RCVRemoteAddr);
+	
+	#TDISCON_RCV(ID:=#CONNRCV_ID);
+	
+	//+++++++++++++++++++++++++++++++++++++++ SEND +++++++++++++++++++++++++++++++++++++
+	CASE #SENDstate OF
+	    #INIT:
+	        #SENDconn.ID := #CONNSEND_ID;
+	        #SENDconn.CONNECTION_TYPE := 19;
+	        #SENDconn.ACTIVE_EST := FALSE;
+	        #SENDconn.LOCAL_TSAP_ID_LEN := 2;
+	        #SENDconn.REM_STADDR_LEN := 0;
+	        #SENDconn.REM_TSAP_ID_LEN := 0;
+	      
+	        //#SENDconn.LOCAL_TSAP_ID[1] := UINT_TO_BYTE(#port_send_default / 256);
+	        //#SENDconn.LOCAL_TSAP_ID[2] := UINT_TO_BYTE(#port_send_default MOD 256);
+	        // now we are using static remote ip/port from rpi3 with nodered 
+	        #SENDconn.LOCAL_TSAP_ID[1] := UINT_TO_BYTE(#port_send / 256);
+	        #SENDconn.LOCAL_TSAP_ID[2] := UINT_TO_BYTE(#port_send MOD 256);
+	        
+	        #SENDTCON.REQ := TRUE;
+	        #TDISCON_SEND.REQ := FALSE;
+	        
+	        IF #SENDTCON.DONE THEN
+	          #SENDTCON.REQ := FALSE;
+	          #SENDstate := #WORKING;
+	
+	        END_IF;
+	        IF #SENDTCON.ERROR THEN
+	            #SENDTCON.REQ := FALSE;
+	            //IF #SENDTCON.STATUS = W#16#80A3 THEN //Attempt is being made to terminate a non-existent connection or the connection is already terminated.
+	            //    #SENDstate := #RESET;
+	            //END_IF;
+	            #SENDstate := #RESET;
+	            "dl_NodeUdp"(submodule := 'init_send_ERROR',
+	                                 message := INT_TO_STRING(WORD_TO_INT(#SENDTCON.STATUS)));
+	        END_IF;
+	        
+	    #WORKING:
+	        IF NOT #SENDTUSEND.BUSY THEN
+	            //TODO: add exception handling for ""NodeBuffer".index_send < 10 "
+	            IF "NodeBuffer".index_send > 0 AND "NodeBuffer".index_send < 11 THEN
+	                //send a warning if index increases
+	                (*IF "NodeBuffer".index_send > 6 THEN
+	                    "NodeSend_ERROR"(module := 'NodeUdp',
+	                                     message := CONCAT(IN1:='NodeBuffer.index_send increases: ', IN2:= INT_TO_STRING("NodeBuffer".index_send))
+	                    );
+	                END_IF;*)
+	                    
+	                "NodeBuffer".index_send := "NodeBuffer".index_send - 1;
+	                IF "NodeBuffer".max_send_msg_NodeBuffer < "NodeBuffer".index_send THEN
+	                    "NodeBuffer".max_send_msg_NodeBuffer := "NodeBuffer".index_send;
+	                END_IF;
+	                #SENDTUSEND.REQ := TRUE;
+	                
+	                
+	                FOR #tmp_index := 0 TO 255 DO
+	                    #SENDdata[#tmp_index] := ' ';
+	                END_FOR;
+	                #SENDdata := "NodeBuffer".send_data["NodeBuffer".index_send];
+	                
+	                //#SENDdata := CONCAT(IN1 := '', IN2 := "NodeBuffer".send_data["NodeBuffer".index_send].topic);
+	                //#SENDdata := CONCAT(IN1 := #SENDdata, IN2 := '#');
+	                //#SENDdata := CONCAT(IN1 := #SENDdata, IN2 := "NodeBuffer".send_data["NodeBuffer".index_send].msg);
+	                
+	                //######################################## TODO #####################################
+	                // now we are using static remote ip/port from rpi3 with nodered 
+	                //#SENDremote_addr := "NodeUdpBuffer_V0.1".send_data["NodeUdpBuffer_V0.1".index_send].remoteAddr;
+	                #SENDremote_addr := "NodeBuffer".global.node_red_ip;
+	                //#SENDremote_addr.REM_PORT_NR := #port_send;
+	                
+	                FOR #tmp_index := 0 TO 255 DO
+	                    #SENDdataChar[#tmp_index] := ' ';
+	                END_FOR;
+	                Strg_TO_Chars(Strg := #SENDdata,
+	                              pChars := 0,
+	                              Chars := #SENDdataChar,
+	                              Cnt=> #tmp_uint );
+	            ELSE
+	                #SENDTUSEND.REQ := FALSE;
+	            END_IF;
+	        ELSE
+	            #SENDTUSEND.REQ := FALSE;
+	        END_IF;
+	        
+	    #RESET:
+	        #TDISCON_SEND.REQ := TRUE;
+	        IF #TDISCON_SEND.DONE THEN
+	            #TDISCON_SEND.REQ := FALSE;
+	            #SENDstate := #INIT;
+	            "dl_NodeUdp"(submodule := 'send',
+	                                 message := 'reset done');
+	        END_IF;
+	END_CASE;
+	
+	//+++++++++++++++++++++++++++++++++++++++ RCV +++++++++++++++++++++++++++++++++++++
+	CASE #RCVstate OF
+	    #INIT:
+	    #RCVTCON.REQ := TRUE;
+	    
+	    #RCVconn.ID := #CONNRCV_ID;
+	    #RCVconn.CONNECTION_TYPE := 19;
+	    #RCVconn.ACTIVE_EST := FALSE;
+	    #RCVconn.LOCAL_TSAP_ID_LEN := 2;
+	    #RCVconn.REM_STADDR_LEN := 0;
+	    #RCVconn.REM_TSAP_ID_LEN := 0;
+	    
+	    #TDISCON_RCV.REQ := false;
+	
+	    //if input #port_listen == 0 use default server port  
+	    IF #port_receive = 0 THEN
+	        #RCVconn.LOCAL_TSAP_ID[1] := UINT_TO_BYTE(#port_receive_default / 256);
+	        #RCVconn.LOCAL_TSAP_ID[2] := UINT_TO_BYTE(#port_receive_default MOD 256);
+	    ELSE
+	        #RCVconn.LOCAL_TSAP_ID[1] := UINT_TO_BYTE(#port_receive / 256);
+	        #RCVconn.LOCAL_TSAP_ID[2] := UINT_TO_BYTE(#port_receive MOD 256);
+	    END_IF;
+	  
+	    IF #RCVTCON.DONE THEN
+	      #RCVTCON.REQ := FALSE;
+	      #RCVstate := #WORKING;
+	
+	    END_IF;
+	    IF #RCVTCON.ERROR THEN
+	        #RCVTCON.REQ := FALSE;
+	        //Attempt is being made to terminate a non-existent connection or the connection is already terminated
+	        IF #RCVTCON.STATUS = W#16#80A3 THEN
+	            #RCVstate := #RESET;
+	        END_IF;
+	        "dl_NodeUdp"(submodule := 'init_receive_ERROR',
+	                             message := INT_TO_STRING(WORD_TO_INT(#RCVTCON.STATUS)));
+	    END_IF;
+	
+	#WORKING:
+	    (*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	    +++++++++++++++++++++++++++++++++++++++ interprete +++++++++++++++++++++++++++++++++++++
+	    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*)
+	    IF #RCVTURCV.NDR THEN
+	        Chars_TO_Strg(Chars:=#RCVdataChar,
+	                      pChars:=0,
+	                      Cnt:=UDINT_TO_UINT(#RCVdataByte_length),
+	                      Strg=>#RCVdata);
+	        
+	        #tmp_index := FIND(IN1 := #RCVdata, IN2 := '#');
+	        
+	        IF #tmp_index = 0 THEN
+	            #tmp_RCVdata_topic := #RCVdata;
+	        ELSE
+	            #tmp_RCVdata_topic := LEFT(IN := #RCVdata, L := #tmp_index - 1);
+	        END_IF;
+	        #tmp_str := RIGHT(IN:=#RCVdata, L:=UDINT_TO_INT(#RCVdataByte_length) - #tmp_index);
+	        
+	        "NodeUdp_interprete_rcv_frame"(topic:=#tmp_RCVdata_topic,
+	                                       payload:=#tmp_str);
+	        
+	    END_IF;
+	
+	     
+	#RESET:
+	    #TDISCON_RCV.REQ := TRUE;
+	    IF #TDISCON_RCV.DONE THEN
+	        #RCVstate := #INIT;
+	        "dl_NodeUdp"(submodule := 'receive',
+	                             message := 'reset done');
+	    END_IF;
+	END_CASE;
+	
+	
+	
+	(*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	+++++++++++++++++++++++++++++++++++++++  WATCHDOG  +++++++++++++++++++++++++++++++++++++
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*)
+	#tmp_RD_LOC_T_err := RD_LOC_T(#tmp_now_DT);
+	IF (#send_status_cycle <> 0 AND #tmp_now_DT > #next_send_status) THEN
+	    #next_send_status := T_ADD(IN1 := #tmp_now_DT, IN2 := #send_status_cycle);
+	    #send_status_count := #send_status_count + 1;
+	    
+	    #tmp_str := 'plc_time=';
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := UINT_TO_STRING(#tmp_now_DT.YEAR)), IN2 := '-');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := USINT_TO_STRING(#tmp_now_DT.MONTH)), IN2 := '-');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := USINT_TO_STRING(#tmp_now_DT.DAY)), IN2 := '_');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := USINT_TO_STRING(#tmp_now_DT.HOUR)), IN2 := ':');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := USINT_TO_STRING(#tmp_now_DT.MINUTE)), IN2 := ':');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := USINT_TO_STRING(#tmp_now_DT.SECOND)), IN2 := ', ');
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := 'send_frames='), IN2 := INT_TO_STRING(#send_status_count));
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := ', max_msg_NodeBuffer='), IN2 := INT_TO_STRING("NodeBuffer".max_send_msg_NodeBuffer));
+	    // #status."max_msg_NodeBuffer.send" := 0; //TODO: to get max without looking at the database
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := ', max_DL_Buffer='), IN2 := INT_TO_STRING("dl_buffer".max_buffer_index));
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := ', verbose='), IN2 := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.verbose)));
+	    #tmp_str := CONCAT(IN1 := CONCAT(IN1 := #tmp_str, IN2 := ', AtDayKeepLightOff='), IN2 := INT_TO_STRING(BOOL_TO_INT("NodeBuffer".global.AtDayKeepLightOff)));
+	    "NodeSend___send"(topic:='status/log',
+	                      msg:=#tmp_str);
+	    
+	END_IF;
+	
+	
+END_FUNCTION_BLOCK
+

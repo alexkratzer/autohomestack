@@ -1,0 +1,16 @@
+﻿TYPE "UDT_jalousie_event"
+VERSION : 0.1
+   STRUCT
+      "time" : Struct
+         hour : Int;
+         minute : Int;
+         secound : Int;
+      END_STRUCT;
+      position : Int;
+      angle : Int;
+      enable : Bool;
+      driving_up : Bool;
+   END_STRUCT;
+
+END_TYPE
+

@@ -1,0 +1,214 @@
+﻿FUNCTION "dl_MSG" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      module : String;
+      submodule : String;
+      "type" : Int;   // 0=empty;1=info;2=warning;3=error;4=watchdog
+      message : String;
+   END_VAR
+
+   VAR_TEMP 
+      send_type : String;
+      tmp_RD_LOC_RET : Int;
+      tmp_now_DT {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      send_string : String;
+   END_VAR
+
+
+BEGIN
+	
+	IF "dl_buffer".index_data < 10 AND "dl_buffer".index_data >= 0 THEN
+	    CASE #type OF
+	        0:
+	            #send_type := 'unused';
+	        1:
+	            #send_type := 'info';
+	        2:
+	            #send_type := 'warning';
+	        3:
+	            #send_type := 'error';
+	        4:
+	            #send_type := 'watchdog';
+	        5:
+	            #send_type := 'DataLogger';
+	        6:
+	            #send_type := 'AktorEvent';
+	        7:
+	            #send_type := 'ComEvent';
+	        ELSE  // Statement section ELSE
+	            ;
+	    END_CASE;
+	    #tmp_RD_LOC_RET := RD_LOC_T(#tmp_now_DT);
+	    
+	    #send_string := '';
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := UINT_TO_STRING(#tmp_now_DT.YEAR)), IN2 := ':');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := USINT_TO_STRING(#tmp_now_DT.MONTH)), IN2 := ':');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := USINT_TO_STRING(#tmp_now_DT.DAY)), IN2 := ':');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := USINT_TO_STRING(#tmp_now_DT.HOUR)), IN2 := ':');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := USINT_TO_STRING(#tmp_now_DT.MINUTE)), IN2 := ':');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := USINT_TO_STRING(#tmp_now_DT.SECOND)), IN2 := ';');
+	    
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := #module), IN2 := ';');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := #submodule), IN2 := ';');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := #send_type), IN2 := ';');
+	    #send_string := CONCAT(IN1 := CONCAT(IN1 := #send_string, IN2 := #message), IN2 := ';');
+	    
+	    
+	    "dl_buffer".data["dl_buffer".index_data] := #send_string;
+	    "dl_buffer".index_data := "dl_buffer".index_data + 1;
+	ELSE
+	    "dl_buffer".index_data := 0;
+	    
+	END_IF;
+END_FUNCTION
+
+FUNCTION "dl_NodeUdp" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      submodule : String;
+      message : String;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_send_string : String;
+      tmp_countIdx : Int;
+   END_VAR
+
+
+BEGIN
+	
+	"dl_MSG"(module := 'NodeUdp',
+	                       submodule := #submodule,
+	                       type := 1,
+	                       message := #message);
+	
+END_FUNCTION
+
+FUNCTION_BLOCK "dl_client"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      con_ID : CONN_OUC;
+      port : Int;
+      watchdog : Time;
+   END_VAR
+
+   VAR 
+      init { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+      con_send {OriginalPartName := 'TCON_Param'; LibVersion := '1.0'; S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : TCON_Param;
+      TSEND_C {OriginalPartName := 'TSEND_C'; LibVersion := '3.0'} : TSEND_C;
+      cmd : Struct
+         connect : Bool;
+         request : Bool;
+         new_send_request : Bool;
+      END_STRUCT;
+      state : Int;
+      tmp_data_char { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Array[0..255] of Char;
+      tmp_data_char_length : UInt;
+      IBS_next_request {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+   END_VAR
+
+   VAR_TEMP 
+      IBS_timestamp {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      IBS_read_time_err : Int;
+   END_VAR
+
+   VAR CONSTANT 
+      state_INIT : Int := 0;
+      state_RESET : Int := 1;
+      state_PENDING : Int := 2;
+      state_SEND_REQ : Int := 3;
+      state_SEND_WORKING : Int := 4;
+      state_SEND_DONE : Int := 5;
+   END_VAR
+
+
+BEGIN
+	(*#######################################################################################
+	    
+	    description:
+	    client which sends log messages to the perl server which stores the logs
+	    in the mySQL database. use the FC "DataLoggerMSG" to send msg
+	########################################################################################*)
+	(*
+	//IBS Watchdog START
+	#IBS_read_time_err := RD_LOC_T(#IBS_timestamp);
+	IF #watchdog <> 0 AND #IBS_timestamp > #IBS_next_request THEN
+	    #IBS_next_request := T_ADD(IN1 := #IBS_timestamp, IN2 := #watchdog);
+	    "DataLoggerMSG"(module := 'system',
+	                           submodule := INT_TO_STRING(#port),
+	                           type := 4,
+	                           message := '');
+	END_IF;
+	//IBS Watchdog END
+	*)
+	
+	#TSEND_C(REQ := #cmd.request,
+	         CONT := #cmd.connect,
+	         CONNECT := #con_send,
+	         DATA := #tmp_data_char,
+	         LEN:=(#tmp_data_char_length + 2)
+	);
+	
+	CASE #state OF
+	    #state_INIT:
+	        #con_send.ID := #con_ID;
+	        #con_send.REM_TSAP_ID_LEN := 2;
+	        #con_send.REM_STADDR[1] := 192;
+	        #con_send.REM_STADDR[2] := 168;
+	        #con_send.REM_STADDR[3] := 1;
+	        #con_send.REM_STADDR[4] := 200;
+	        #con_send.REM_TSAP_ID[1] := INT_TO_BYTE(#port / 256);
+	        #con_send.REM_TSAP_ID[2] := INT_TO_BYTE(#port MOD 256);
+	        
+	        #state := #state_PENDING;
+	        
+	    #state_RESET:
+	        #cmd.request := FALSE;
+	        #cmd.connect := FALSE;
+	        #state := #state_PENDING;
+	        
+	    #state_PENDING:
+	        IF "dl_buffer".index_data > 0 THEN
+	            
+	            IF "dl_buffer".max_buffer_index < "dl_buffer".index_data THEN
+	                "dl_buffer".max_buffer_index := "dl_buffer".index_data;
+	            END_IF;
+	            
+	            "dl_buffer".index_data := "dl_buffer".index_data - 1;
+	            
+	            Strg_TO_Chars(Strg := "dl_buffer".data["dl_buffer".index_data],
+	                          pChars := 2,
+	                          Cnt => #tmp_data_char_length,
+	                          Chars := #tmp_data_char);
+	            
+	            #cmd.connect := TRUE;
+	            #state := #state_SEND_REQ;
+	        END_IF;
+	        
+	    #state_SEND_REQ:
+	        IF #TSEND_C.STATUS = w#16#7004 THEN
+	            #cmd.request := TRUE;
+	            #state := #state_SEND_WORKING;
+	        END_IF;
+	
+	    #state_SEND_WORKING:
+	        #cmd.request := FALSE;
+	        IF #TSEND_C.DONE OR #TSEND_C.STATUS = w#16#7004  THEN
+	            #state := #state_SEND_DONE;
+	        END_IF;
+	        
+	    #state_SEND_DONE:
+	        #cmd.connect := FALSE;
+	        IF #TSEND_C.STATUS = w#16#7000 THEN
+	            #state := #state_PENDING;
+	        END_IF;
+	        
+	    ELSE
+	        #state := #state_RESET;
+	END_CASE;
+	
+END_FUNCTION_BLOCK
+

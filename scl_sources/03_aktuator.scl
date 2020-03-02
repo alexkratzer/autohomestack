@@ -1,0 +1,1155 @@
+﻿FUNCTION_BLOCK "jalousieMotor_1"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      new_position : Int;   // drive to position (0 = up) (100 = down)
+      new_angle : Int;   // drive to angel (0 = up) (100 = down)
+      local_DTL {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;   // current time (DTL)
+      full_name : String;
+   END_VAR
+
+   VAR_OUTPUT 
+      drive_up : Bool;   // HW Motor Output
+      drive_down : Bool;   // HW Motor Output
+      position : Int;   // current position (0 = up) (100 = down)
+      angel : Int;   // current angel (0 = up) (100 = down)
+   END_VAR
+
+   VAR_IN_OUT 
+      init : Bool;   // drive absolute up
+   END_VAR
+
+   VAR RETAIN
+      state : Int;
+      cur_data : Struct
+         position_in_time : Time;
+         angle_in_time : Time;
+         position : Int;
+         angle : Int;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      timer_init {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+      last_DTL {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      DRIVING_TIME_ANGLE { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time := T#1S_500MS;   // constante
+      DRIVING_TIME_POSITION { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time := T#53S;   // constante
+   END_VAR
+
+   VAR_TEMP 
+      do_init : Bool;
+      timediff : Time;
+   END_VAR
+
+   VAR CONSTANT 
+      STATE_HOLD : Int := 0;
+      STATE_UP : Int := 1;
+      STATE_DOWN : Int := 2;
+      DIGIT_SCALA : Real := 100.0;
+   END_VAR
+
+
+BEGIN
+	
+	(*#######################################################################################
+	                                                                                     
+	      "jalousie_motor"      V00.00.01 - creation                        
+	                            V00.00.11 - add log at "positionen berechnen"
+	                            V00.00.14 - add log at "positionen berechnen"
+	                            V00.00.15 - disable log at do_init                                                                                    
+	########################################################################################*)
+	// 600ms ~1 Step driving time
+	#DRIVING_TIME_ANGLE := t#1s_500ms;
+	#DRIVING_TIME_POSITION := t#55s;
+	
+	//#######################################################################################
+	//################################### sequence control ##################################
+	//#######################################################################################
+	#drive_up := false;
+	#drive_down := false;
+	
+	#timer_init(IN := #init,
+	            PT := #DRIVING_TIME_POSITION + #DRIVING_TIME_ANGLE + t#2s,
+	            Q => #do_init);
+	
+	IF #do_init THEN
+	  #drive_up := true;
+	  #init := FALSE;
+	  GOTO INIT;
+	END_IF;
+	
+	CASE #state OF
+	  #STATE_HOLD:
+	    //bei veränderter position diese anfahren
+	    IF #new_position > #cur_data.position OR #new_angle < #cur_data.angle THEN
+	      #state := #STATE_DOWN;
+	    ELSIF #new_position < #cur_data.position OR #new_angle > #cur_data.angle THEN
+	      #state := #STATE_UP;
+	    END_IF;
+	    
+	  #STATE_DOWN:
+	    //solange position noch nicht erreicht wurde wird weitergefahren
+	    IF #new_position > #cur_data.position THEN
+	      #drive_down := true;
+	    ELSIF #new_angle < #cur_data.angle THEN
+	      #drive_up := true;
+	    ELSE
+	      #state := #STATE_HOLD;
+	    END_IF;
+	    
+	  #STATE_UP:
+	    //solange position noch nicht erreicht wurde wird weitergefahren
+	    IF #new_position < #cur_data.position THEN
+	      #drive_up := true;
+	    ELSIF #new_angle > #cur_data.angle THEN
+	      #drive_down := true;
+	    ELSE
+	      #state := #STATE_HOLD;
+	    END_IF;
+	  ELSE
+	      "NodeSend_ERROR"(module := #full_name,
+	                         message := 'JALOUSIE_MOTOR unknown state');
+	    #state := #STATE_HOLD;
+	END_CASE;
+	
+	INIT:
+	//#######################################################################################
+	//############################ positionen berechnen #####################################
+	//#######################################################################################
+	//position während hochfahren
+	IF #drive_up THEN
+	  #timediff := T_DIFF(IN1 := #local_DTL, IN2 := #last_DTL);
+	  IF #cur_data.angle_in_time <= t#0ms THEN
+	    #cur_data.position_in_time := T_SUB(IN1 := #cur_data.position_in_time, IN2 := #timediff);
+	    IF #cur_data.position_in_time <= t#0ms THEN
+	        #cur_data.position_in_time := t#0ms;
+	        //################### TO-DO: optimieren ############################
+	        //"log"(type:=2, id:=#interface_ID, msg :='jal drive_up pos_in_time < 0ms');
+	    END_IF;
+	  ELSE
+	    #cur_data.angle_in_time := T_SUB(IN1 := #cur_data.angle_in_time, IN2 := #timediff);
+	    IF #cur_data.angle_in_time <= t#0ms THEN
+	        #cur_data.angle_in_time := t#0ms;
+	        //################### TO-DO: optimieren ############################
+	        //"log"(type:=2, id:=#interface_ID, msg :='jal drive_up angle_in_time < 0ms');
+	    END_IF;
+	  END_IF;
+	END_IF;
+	
+	//position während runterfahren
+	IF #drive_down THEN
+	  #timediff := T_DIFF(IN1 := #local_DTL, IN2 := #last_DTL);
+	  IF #cur_data.angle_in_time >= #DRIVING_TIME_ANGLE THEN
+	      #cur_data.position_in_time := T_ADD(IN1 := #cur_data.position_in_time, IN2 := #timediff);
+	        IF #cur_data.position_in_time > #DRIVING_TIME_POSITION THEN
+	            #cur_data.position_in_time := #DRIVING_TIME_POSITION;
+	            //################### TO-DO: optimieren ############################
+	            //"log"(type:=2, id:=#interface_ID, msg :='jal drive_down pos_in_time > DRIVING_T_POS');
+	        END_IF;
+	  ELSE
+	      #cur_data.angle_in_time := T_ADD(IN1 := #cur_data.angle_in_time, IN2 := #timediff);
+	        IF #cur_data.angle_in_time > #DRIVING_TIME_ANGLE THEN
+	            #cur_data.angle_in_time := #DRIVING_TIME_ANGLE;
+	            //################### TO-DO: optimieren ############################
+	            //"log"(type:=2, id:=#interface_ID, msg :='jal drive_down angle_in_time > DRIVING_T_ANGLE');
+	        END_IF;
+	  END_IF;
+	END_IF;
+	
+	// normierung der position/zeit zwischen 0 - 100 
+	#cur_data.position := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.position_in_time, MAX := #DRIVING_TIME_POSITION) * #DIGIT_SCALA);
+	#cur_data.angle := REAL_TO_INT(NORM_X(MIN := 0, VALUE := #cur_data.angle_in_time, MAX := #DRIVING_TIME_ANGLE) * #DIGIT_SCALA);
+	
+	//festhalten der Lokalzeit für nächsten zyklus
+	#last_DTL := #local_DTL;
+	
+	//#######################################################################################
+	//################################## set outputs ########################################
+	//#######################################################################################
+	#position := #cur_data.position;
+	#angel := #cur_data.angle;
+	
+	//Exeption handling
+	IF #drive_down AND #drive_up THEN
+	    "NodeSend_ERROR"(module := #full_name, message := 'JALOUSIE_MOTOR drive_up AND drive_down');
+	    
+	  #drive_down := false;
+	  #drive_up := false;
+	END_IF;
+	
+	
+	
+	
+	
+	
+	
+END_FUNCTION_BLOCK
+
+FUNCTION "jal_values" : String
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      msg : String;
+      position : Int;
+      angle : Int;
+      new_position : Int;
+      new_angle : Int;
+      drive_up : Bool;
+      drive_down : Bool;
+   END_VAR
+
+   VAR_TEMP 
+      str : String;
+   END_VAR
+
+
+BEGIN
+	#str := '';
+	#str := #msg;
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'drive_up='),
+	                            IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#drive_up)), IN2 := ';'));
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'drive_down='),
+	                            IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#drive_down)), IN2 := ';'));
+	#str := CONCAT(IN1 := #str, IN2 := 'pos/angle cur=');
+	#str := CONCAT(IN1 := #str, IN2 := INT_TO_STRING(#position));
+	#str := CONCAT(IN1 := #str, IN2 := '/');
+	#str := CONCAT(IN1 := #str, IN2 := INT_TO_STRING(#angle));
+	#str := CONCAT(IN1 := #str, IN2 := ';new=');
+	#str := CONCAT(IN1 := #str, IN2 := INT_TO_STRING(#new_position));
+	#str := CONCAT(IN1 := #str, IN2 := '/');
+	#str := CONCAT(IN1 := #str, IN2 := INT_TO_STRING(#new_angle));
+	#str := CONCAT(IN1 := #str, IN2 := ';');
+	
+	#jal_values := #str;
+END_FUNCTION
+
+FUNCTION "heater_values" : String
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      heater_circuit_state : Bool;
+      current_temp : Real;
+      stop_at_degree : Real;
+      ctrl_mode : Int;
+   END_VAR
+
+   VAR_TEMP 
+      str : String;
+   END_VAR
+
+
+BEGIN
+	
+	#str := '';
+	#str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'heater_circuit_state='),
+	                IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#heater_circuit_state)), IN2 := ';'));
+	 #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'current_temp='),
+	                IN2 := CONCAT(IN1 := REAL_TO_STRING(#current_temp), IN2 := ';'));
+	 #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'stop_at_degree='),
+	                IN2 := CONCAT(IN1 := REAL_TO_STRING(#stop_at_degree), IN2 := ';'));
+	 #str := CONCAT(IN1 := CONCAT(IN1 := #str, IN2 := 'ctrl_mode='),
+	                IN2 := CONCAT(IN1 := INT_TO_STRING(#ctrl_mode), IN2 := ';'));
+	
+	 #heater_values := #str;
+END_FUNCTION
+
+FUNCTION_BLOCK "light_1"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "name" : String;   // identifier name which must match to NodeRed message
+      button : Bool;   // zugeordneter Taster
+      turn_off : Bool;   // statisch ausschalten
+      turn_on : Bool;   // statisch einschalten (u.a. Bewegungsmelder)
+      KeepLightOff : Bool;
+   END_VAR
+
+   VAR_OUTPUT 
+      out : Bool;   // output which controls hardware line
+   END_VAR
+
+   VAR 
+      mask_jitter_impuls {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TP_TIME;
+      button_signal : Bool;
+   END_VAR
+   VAR RETAIN
+      mem_button_flag : Bool;
+   END_VAR
+   VAR 
+      "Tauto-off-timer" {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+   END_VAR
+   VAR RETAIN
+      param : Struct
+         AutoOffTime : Time := T#4h;   // zeitdauer nach der das licht wieder ausgeschalten wird.
+         AutoOffTimeEnable : Bool := true;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      val : Struct
+         switch_signal : Bool;
+         last_switch_signal : Bool;
+         light_on_since : Time;
+         time_left_to_turn_off : Time;
+         toggle : Bool;
+         last_switch_time {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      END_STRUCT;
+      Tturn_off {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+      toggle_timer {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      tmp_toggle_active : Bool;
+      tmpNode : Struct
+         full_name : String;
+         cmdToInterprete : String;
+         MsgToInterprete : String;
+         str : String;
+         msg_key : String;
+         msg_value : String;
+      END_STRUCT;
+      tmp_turn_off_hold : Bool;
+      tmp_turn_off_timer : Bool;
+      tmp_trigger_source : String;
+   END_VAR
+
+   VAR CONSTANT 
+      type_prefix : String := 'light/';
+   END_VAR
+
+
+BEGIN
+	(*####################################################################################                                                                 
+	      light         V00.00.01 - creation                                             
+	                    V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	                        'get'
+	                        'set_switch_value'
+	                        'set_AutoOffLuxEnable'
+	                        'set_AutoOffLux'
+	                        'set_AutoOffTimeEnable'
+	                        'set_AutoOffTime'
+	                        
+	                   19-11-01:        button trigger reset auto-time-off counter value
+	                        
+	                        
+	                        
+	#####################################################################################*)
+	#tmpNode.full_name := CONCAT(IN1 := #type_prefix, IN2 := #name);
+	#tmp_trigger_source := 'undefined';
+	
+	//#######################################################################################
+	//#################################    NodeUdp   ########################################
+	//#######################################################################################
+	IF "NodeUdp_check_aktor_req"("type/name" := #tmpNode.full_name, cmd:=#tmpNode.cmdToInterprete, msg := #tmpNode.MsgToInterprete, msg_key:=#tmpNode.msg_key, msg_value:=#tmpNode.msg_value) THEN
+	   
+	    //V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	    //maybe remove old variant sometime if not more needed....
+	    //than also check if msg_value is needed anymore
+	IF #tmpNode.cmdToInterprete = 'get' THEN
+	    IF #tmpNode.msg_key = '' OR #tmpNode.msg_key = 'all' THEN
+	        //this section could be realized by expanding FC light_values
+	        //#tmpNode."string" := "light_values"(switch_signal := #val.switch_signal, AutoOffTimeEnable := #param.AutoOffTimeEnable, AutoOffTime := #param.AutoOffTime, AutoOffLuxEnable := #param.AutoOffLuxEnable, AutoOffLux := #param.AutoOffLux);
+	            #tmpNode."str" := '';
+	            #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'switch state:'),
+	                                        IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#val.switch_signal)), IN2 := ', '));
+	            #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'light_on_since='),
+	                                        IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#val.light_on_since), IN2 := ', '));
+	            #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'time_left_to_turn_off='),
+	                                        IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#val.time_left_to_turn_off), IN2 := ', '));
+	            #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'AutoOffTimeEnable'),
+	                                        IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#param.AutoOffTimeEnable)), IN2 := ', '));
+	            #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'AutoOffTime='),
+	                                        IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#param.AutoOffTime), IN2 := ''));
+	        ELSIF #tmpNode.msg_key = 'AutoOffTimeEnable' THEN
+	            #tmpNode."str" := INT_TO_STRING(BOOL_TO_INT(#param.AutoOffTimeEnable));
+	        ELSIF #tmpNode.msg_key = 'AutoOffTime' THEN
+	            #tmpNode."str" := "NodeSend_HelperTimeToString"(#param.AutoOffTime);
+	        ELSIF #tmpNode.msg_key = 'switch state' THEN
+	            #tmpNode."str" := INT_TO_STRING(BOOL_TO_INT(#val.switch_signal));
+	        ELSE
+	            "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                                   message := CONCAT(IN1 := 'unknown msg_key to interprete -> ', IN2 := #tmpNode.msg_key));
+	       END_IF;
+	       
+	       "NodeSend_output"(name := CONCAT(IN1 := CONCAT(IN1:=#tmpNode.full_name,IN2:='/'), IN2 := #tmpNode.cmdToInterprete),
+	                         message := #tmpNode."str"
+	       );
+	        
+	   ELSIF #tmpNode.cmdToInterprete = 'set_switch_value' THEN
+	       #tmp_trigger_source := 'remote cmd set_switch_value';
+	        IF #tmpNode.msg_key = 'switch' THEN
+	            #val.switch_signal := NOT #val.switch_signal;
+	        ELSIF #tmpNode.msg_key = 'on' THEN
+	            #val.switch_signal := true;
+	        ELSIF #tmpNode.msg_key = 'off' THEN
+	            #val.switch_signal := false;
+	        ELSIF #tmpNode.msg_key = 'toggle' THEN
+	            #val.toggle := TRUE;
+	        ELSE
+	            "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                                   message := CONCAT(IN1 := 'unknown msg_key to interprete -> ', IN2 := #tmpNode.msg_key));
+	              END_IF;
+	    ELSIF #tmpNode.cmdToInterprete = 'set_AutoOffTime' THEN
+	        #param.AutoOffTime := "NodeSend_HelperStringToTime"(#tmpNode.msg_key);
+	        
+	        
+	        //done with normal message prozessing
+	    ELSE //cmd type not existing
+	        "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                           message := CONCAT(IN1 := 'unknown cmdToInterprete -> ', IN2 := #tmpNode.cmdToInterprete));
+	    END_IF;
+	    
+	    //send response to client
+	    #tmpNode."str" := CONCAT(IN1 := #tmpNode.cmdToInterprete, IN2 := ';');
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'key='),
+	                                IN2 := CONCAT(IN1 := #tmpNode.msg_key, IN2 := ';'));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'value='),
+	                                IN2 := CONCAT(IN1 := #tmpNode.msg_value, IN2 := ';'));
+	    "NodeSend_output"(name := #tmpNode.full_name,
+	                      message := #tmpNode."str");
+	END_IF;
+	
+	//#######################################################################################
+	//################################ process logic  #######################################
+	//#######################################################################################
+	// Entprellen des Signals bei mechanischer Tasterbetätigung
+	// (bzw wenn der stöpsel die ganze zeit rumdrückt)
+	#mask_jitter_impuls(IN := #button,
+	                    PT := t#1s,
+	                    Q => #button_signal);
+	
+	// #signal wechselt bei Änderung
+	IF #button_signal AND NOT #mem_button_flag THEN
+	    #val.switch_signal := NOT #val.switch_signal;
+	    #tmp_trigger_source := 'button_signal';
+	END_IF;
+	#mem_button_flag := #button_signal;
+	
+	// bei turn_on wird eingeschalten
+	IF #turn_on THEN
+	    #val.switch_signal := true;
+	    #tmp_trigger_source := 'input turn_on';
+	END_IF;
+	
+	// bei turn_off input wird für t ausgeschalten 
+	#Tturn_off(IN := #turn_off,
+	           PT := t#5s,
+	           Q => #tmp_turn_off_hold);
+	IF #turn_off THEN
+	    #tmp_trigger_source := 'input turn_off';
+	END_IF;
+	
+	
+	// Timer für automatisches wieder-aus-schalten
+	IF #param.AutoOffTimeEnable THEN
+	    #"Tauto-off-timer"(IN := #val.switch_signal,
+	                       PT := #param.AutoOffTime,
+	                       Q => #tmp_turn_off_timer,
+	                       ET => #val.light_on_since);
+	    #val.time_left_to_turn_off := T_SUB(IN1 := #param.AutoOffTime, IN2 := #val.light_on_since);
+	END_IF;
+	
+	// out param set to signal
+	IF #val.switch_signal AND #tmp_turn_off_timer THEN
+	    #tmp_trigger_source := 'turn_off_timer';
+	    #val.switch_signal := FALSE;
+	END_IF;
+	IF #val.switch_signal AND #tmp_turn_off_hold THEN
+	    #tmp_trigger_source := 'turn_off_hold';
+	    #val.switch_signal := FALSE;
+	END_IF;
+	IF #val.switch_signal AND #KeepLightOff THEN
+	    #tmp_trigger_source := 'KeepLightOff';
+	    #val.switch_signal := FALSE;
+	END_IF;
+	//################# invert light if toggle is set
+	#toggle_timer(IN:=#val.toggle,
+	              PT:=t#2s,
+	              Q=>#tmp_toggle_active);
+	#val.toggle := false;
+	
+	// belegen des ausgangs
+	#out := #val.switch_signal;
+	
+	IF #tmp_toggle_active THEN
+	    #out := NOT #val.switch_signal;
+	END_IF;
+	
+	//signalwechsel an datalogger senden
+	IF #val.last_switch_signal <> #val.switch_signal THEN
+	    #tmpNode."str" := '';
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'switch to:'),
+	                                IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#val.switch_signal)), IN2 := ', '));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'trigger_source:'),
+	                                IN2 := CONCAT(IN1 := #tmp_trigger_source, IN2 := ', '));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'light_on_since:'),
+	                                IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#val.light_on_since), IN2 := ', '));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'time_left_to_turn_off:'),
+	                                IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#val.time_left_to_turn_off), IN2 := ', '));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'AutoOffTimeEnable:'),
+	                                IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#param.AutoOffTimeEnable)), IN2 := ', '));
+	    #tmpNode."str" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."str", IN2 := 'AutoOffTime:'),
+	                                IN2 := CONCAT(IN1 := "NodeSend_HelperTimeToString"(#param.AutoOffTime), IN2 := ''));
+	    
+	    "NodeSend_output"(name:=#tmpNode.full_name,
+	                      message:=#tmpNode."str"
+	    );
+	//    #val.last_switch_time := 
+	     
+	END_IF;
+	#val.last_switch_signal := #val.switch_signal;
+	
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK "heater"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "name" : String;
+      current_temp : Real;
+   END_VAR
+
+   VAR_OUTPUT 
+      heater_circuit { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;   // Signal ob Heizkreis ein/ oder aus sein soll
+   END_VAR
+
+   VAR 
+      switching_delay { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+      last_state : Bool;
+   END_VAR
+   VAR RETAIN
+      param : Struct
+         time_on { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time := T#45m;   // Zeitdauer die Heizkreis eingeschalten ist
+         time_off { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time := T#15m;   // Zeitdauer die Heizkreis ausgeschalten ist
+         start_time { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time_Of_Day := TOD#07:00:00;   // Tageszeit ab wann Heizkreis ein/aus geschalten wird
+         stop_time { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Time_Of_Day := TOD#23:30:00;   // Tageszeit bis wann Heizkreis ein/aus geschalten wird
+         stop_at_degree { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Real := 21.21;   // Temperatur ab welcher nicht mehr geheizt wird
+         ctrl_mode : Int;   // 0 => automatic; 1 => off; 2 => on; else automatic
+         last_ctrl_mode : Int;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      val : Struct
+         heater_circuit_state { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;   // Signal ob Heizkreis ein/ oder aus sein soll
+      END_STRUCT;
+   END_VAR
+
+   VAR_TEMP 
+      "time" : Struct
+         retval : Int;
+         local_DTL {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+         local_TOD : Time_Of_Day;
+      END_STRUCT;
+      tmp_DTL {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      tmpNode : Struct
+         full_name : String;
+         cmdToInterprete : String;
+         MsgToInterprete : String;
+         "string" : String;
+         msg_key : String;
+         msg_value : String;
+      END_STRUCT;
+   END_VAR
+
+   VAR CONSTANT 
+      type_prefix : String := 'heater/';
+   END_VAR
+
+
+BEGIN
+	(*#######################################################################################
+	
+	    heater      V00.00.01 - creation
+	                V00.00.02 - insert read local time
+	                V00.00.03 - integrate web access
+	                V00.00.04 - integrate log heater switch
+	                V00.00.05 - change Get/Set State to Param
+	                V00.02      - disable on/off intervall
+	                V00.03    - update to new netcpsV0.0.10 interface
+	                V00.04    - remove netcps / param with input vars
+	                V00.06    - add node udp interface
+	                V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	                    'get'
+	                    'set_ctrl_mode'
+	                    'set_stop_at_degree'
+	                
+	                
+	                
+	########################################################################################*)
+	#tmpNode.full_name := CONCAT(IN1 := #type_prefix, IN2 := #name);
+	//#######################################################################################
+	//#################################    NodeUdp   ########################################
+	//#######################################################################################
+	IF "NodeUdp_check_aktor_req"("type/name" := #tmpNode.full_name, cmd:=#tmpNode.cmdToInterprete, msg := #tmpNode.MsgToInterprete, msg_key:=#tmpNode.msg_key, msg_value:=#tmpNode.msg_value) THEN
+	//V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	
+	IF #tmpNode.cmdToInterprete = 'get' THEN
+	    #tmpNode."string" := "heater_values"(heater_circuit_state := #val.heater_circuit_state,
+	                                         current_temp := #current_temp,
+	                                         stop_at_degree := #param.stop_at_degree,
+	                                         ctrl_mode := #param.ctrl_mode);
+	
+	  "NodeSend_output"(name:= CONCAT(IN1:=#tmpNode.full_name, IN2:=#tmpNode.cmdToInterprete),
+	                    message:=#tmpNode."string"
+	  );
+	  
+	ELSIF #tmpNode.cmdToInterprete = 'set_ctrl_mode' THEN
+	        //ctrl_mode [on|2|off|1|automatic|0]      -> switch automatic/manuall ctrl_mode
+	        IF #tmpNode.msg_key = 'on' THEN
+	            #param.ctrl_mode := 2;
+	        ELSIF #tmpNode.msg_key = 'off' THEN
+	            #param.ctrl_mode := 1;
+	        ELSIF #tmpNode.msg_key = 'automatic' THEN
+	            #param.ctrl_mode := 0;
+	        ELSE //dont send error message, but switch to automatic mode
+	            #param.ctrl_mode := 0;
+	        END_IF;
+	    ELSIF #tmpNode.cmdToInterprete = 'set_stop_at_degree' THEN
+	        #param.stop_at_degree := STRING_TO_REAL(#tmpNode.msg_key);
+	        
+	    ELSE //cmd type not existing
+	        "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                           message := CONCAT(IN1 := 'unknown cmdToInterprete -> ', IN2 := #tmpNode.cmdToInterprete));
+	END_IF;
+	
+	    //send response to client
+	    #tmpNode."string" := CONCAT(IN1 := #tmpNode.cmdToInterprete, IN2 := ';');
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'key='),
+	                                        IN2 := CONCAT(IN1 := #tmpNode.msg_key, IN2 := ';'));
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'value='),
+	                                IN2 := CONCAT(IN1 := #tmpNode.msg_value, IN2 := ';'));
+	    "NodeSend_output"(name:=#tmpNode.full_name,
+	                      message:=#tmpNode."string");
+	END_IF;
+	
+	//#######################################################################################
+	//################################ process logic  #######################################
+	//#######################################################################################
+	//systemzeit lesen
+	#time.retval := RD_LOC_T(#time.local_DTL);
+	#time.local_TOD := DTL_TO_TOD(#time.local_DTL);
+	
+	IF #param.ctrl_mode = 1 THEN
+	    #val.heater_circuit_state := FALSE;
+	ELSIF #param.ctrl_mode = 2 THEN
+	    #val.heater_circuit_state := TRUE;
+	ELSE
+	    IF #param.stop_at_degree + 0.5 < #current_temp THEN //Heizkreis läuft 0,5 Grad über Soll weiter
+	        #switching_delay := false;
+	    END_IF;
+	    
+	    IF (#param.stop_at_degree > #current_temp) OR #switching_delay THEN // IST temperatur kleiner schwellwert
+	        #switching_delay := true;
+	        #val.heater_circuit_state := true;
+	    ELSE
+	        #val.heater_circuit_state := false;
+	    END_IF;
+	END_IF;
+	
+	#heater_circuit := #val.heater_circuit_state;
+	
+	//log des zustandswechsels
+	IF #val.heater_circuit_state <> #last_state THEN
+	    #last_state := #val.heater_circuit_state;
+	    
+	    #tmpNode."string" := "heater_values"(heater_circuit_state := #val.heater_circuit_state,
+	                                      current_temp := #current_temp,
+	                                      stop_at_degree := #param.stop_at_degree,
+	                                      ctrl_mode := #param.ctrl_mode);
+	
+	    "NodeSend_output"(name:=#tmpNode.full_name, message:=#tmpNode."string");
+	END_IF;
+	
+	IF #param.ctrl_mode <> #param.last_ctrl_mode THEN
+	    #tmpNode."string" := CONCAT(
+	                                IN1 :=  CONCAT(IN1 := 'change ctrl mode from ',
+	                                               IN2 := INT_TO_STRING(#param.last_ctrl_mode)),
+	                                IN2 := CONCAT(IN1 := ' to ',
+	                                            IN2 := INT_TO_STRING(#param.ctrl_mode))
+	  );
+	    "NodeSend_output"(name := #tmpNode.full_name,
+	                       message := #tmpNode."string");
+	    #param.last_ctrl_mode := #param.ctrl_mode;
+	END_IF;
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK "jalousie_1"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      "name" : String;
+      button_up : Bool;
+      button_down : Bool;
+      wind_speed : Real;
+   END_VAR
+
+   VAR_OUTPUT 
+      drive_up : Bool;
+      drive_down : Bool;
+      position : Int;
+      angle : Int;
+   END_VAR
+
+   VAR 
+      motor : "jalousieMotor_1";
+      trigger_up_FP {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      trigger_down_FP {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      trigger_down_FN {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;
+      trigger_up_FN {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;
+   END_VAR
+   VAR RETAIN
+      val : Struct
+         new_position : Int;
+         new_angle : Int;
+         new_position_last_cycle : Int;
+         new_angle_last_cycle : Int;
+         position : Int;
+         angle : Int;
+         drive_up : Bool;
+         drive_down : Bool;
+         init_motor { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         drive_up_FP : Bool;
+         drive_up_FN : Bool;
+         drive_down_FP : Bool;
+         drive_down_FN : Bool;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      param : Struct
+         DriveUpAtWindSpeed : Real := 14.0;   // grenzwert in m/s bei dem jalousie hochfährt (http://www.warema.de/FACHPARTNER/PRODUKTE/Raffstoren/Zubehoer-Infos/Windwarnanlagen_300806.pdf)
+      END_STRUCT;
+   END_VAR
+   VAR RETAIN
+      event : Array[0..#EVENT_COUNT] of "UDT_jalousie_event";
+   END_VAR
+   VAR 
+      "timer" : Struct
+         button_hold : Bool;
+         event_lock : Bool;
+         event_signal : Bool;
+         wind_warning_lock : Bool;
+         wind_warning_signal : Bool;
+         motor_toggle_safety_lock : Bool;
+         motor_toggle_safety_signal : Bool;
+         motor_toggle_counts : Int;
+      END_STRUCT;
+      Twind_warning_lock {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+      Tevent_lock {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+      timer_button_hold {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      Tmotor_toggle_safety {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TOF_TIME;
+      drive_up_FP {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      drive_up_FN {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      drive_down_FP {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      drive_down_FN {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+   END_VAR
+
+   VAR_TEMP 
+      button : Struct
+         up : Struct
+            FP : Bool;
+            FN : Bool;
+         END_STRUCT;
+         down : Struct
+            FP : Bool;
+            FN : Bool;
+         END_STRUCT;
+      END_STRUCT;
+      loop : Int;
+      "time" : Struct
+         retval : Int;
+         local_DTL {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+         not_used_local_TOD : Time_Of_Day;
+      END_STRUCT;
+      tmpNode : Struct
+         full_name : String;
+         cmdToInterprete : String;
+         MsgToInterprete : String;
+         "string" : String;
+         msg_key : String;
+         msg_value : String;
+      END_STRUCT;
+   END_VAR
+
+   VAR CONSTANT 
+      BUTTON_HOLD_TIME : Time := T#300MS;   // Zeit um nach FN motor zu stopen. ansonsten wird auf anschlag gefahren
+      EVENT_COUNT : Int := 9;   // Anzahl der Events die der Baustein maximal verwaltet
+      type_prefix : String := 'jalousie/';
+   END_VAR
+
+
+BEGIN
+	(*####################################################################################
+	                                                                                     
+	      jalousie      V00.00.01 - creation                                             
+	                    V00.00.04 - verify wind-speed / static var cmd, data_motor remanent  
+	                    V00.00.11 - check event to >= not only >
+	                    V00.00.12 - add log at init motor / change init_motor from temp to static
+	                    V00.00.13 - hard code wind-speed and remove it from input
+	                    V00.00.14 - change logging and add lock timer for wind-speed-warning
+	                    V00.00.15 - check event angel after position
+	                    V00.00.16 - move DRIVE_UP_WIND_SPEED from const to static param and include in NET interface
+	                    V00.00.17 - write log event DRIVE_UP_WIND_SPEED in Database
+	                    V00.01.00 - Change TCP to UDP connection
+	                    V00.02    - include send diagnostic message (with FC jal_diag_msg)
+	                    V00.02.1  - read wind speed from Input
+	                    V00.02.2    - change logging DataLogger_AktorError / drive up at wind speed -> new check if allready pos/ang at 0
+	                    V00.03    - update to new netcpsV0.0.10 interface
+	                    V00.04    - remove cps 
+	                    V00.06    - add NodeRed interface
+	                    V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	                        'get'
+	                        'set_DriveUpAtWindSpeed'
+	                        'set_position'
+	                        'set_angle' 
+	                        'set_init_motor'
+	                        'set_drive_up'
+	                        'set_drive_down'
+	                        'set_drive_halt'
+	                        
+	                    
+	#####################################################################################*)
+	#tmpNode.full_name := CONCAT(IN1 := #type_prefix, IN2 := #name);
+	//#######################################################################################
+	//#################################    NodeUdp   ########################################
+	//#######################################################################################
+	IF "NodeUdp_check_aktor_req"("type/name" := #tmpNode.full_name, cmd := #tmpNode.cmdToInterprete, msg := #tmpNode.MsgToInterprete, msg_key:=#tmpNode.msg_key, msg_value:=#tmpNode.msg_value) THEN
+	    (*
+	    IF #tmpNode.cmdToInterprete = 'set param' THEN
+	        IF #tmpNode.msg_key = 'DriveUpAtWindSpeed' THEN
+	            #param.DriveUpAtWindSpeed := STRING_TO_REAL(#tmpNode.msg_value);
+	        ELSE
+	            "NodeSend_aktor/error"(module := #tmpNode.full_name,
+	                               message := CONCAT(IN1 := 'unknown msg_key to interprete -> ', IN2 := #tmpNode.msg_key));
+	        END_IF;
+	    ELSIF #tmpNode.cmdToInterprete = 'get param' THEN
+	        IF #tmpNode.msg_key = '' OR #tmpNode.msg_key = 'all' THEN
+	            #tmpNode."string" := REAL_TO_STRING(#param.DriveUpAtWindSpeed);
+	            "NodeSend_aktor/response"(name := #tmpNode.full_name,
+	                                  cmd := #tmpNode.cmdToInterprete,
+	                                  message := #tmpNode."string");
+	        ELSE
+	            "NodeSend_aktor/error"(module := #tmpNode.full_name,
+	                               message := CONCAT(IN1 := 'unknown msg_key to interprete -> ', IN2 := #tmpNode.msg_key));
+	        END_IF;
+	    ELSIF #tmpNode.cmdToInterprete = 'set value' THEN
+	        IF #tmpNode.msg_key = 'pos' OR #tmpNode.msg_key =  'position' OR #tmpNode.msg_key = 'new_position' THEN
+	            #val.new_position := STRING_TO_INT(#tmpNode.msg_value);
+	        ELSIF #tmpNode.msg_key = 'ang' OR #tmpNode.msg_key = 'angle' OR #tmpNode.msg_key = 'new_angle'  THEN
+	            #val.new_angle := STRING_TO_INT(#tmpNode.msg_value);
+	        ELSIF #tmpNode.msg_key = 'init_motor' OR #tmpNode.msg_key = 'init' THEN
+	            #val.init_motor := TRUE;
+	        ELSIF #tmpNode.msg_key = 'up' OR #tmpNode.msg_key = 'drive_up' THEN
+	            #val.new_position := 0;
+	            #val.new_angle := 0;
+	        ELSIF #tmpNode.msg_key = 'down' OR #tmpNode.msg_key = 'drive_down' THEN
+	            #val.new_position := 100;
+	            #val.new_angle := 100;
+	        ELSIF #tmpNode.msg_key = 'stop' OR #tmpNode.msg_key = 'halt' THEN
+	            GOTO STOP;
+	        ELSE
+	            "NodeSend_aktor/error"(module := #tmpNode.full_name,
+	                               message := CONCAT(IN1 := 'unknown msg to interprete -> ', IN2 := #tmpNode.MsgToInterprete));
+	        END_IF;
+	    ELSIF #tmpNode.cmdToInterprete = 'get value' THEN
+	        //at cmd 'get value' always return all values
+	        //IF #tmpNode.msg_key = '' OR #tmpNode.msg_key = 'all' THEN
+	        #tmpNode."string" := "jal_values"(msg := '',
+	                                            position := #val.position,
+	                                            angle := #val.angle,
+	                                            new_position := #val.new_position,
+	                                            new_angle := #val.new_angle,
+	                                            drive_up := #val.drive_up,
+	                                            drive_down := #val.drive_down);
+	        #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'init_motor='),
+	                                    IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#val.init_motor)), IN2 := ';'));
+	        "NodeSend_aktor/response"(name := #tmpNode.full_name,
+	                              cmd := #tmpNode.cmdToInterprete,
+	                              message := #tmpNode."string");
+	        //ELSE
+	        //    "Node_aktor/error"(name := #tmpNode.full_name,
+	        //                       message := CONCAT(IN1 := 'unknown msg to interprete -> ', IN2 := #tmpNode.MsgToInterprete));
+	        //END_IF;
+	        *)
+	        
+	    //V00.07    - update NodeUdp interface, add to [set/get value/param] new variant [get, set x, set y, set ...]
+	    //maybe remove old variant sometime if not more needed....
+	    //
+	IF #tmpNode.cmdToInterprete = 'get' THEN
+	    #tmpNode."string" := "jal_values"(msg := '',
+	                                      position := #val.position,
+	                                      angle := #val.angle,
+	                                      new_position := #val.new_position,
+	                                      new_angle := #val.new_angle,
+	                                      drive_up := #val.drive_up,
+	                                      drive_down := #val.drive_down);
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'init_motor='),
+	                                IN2 := CONCAT(IN1 := INT_TO_STRING(BOOL_TO_INT(#val.init_motor)), IN2 := ';'));
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'DriveUpAtWindSpeed='),
+	                                IN2 := CONCAT(IN1 := REAL_TO_STRING(#param.DriveUpAtWindSpeed), IN2 := ';'));
+	    
+	    "NodeSend_output"(name := CONCAT(IN1 := #tmpNode.full_name, IN2 := #tmpNode.cmdToInterprete),
+	                      message := #tmpNode."string"
+	    );
+	    
+	ELSIF #tmpNode.cmdToInterprete = 'set_DriveUpAtWindSpeed' THEN
+	    #param.DriveUpAtWindSpeed := STRING_TO_REAL(#tmpNode.msg_key);
+	ELSIF #tmpNode.cmdToInterprete = 'set_position' THEN
+	    #val.new_position := STRING_TO_INT(#tmpNode.msg_key);
+	ELSIF #tmpNode.cmdToInterprete = 'set_angle' THEN
+	    #val.new_angle := STRING_TO_INT(#tmpNode.msg_key);
+	ELSIF #tmpNode.cmdToInterprete = 'set_init_motor' THEN
+	    #val.init_motor := TRUE;
+	ELSIF #tmpNode.cmdToInterprete = 'set_drive_up' THEN
+	    #val.new_position := 0;
+	    #val.new_angle := 0;
+	ELSIF #tmpNode.cmdToInterprete = 'set_drive_down' THEN
+	    #val.new_position := 100;
+	    #val.new_angle := 100;
+	ELSIF #tmpNode.cmdToInterprete = 'set_drive_halt' THEN
+	    GOTO STOP;
+	    
+	        
+	        
+	    ELSE //cmd type not existing
+	        "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                           message := CONCAT(IN1 := 'unknown cmdToInterprete -> ', IN2 := #tmpNode.cmdToInterprete));
+	    END_IF;
+	    
+	    //send response to client
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := 'cmdToInterprete=', IN2 := #tmpNode.cmdToInterprete),
+	                                IN2 := ', ');
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'key='),
+	                                IN2 := CONCAT(IN1 := #tmpNode.msg_key, IN2 := ','));
+	    #tmpNode."string" := CONCAT(IN1 := CONCAT(IN1 := #tmpNode."string", IN2 := 'value='),
+	                                IN2 := CONCAT(IN1 := #tmpNode.msg_value, IN2 := ''));
+	    "NodeSend_output"(name := #tmpNode.full_name,
+	                      message := #tmpNode."string");
+	END_IF;
+	
+	//#######################################################################################
+	//################################ process logic  #######################################
+	//#######################################################################################
+	//systemzeit lesen
+	#time.retval := RD_LOC_T(#time.local_DTL);
+	//#######################################################################################
+	//#########################  event based drive position #################################       
+	//#######################################################################################
+	IF NOT #timer.event_lock THEN
+	    FOR #loop := 0 TO #EVENT_COUNT DO
+	        IF #event[#loop].enable THEN
+	            IF #time.local_DTL.HOUR = #event[#loop]."time".hour AND #time.local_DTL.MINUTE = #event[#loop]."time".minute AND #time.local_DTL.SECOND = #event[#loop]."time".secound THEN
+	                #timer.event_signal := true;
+	                IF #event[#loop].driving_up THEN
+	                    IF #event[#loop].position <= #val.position THEN
+	                        #val.new_position := #event[#loop].position;
+	                        #val.new_angle := #val.angle;
+	                        IF #event[#loop].angle < #val.angle THEN
+	                            #val.new_angle := #event[#loop].angle;
+	                        END_IF;
+	                    END_IF;
+	                ELSE
+	                    IF #event[#loop].position >= #val.position THEN
+	                        #val.new_position := #event[#loop].position;
+	                        #val.new_angle := #val.angle;
+	                        IF #event[#loop].angle > #val.angle THEN
+	                            #val.new_angle := #event[#loop].angle;
+	                        END_IF;
+	                    END_IF;
+	                END_IF;
+	
+	                "NodeSend_output"(name := #tmpNode.full_name,
+	                                   message :=
+	                                   "jal_values"(msg := CONCAT(IN1:='jal event: ', IN2:=INT_TO_STRING(#loop)),
+	                                                  position := #val.position,
+	                                                  angle := #val.angle,
+	                                                  new_position := #val.new_position,
+	                                                  new_angle := #val.new_angle,
+	                                                  drive_up := #val.drive_up,
+	                                                  drive_down := #val.drive_down)
+	                );
+	                
+	            END_IF;
+	        END_IF;
+	    END_FOR;
+	END_IF;
+	
+	#Tevent_lock(IN := #timer.event_signal,
+	             PT := t#2s,
+	             Q => #timer.event_lock);
+	
+	#timer.event_signal := FALSE;
+	
+	//#######################################################################################
+	//###########################  check input data #########################################
+	//#######################################################################################
+	//verify data 
+	IF #button_down AND #button_up THEN
+	    "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                       message := 'jalousie button up AND down is pressed');
+	    GOTO STOP;
+	ELSIF #val.new_position < 0 OR #val.new_position > 100 THEN
+	    "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                       message := CONCAT(IN1:='jal pos invalid: ',IN2:=INT_TO_STRING(#val.new_position)));
+	    GOTO STOP;
+	ELSIF #val.new_angle < 0 OR #val.new_angle > 100 THEN
+	    "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                       message := CONCAT(IN1:='jal angle invalid: ',IN2:= INT_TO_STRING(#val.new_angle)));
+	    GOTO STOP;
+	END_IF;
+	
+	#trigger_up_FP(CLK := #button_up,
+	               Q => #button.up.FP);
+	#trigger_up_FN(CLK := #button_up,
+	               Q => #button.up.FN);
+	#trigger_down_FP(CLK := #button_down,
+	                 Q => #button.down.FP);
+	#trigger_down_FN(CLK := #button_down,
+	                 Q => #button.down.FN);
+	
+	
+	//bei steigender flanke an taster und während fahrenden motor wird dieser gestoppt
+	IF (#button.up.FP OR #button.down.FP) AND (#val.drive_up OR #val.drive_down) THEN
+	    GOTO STOP;
+	ELSIF #button.up.FP THEN //fahre ganz hoch
+	    #val.new_angle := 0;
+	    #val.new_position := 0;
+	    IF "NodeBuffer".global.verbose THEN
+	        "NodeSend_output"(name := #tmpNode.full_name,
+	                           message :=
+	                           "jal_values"(msg := 'button.up.FP -> ',
+	                                        position := #val.position,
+	                                        angle := #val.angle,
+	                                        new_position := #val.new_position,
+	                                        new_angle := #val.new_angle,
+	                                        drive_up := #val.drive_up,
+	                                        drive_down := #val.drive_down));
+	    END_IF;
+	ELSIF #button.down.FP THEN //fahre ganz runter
+	    #val.new_angle := 100;
+	    #val.new_position := 100;
+	    IF "NodeBuffer".global.verbose THEN
+	        "NodeSend_output"(name := #tmpNode.full_name,
+	                           message :=
+	                           "jal_values"(msg := 'button.down.FP -> ',
+	                                        position := #val.position,
+	                                        angle := #val.angle,
+	                                        new_position := #val.new_position,
+	                                        new_angle := #val.new_angle,
+	                                        drive_up := #val.drive_up,
+	                                        drive_down := #val.drive_down));
+	    END_IF;
+	    //stoppe motor nach FN wenn taster für hold-time gedrückt war
+	ELSIF (#button.down.FN OR #button.up.FN) AND #timer.button_hold THEN
+	    GOTO STOP;
+	END_IF;
+	
+	//check buttons for hold
+	#timer_button_hold(IN := #button_down OR #button_up,
+	                   PT := #BUTTON_HOLD_TIME,
+	                   Q => #timer.button_hold);
+	
+	//#######################################################################################
+	//############################## verify wind speed ######################################      
+	//#######################################################################################
+	IF NOT #timer.wind_warning_lock THEN
+	    IF #wind_speed > #param.DriveUpAtWindSpeed THEN
+	        IF #val.position <> 0 OR #val.angle <> 0 THEN
+	            #val.new_angle := 0;
+	            #val.new_position := 0;
+	            #timer.wind_warning_signal := TRUE;
+	            //########################## LOG in Database ##############################
+	            "NodeSend_output"(name := #tmpNode.full_name,
+	                               message := CONCAT(IN1 := 'Drive Up At Wind Speed(m/s): ', IN2 := REAL_TO_STRING(#wind_speed)));
+	        END_IF;
+	    END_IF;
+	END_IF;
+	
+	#Twind_warning_lock(IN := #timer.wind_warning_signal,
+	                    PT := t#10s,
+	                    Q => #timer.wind_warning_lock);
+	
+	#timer.wind_warning_signal := FALSE;
+	
+	
+	//#######################################################################################
+	//################################# drive motor #########################################
+	//#######################################################################################
+	#motor(new_position := #val.new_position,
+	       new_angle := #val.new_angle,
+	       full_name := #tmpNode.full_name,
+	       init := #val.init_motor,
+	       local_DTL := #time.local_DTL,
+	       drive_up => #val.drive_up,
+	       drive_down => #val.drive_down,
+	       position => #val.position,
+	       angel => #val.angle);
+	
+	#drive_up := #val.drive_up;
+	#drive_down := #val.drive_down;
+	#position := #val.position;
+	#angle := #val.angle;
+	
+	//#######################################################################################
+	//############################## log state change #######################################
+	//#######################################################################################
+	#drive_up_FP(CLK := #drive_up,
+	             Q => #val.drive_up_FP);
+	#drive_up_FN(CLK := #drive_up,
+	             Q => #val.drive_up_FN);
+	#drive_down_FP(CLK := #drive_down,
+	             Q => #val.drive_down_FP);
+	#drive_down_FN(CLK := #drive_down,
+	             Q => #val.drive_down_FN);
+	
+	IF #val.drive_up_FN OR #val.drive_up_FP OR #val.drive_down_FN OR #val.drive_down_FP THEN
+	    "NodeSend_output"(name := #tmpNode.full_name,
+	                       message :=
+	                       "jal_values"(msg := 'flag change -> ',
+	                                      position := #val.position,
+	                                      angle := #val.angle,
+	                                      new_position := #val.new_position,
+	                                      new_angle := #val.new_angle,
+	                                      drive_up := #val.drive_up,
+	                                      drive_down := #val.drive_down)
+	  );
+	  //count signal changes within 1s and stop if more than 3 changes accoured
+	  IF NOT #timer.motor_toggle_safety_lock THEN
+	      #timer.motor_toggle_safety_signal := TRUE;
+	      #timer.motor_toggle_counts := 0;
+	  ELSE
+	      #timer.motor_toggle_counts := #timer.motor_toggle_counts + 1;
+	      IF #timer.motor_toggle_counts > 2 THEN
+	          "NodeSend_ERROR"(module := #tmpNode.full_name,
+	                                 message := 'to many motor_toggle_counts');
+	          GOTO STOP;
+	      END_IF;
+	  END_IF;
+	END_IF;
+	
+	#Tmotor_toggle_safety(IN:=#timer.motor_toggle_safety_signal,
+	                      PT:=t#3s,
+	                      Q=>#timer.motor_toggle_safety_lock);
+	#timer.motor_toggle_safety_signal := FALSE;
+	
+	
+	RETURN;
+	
+	
+	//#######################################################################################
+	//################################## stop motor #########################################
+	//#######################################################################################
+	STOP:
+	#val.new_angle := #val.angle;
+	#val.new_position := #val.position;
+	#drive_up := FALSE;
+	#drive_down := FALSE;
+	"NodeSend_output"(name := #tmpNode.full_name,
+	                   message :=
+	                   "jal_values"(msg := 'STOP MOTOR -> ',
+	                                  position := #val.position,
+	                                  angle := #val.angle,
+	                                  new_position := #val.new_position,
+	                                  new_angle := #val.new_angle,
+	                                  drive_up := #val.drive_up,
+	                                  drive_down := #val.drive_down)
+	);
+END_FUNCTION_BLOCK
+

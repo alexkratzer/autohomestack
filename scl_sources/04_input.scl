@@ -1,0 +1,32 @@
+﻿FUNCTION_BLOCK "log_di"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      signal_input : Bool;
+      input_name : String;
+   END_VAR
+
+   VAR_OUTPUT 
+      signal_changed : Bool;
+   END_VAR
+
+   VAR 
+      mem_last_signal : Bool;
+      counter_val : Int;
+   END_VAR
+
+
+BEGIN
+	#signal_changed := FALSE;
+	//check rising flag 
+	IF #signal_input AND NOT #mem_last_signal THEN
+	    #signal_changed := TRUE;
+	    #counter_val := #counter_val + 1;
+	    "NodeSend_input"(name := #input_name,
+	                     message := CONCAT(IN1 := CONCAT(IN1 := '{', IN2 := 'switches:'), IN2 := CONCAT(IN1 := INT_TO_STRING(#counter_val), IN2 := '}'))
+	    );
+	END_IF;
+	#mem_last_signal := #signal_input;
+	
+END_FUNCTION_BLOCK
+
