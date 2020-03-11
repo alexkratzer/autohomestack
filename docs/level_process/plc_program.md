@@ -1,14 +1,12 @@
 # Processing level
 
-## Simatic PLC programm
-
 My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.
 
-### aktor interface
+## Simatic Project library
 
-For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.
+For basic functions which are performed in more then one plc I maintain the code in the `TIA Project library`.
 
-![TIA_multiinstanz](TIA_multiinstanz.PNG)
+### Actuator
 
 Here is an example of the light building block. This is called several times in a superimposed "control" block.
 
@@ -88,22 +86,45 @@ I have not yet realized the socket module. Currently I only switch the sockets i
 
 Since here however a bedside lamp is switched I also used the light component for it.
 
-### communication
+### Data ingest
 
-For external communication each CPU contains a net_interface block.
+### Data logger
+
+The data logger client communicates via the TCP/IP protocol with the server running on the NAS.
+
+### NodeUdp
+
+## Simatic program
+
+For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.
+
+![TIA_multiinstanz](TIA_multiinstanz.PNG)
+
+### communication udp
+
+For external communication each PLC contains a net_interface block.
 
 Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.
 
 Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.
 
-## Data logger
+### communication plc <-> plc
 
-During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.
+The actual rule engine (which is currently implemented via node-red on a raspberry) is running stable so far.
 
-And after implementing this interface at the plc and i kept it for data logging.
+!!! hint
+    Nevertheless it should be guaranteed that some important functions are available even if the rule engine fails.
 
-Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.
+For example, the blinds on the ground floor must be raised in the event of a storm warning.
 
-The main script provides a IP listener for every configuret plc connection.
+Therefore it is necessary that the plcs exchange selected signals directly.
 
-Messages from the remote clients will be parsed and stored in a db.
+The plc on the ground floor uses the GET module to read the current wind speed from the plc on the upper floor
+
+```javascript
+#GET_sensor_values(
+    REQ := #next_cycle_flag, ID := W#16#100,
+    ADDR_1 := P#DB80.DBX0.0 BYTE 4,
+    RD_1 := #remote_sensor_weather_wind
+);
+```

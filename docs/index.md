@@ -10,7 +10,7 @@ As a central control system I use NodeRed which provides a webserver for operati
 
 !!! hint
 
-    of course I am not liable for any damage caused by replicas ;-)
+    Of course I am not liable for any damage caused by replicas ;-)
 
 ## Business view
 

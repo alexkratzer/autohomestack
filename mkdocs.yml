@@ -17,6 +17,7 @@ nav:
     - Process level:
         - Simatic PLC:          'level_process/simatic_plc.md'
         - PLC program:          'level_process/plc_program.md'
+        - Data logger:          'level_process/dataLoggerServer.md'
     - Field level:          
         - IoT Multisensor:      level_field/iot_multisensor.md
         - devices:              level_field/field_level.md
