@@ -464,23 +464,37 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simatic-plc-programm" class="md-nav__link">
-    Simatic PLC programm
+  <a href="#simatic-project-library" class="md-nav__link">
+    Simatic Project library
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#aktor-interface" class="md-nav__link">
-    aktor interface
+  <a href="#actuator" class="md-nav__link">
+    Actuator
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#communication" class="md-nav__link">
-    communication
+  <a href="#data-ingest" class="md-nav__link">
+    Data ingest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-logger" class="md-nav__link">
+    Data logger
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodeudp" class="md-nav__link">
+    NodeUdp
   </a>
   
 </li>
@@ -491,9 +505,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-logger" class="md-nav__link">
-    Data logger
+  <a href="#simatic-program" class="md-nav__link">
+    Simatic program
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#communication-udp" class="md-nav__link">
+    communication udp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-plc-plc" class="md-nav__link">
+    communication plc &lt;-&gt; plc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -505,6 +539,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dataLoggerServer/" title="Data logger" class="md-nav__link">
+      Data logger
+    </a>
   </li>
 
         
@@ -702,23 +748,37 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simatic-plc-programm" class="md-nav__link">
-    Simatic PLC programm
+  <a href="#simatic-project-library" class="md-nav__link">
+    Simatic Project library
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#aktor-interface" class="md-nav__link">
-    aktor interface
+  <a href="#actuator" class="md-nav__link">
+    Actuator
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#communication" class="md-nav__link">
-    communication
+  <a href="#data-ingest" class="md-nav__link">
+    Data ingest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-logger" class="md-nav__link">
+    Data logger
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodeudp" class="md-nav__link">
+    NodeUdp
   </a>
   
 </li>
@@ -729,9 +789,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-logger" class="md-nav__link">
-    Data logger
+  <a href="#simatic-program" class="md-nav__link">
+    Simatic program
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#communication-udp" class="md-nav__link">
+    communication udp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-plc-plc" class="md-nav__link">
+    communication plc &lt;-&gt; plc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -753,11 +833,10 @@
                 
                 
                 <h1 id="processing-level">Processing level<a class="headerlink" href="#processing-level" title="Permanent link">&para;</a></h1>
-<h2 id="simatic-plc-programm">Simatic PLC programm<a class="headerlink" href="#simatic-plc-programm" title="Permanent link">&para;</a></h2>
 <p>My focus was on a generic solution in order to be able to extend the control program easily or to port it to another environment without major adaptations.</p>
-<h3 id="aktor-interface">aktor interface<a class="headerlink" href="#aktor-interface" title="Permanent link">&para;</a></h3>
-<p>For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.</p>
-<p><img alt="TIA_multiinstanz" src="../TIA_multiinstanz.PNG" /></p>
+<h2 id="simatic-project-library">Simatic Project library<a class="headerlink" href="#simatic-project-library" title="Permanent link">&para;</a></h2>
+<p>For basic functions which are performed in more then one plc I maintain the code in the <code>TIA Project library</code>.</p>
+<h3 id="actuator">Actuator<a class="headerlink" href="#actuator" title="Permanent link">&para;</a></h3>
 <p>Here is an example of the light building block. This is called several times in a superimposed "control" block.</p>
 <p><strong><em>ash became light</em></strong></p>
 <div class="codehilite"><pre><span></span><code><span class="nx">IF</span> <span class="err">#</span><span class="nx">turn_on</span> <span class="nx">THEN</span>
@@ -822,16 +901,32 @@
 <p><strong><em>TO-DO Current</em></strong></p>
 <p>I have not yet realized the socket module. Currently I only switch the sockets in the children's room.</p>
 <p>Since here however a bedside lamp is switched I also used the light component for it.</p>
-<h3 id="communication">communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
-<p>For external communication each CPU contains a net_interface block.</p>
+<h3 id="data-ingest">Data ingest<a class="headerlink" href="#data-ingest" title="Permanent link">&para;</a></h3>
+<h3 id="data-logger">Data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h3>
+<p>The data logger client communicates via the TCP/IP protocol with the server running on the NAS.</p>
+<h3 id="nodeudp">NodeUdp<a class="headerlink" href="#nodeudp" title="Permanent link">&para;</a></h3>
+<h2 id="simatic-program">Simatic program<a class="headerlink" href="#simatic-program" title="Permanent link">&para;</a></h2>
+<p>For each actuator type (light, jalouse, socket, heating) there is a general function module that is instantiated for each device.</p>
+<p><img alt="TIA_multiinstanz" src="../TIA_multiinstanz.PNG" /></p>
+<h3 id="communication-udp">communication udp<a class="headerlink" href="#communication-udp" title="Permanent link">&para;</a></h3>
+<p>For external communication each PLC contains a net_interface block.</p>
 <p>Here a UDP/IP server is realized in a state machine which can be addressed e.g. via the PC-Tool.</p>
 <p>Each instance of an actuator block is given a unique ID. This ID can also be found in the PC tool.</p>
-<h2 id="data-logger">Data logger<a class="headerlink" href="#data-logger" title="Permanent link">&para;</a></h2>
-<p>During the early implementing phase of the home automation system i needed some logging mechanism for bug finding.</p>
-<p>And after implementing this interface at the plc and i kept it for data logging.</p>
-<p>Meanwhile the usual data logging is realized within the control system (node red) but for redundancy purpose the mechanism is still alive.</p>
-<p>The main script provides a IP listener for every configuret plc connection.</p>
-<p>Messages from the remote clients will be parsed and stored in a db.</p>
+<h3 id="communication-plc-plc">communication plc &lt;-&gt; plc<a class="headerlink" href="#communication-plc-plc" title="Permanent link">&para;</a></h3>
+<p>The actual rule engine (which is currently implemented via node-red on a raspberry) is running stable so far.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Nevertheless it should be guaranteed that some important functions are available even if the rule engine fails.</p>
+</div>
+<p>For example, the blinds on the ground floor must be raised in the event of a storm warning.</p>
+<p>Therefore it is necessary that the plcs exchange selected signals directly.</p>
+<p>The plc on the ground floor uses the GET module to read the current wind speed from the plc on the upper floor</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="nx">GET_sensor_values</span><span class="p">(</span>
+    <span class="nx">REQ</span> <span class="o">:=</span> <span class="err">#</span><span class="nx">next_cycle_flag</span><span class="p">,</span> <span class="nx">ID</span> <span class="o">:=</span> <span class="nx">W</span><span class="err">#</span><span class="mi">16</span><span class="err">#</span><span class="mi">100</span><span class="p">,</span>
+    <span class="nx">ADDR_1</span> <span class="o">:=</span> <span class="nx">P</span><span class="err">#</span><span class="nx">DB80</span><span class="p">.</span><span class="nx">DBX0</span><span class="mf">.0</span> <span class="nx">BYTE</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nx">RD_1</span> <span class="o">:=</span> <span class="err">#</span><span class="nx">remote_sensor_weather_wind</span>
+<span class="p">);</span>
+</code></pre></div>
                 
                   
                 
@@ -868,13 +963,13 @@
           </a>
         
         
-          <a href="../../level_field/iot_multisensor/" title="IoT Multisensor" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../dataLoggerServer/" title="Data logger" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                IoT Multisensor
+                Data logger
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
