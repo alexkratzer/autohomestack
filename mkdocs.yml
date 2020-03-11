@@ -25,10 +25,10 @@ nav:
         - multiroom:            multiroom/my_multiroom.md
     - About:
         - References:           'references.md'
-        - Hints:                hints.md
         - Plantuml code:        images/readme_plantuml.md
         - node topics:          topics_node.md
         - plc lib:              plc_lib_interface.md
+        - My wiki:              wiki.md
 
 # theme: readthedocs
 # theme: 'windmill-dark'

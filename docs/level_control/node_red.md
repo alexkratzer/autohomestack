@@ -72,6 +72,22 @@ msg.topic = "INSERT INTO node_log(topic, message) VALUES ( \"rule_engine/"+t+"\"
 return [msg, plc_cmd];
 ```
 
+## some hints
+
+Initialising Variable
+
+```javascript
+var count=context.get('count') || 0;
+var count2=context.get('count2') || 0;
+
+// You can also use an object e.g
+var local=context.get('data') || {};
+if (local.count===undefined) //test exists
+{
+  local.count=0;
+}
+```
+
 ## Downloads
 
-[node_red_flows repo](https://github.com/alexkratzer/autohomestack/tree/master/node_red_flows)
+If you are interested in the flows you can find the download link at the references.
