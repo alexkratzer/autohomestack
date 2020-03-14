@@ -24,11 +24,12 @@ nav:
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
     - About:
-        - References:           'references.md'
-        - Plantuml code:        images/readme_plantuml.md
-        - node topics:          topics_node.md
-        - plc lib:              plc_lib_interface.md
-        - My wiki:              wiki.md
+        - Imprint:              'about/imprint.md'
+        - References:           'about/references.md'
+        - My wiki:              'about/wiki.md'
+        - Plantuml code:        images/readme_plantuml.md'
+        - node topics:          'about/topics_node.md'
+        - plc lib:              'about/plc_lib_interface.md'
 
 # theme: readthedocs
 # theme: 'windmill-dark'

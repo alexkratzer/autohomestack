@@ -8,19 +8,6 @@ It has already implemented interfaces (which are called 'nodes') to a lot of dev
 
 ![NodeRedInterfaces](https://www.plantuml.com/plantuml/png/0/TP4nJyCm48Lt_uetepO3I1NAW0fYGMgH80C3ON3ZIsFXdeDzQGk_7ZlGKePErhtl-RspF8-YWmmRfzJhnHkcqniyUaFFPDHWUfoClsUM4XbfYTuri2mKMjsGsdo8_8iutabQXZ-E4gqbP-1eImw6jhQXM3F57jUNizcavfsMfZD-ZKXXf1CKHQ6iFn-VsCXBUEae_6qLKREpxuH0KQ1xcy9kNofKLwaenWxYuImF-yCcISvbf-5cfSmgHIy_gwS5D9kK-S2j6_RtT-heB1751u9s3dtmNnHpTtQdXxB0QD4r7qYUiBFI8GoEGBosJ3MhER59__4D "NodeRedInterfaces")
 
-## Requirements regarding plugins
-
-1. node-red-dashboard
-1. node-red-contrib-fritz
-1. node-red-contrib-s7
-1. node-red-node-mysql
-1. node-red-contrib-os
-1. node-red-contrib-mqtt-broker
-1. node-red-node-email
-1. (outdated) node-red-contrib-netatmo
-1. node-red-contrib-netatmo-dashboard
-1. node-red-contrib-viera
-
 ## Dashboards
 
 It is easy to make quick dash boards to monitor the sensor and health state of the devices.
@@ -43,34 +30,41 @@ If the weather station detects that it is dark two lights are switched on.
 
 ```javascript
 var plc_cmd = [];
-if(t.startsWith('v01/plc/car/sensor/event')){
-    var lux_weather = global.get('PD.plcog.weather.light_lux')
+var alarm_info = 'not_processed';
 
-    //not a bug but a feature
-    //weather station sends never 0 value
-    //but 1 if no lux is detected
-    if(lux_weather!=1){
-        info = 'aktor/light set to value on'
-        plc_cmd.push({ payload: "aktor/light/led_stripes/set_switch_value#on", topic: "car" });
-        plc_cmd.push({ payload: "aktor/light/drive/set_switch_value#on", topic: "car" });  
+if(t.startsWith('v01/esp/basement/i/')){
+    let lux = global.get('PD.esp_basement.lux');
+    let switch_value = 150
+    if(lux<switch_value){
+        alarm_info = 'esp/basement switch light on'
+        plc_cmd.push({ payload: "aktor/light/basement_floor/set_switch_value#on", topic: "eg" });
+        plc_cmd.push({ payload: "aktor/light/basement_stairs/set_switch_value#on", topic: "eg" });
     }else{
-        info = 'no action since it is not dark'
+        alarm_info = 'esp/basement motion but not dark [lux: ' + lux + '] > ' + switch_value;
     }
-
-//for logging or later use a new alarm is generated
-//and stored at the database
-msg.alarm = {
-    topic : t,
-    status : 'created',
-    time_created : getFormattedDate(),
-    info : info
 }
 
-msg.topic = "INSERT INTO node_log(topic, message) VALUES ( \"rule_engine/"+t+"\", \""+info+"\" )"
+// for logging or later use a new alarm is generated
+// and stored at the database
+if(alarm_info !== 'not_processed'){
+    msg.alarm = {
+        topic : t,
+        payload : p,
+        status : 'created',
+        time_created : getFormattedDate(),
+        info : alarm_info
+    }
+    let ret = t.replace('v01','re');
 
-//the alarm and commands for the PLC s are returned for further processing
-return [msg, plc_cmd];
+    // the alarm and commands for the PLC s are returned for further processing
+    msg.topic = "INSERT INTO node_log(topic, message) VALUES ( \"" + ret +"\", \""+ alarm_info + " / " + p + "\" )"
+    return [msg, plc_cmd];
+}
 ```
+
+Here are the log messages when the motion sensor is triggered
+
+![node_log_data](node_log_data.png)
 
 ## some hints
 
@@ -87,6 +81,23 @@ if (local.count===undefined) //test exists
   local.count=0;
 }
 ```
+
+## my config
+
+## Imported Nodes (Plugins)
+
+name|usage
+-|-
+node-red-dashboard|frontend dashboard elements
+node-red-contrib-fritz|get network device status / control guest wlan
+node-red-contrib-s7|connection to PLCs via S7 protocol, almost no longer in use (replaced by the udp protocol)
+node-red-node-mysql|reading / writing to maria database
+node-red-contrib-os|access to operating system bevore switching to docker
+node-red-contrib-mqtt-broker|mqtt client
+node-red-node-email|send alarm / notification e-mails
+node-red-contrib-netatmo|todo check if outdated
+node-red-contrib-netatmo-dashboard|getting netatmo weather station data from cloud-account
+node-red-contrib-viera|control the Panasonic TV
 
 ## Downloads
 

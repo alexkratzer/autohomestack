@@ -1,8 +1,26 @@
 # Requirements to the system
 
+## Most important
+
+!!! Hint
+
+    In order to gain acceptance among stakeholders, it is absolutely necessary to guarantee the basic functions that are also available with a conventional installation.
+
+These basic functions are:
+
+* Switching the light on / off with conventional switches
+
+* It must be possible to raise and lower the blinds by pressing buttons
+
+* Sockets must be switched on moderately by default
+
+* The heater must heat automatically up to the last set temperature
+
+## Some more
+
 type | description
 -|-
-robustnes|When switching on (e.g. after a power failure) the system itself should start up and be active
+robustnes|When the system is switched on (e.g. after a power failure) the system itself should start up and be active
 robustnes|Services / applications on servers should be monitored automatically and restarted if necessary
 robustnes|Backups of databases and other artifacts should be created automatically
 robustnes|Basic functions like switching light on/off must work even if the control level or parts of the process level fail

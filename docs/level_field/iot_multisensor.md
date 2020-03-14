@@ -2,9 +2,9 @@
 
 ## Install Arduino IDE
 
-The Arduino IDE from the package repository is very old.
+The Arduino IDE from my debian package repository is very old.
 
-To install Arduino IDE from the [Official Website](https://www.arduino.cc/en/Main/software) download your package.
+To get a newer version of the Arduino IDE got to the [Official Website](https://www.arduino.cc/en/Main/software) and download your package.
 
 ```bash
 cd ./Downloads
@@ -41,9 +41,9 @@ Features:
 
 MQTT Interface
 
-* subscription topics (start with prefix(iot/v01) + esp_name + topic_type)
+* subscription topics (start with prefix(v01/esp/) + esp_name + topic_type)
 
-* e.g. iot/v01/nodeMCUIBS/config/get_status
+* e.g. v01/esp/nodeMCUIBS/config/get_status
 
 topic|meaning
 -|-
@@ -114,6 +114,12 @@ VIN||3V|DHT22 1 [brown]
 This is the 3D model of the case
 
 ![multisensor_case_3d_model](multisensor_case_3d_model.png)
+
+## Natural environment
+
+Here you can see the sensor in the wild
+
+![multisensor_in](multisensor_from_stairs.jpg)
 
 ## Downloads
 

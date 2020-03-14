@@ -7,7 +7,7 @@ The tool has a fancy surface and is suitable for carrying out basic parameter se
 
 It turns out that it is uncomfortable to rely on a windows pc to control the system.
 
-If you are interested you can look at it [references.md](../references.md)
+If you are interested you can look at it [references.md](../about/references.md)
 
 Here are some historical pics of the outdated dot net pc tool.
 
