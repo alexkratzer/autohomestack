@@ -235,7 +235,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../references/" class="md-tabs__link">
+        <a href="../../about/imprint/" class="md-tabs__link">
           About
         </a>
       
@@ -567,6 +567,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#natural-environment" class="md-nav__link">
+    Natural environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#downloads" class="md-nav__link">
     Downloads
   </a>
@@ -662,7 +669,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../../references/" title="References" class="md-nav__link">
+    <a href="../../about/imprint/" title="Imprint" class="md-nav__link">
+      Imprint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/references/" title="References" class="md-nav__link">
       References
     </a>
   </li>
@@ -674,8 +693,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../hints/" title="Hints" class="md-nav__link">
-      Hints
+    <a href="../../about/wiki/" title="My wiki" class="md-nav__link">
+      My wiki
     </a>
   </li>
 
@@ -686,7 +705,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../images/readme_plantuml/" title="Plantuml code" class="md-nav__link">
+    <a href="../../images/readme_plantuml.md'" title="Plantuml code" class="md-nav__link">
       Plantuml code
     </a>
   </li>
@@ -698,7 +717,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../topics_node/" title="node topics" class="md-nav__link">
+    <a href="../../about/topics_node/" title="node topics" class="md-nav__link">
       node topics
     </a>
   </li>
@@ -710,7 +729,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../plc_lib_interface/" title="plc lib" class="md-nav__link">
+    <a href="../../about/plc_lib_interface/" title="plc lib" class="md-nav__link">
       plc lib
     </a>
   </li>
@@ -797,6 +816,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#natural-environment" class="md-nav__link">
+    Natural environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#downloads" class="md-nav__link">
     Downloads
   </a>
@@ -822,8 +848,8 @@
                 
                 <h1 id="iot-multisensor">IoT multisensor<a class="headerlink" href="#iot-multisensor" title="Permanent link">&para;</a></h1>
 <h2 id="install-arduino-ide">Install Arduino IDE<a class="headerlink" href="#install-arduino-ide" title="Permanent link">&para;</a></h2>
-<p>The Arduino IDE from the package repository is very old.</p>
-<p>To install Arduino IDE from the <a href="https://www.arduino.cc/en/Main/software">Official Website</a> download your package.</p>
+<p>The Arduino IDE from my debian package repository is very old.</p>
+<p>To get a newer version of the Arduino IDE got to the <a href="https://www.arduino.cc/en/Main/software">Official Website</a> and download your package.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">cd</span> ./Downloads
 sudo tar xvJf arduino-1.8.12-linux64.tar.xz -C /opt
 ls -lh /opt/
@@ -866,10 +892,10 @@ sudo -E /opt/arduino-1.8.12/install.sh
 <p>MQTT Interface</p>
 <ul>
 <li>
-<p>subscription topics (start with prefix(iot/v01) + esp_name + topic_type)</p>
+<p>subscription topics (start with prefix(v01/esp/) + esp_name + topic_type)</p>
 </li>
 <li>
-<p>e.g. iot/v01/nodeMCUIBS/config/get_status</p>
+<p>e.g. v01/esp/nodeMCUIBS/config/get_status</p>
 </li>
 </ul>
 <table>
@@ -1131,6 +1157,9 @@ sudo -E /opt/arduino-1.8.12/install.sh
 <h2 id="3d-case">3D case<a class="headerlink" href="#3d-case" title="Permanent link">&para;</a></h2>
 <p>This is the 3D model of the case</p>
 <p><img alt="multisensor_case_3d_model" src="../multisensor_case_3d_model.png" /></p>
+<h2 id="natural-environment">Natural environment<a class="headerlink" href="#natural-environment" title="Permanent link">&para;</a></h2>
+<p>Here you can see the sensor in the wild</p>
+<p><img alt="multisensor_in" src="../multisensor_from_stairs.jpg" /></p>
 <h2 id="downloads">Downloads<a class="headerlink" href="#downloads" title="Permanent link">&para;</a></h2>
 <p>You can download the STL file here: <a href="../new_multisensor_V0.1.stl">new_multisensor_V0.1</a></p>
 <p>The arduino sketch is stored here: <a href="../ah_iot_multisensor_v06.ino">ah_iot_multisensor_v06</a></p>
