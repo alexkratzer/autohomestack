@@ -27,7 +27,7 @@ nav:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'
         - My wiki:              'about/wiki.md'
-        - Plantuml code:        images/readme_plantuml.md'
+        - Plantuml code:        'images/readme_plantuml.md'
         - node topics:          'about/topics_node.md'
         - plc lib:              'about/plc_lib_interface.md'
 

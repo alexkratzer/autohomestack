@@ -119,7 +119,11 @@ This is the 3D model of the case
 
 Here you can see the sensor in the wild
 
-![multisensor_in](multisensor_from_stairs.jpg)
+![multisensor natural](multisensor_from_stairs.jpg)
+
+and here the inside of it
+
+![multisensor inside](multisensor_inside.jpg)
 
 ## Downloads
 
