@@ -313,8 +313,56 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#intention" class="md-nav__link">
+    Intention
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#business-view" class="md-nav__link">
     Business view
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#levels" class="md-nav__link">
+    Levels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actuators" class="md-nav__link">
+    Actuators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensors" class="md-nav__link">
+    Sensors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disclaimer" class="md-nav__link">
+    Disclaimer
   </a>
   
 </li>
@@ -692,8 +740,56 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#intention" class="md-nav__link">
+    Intention
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#business-view" class="md-nav__link">
     Business view
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#levels" class="md-nav__link">
+    Levels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actuators" class="md-nav__link">
+    Actuators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensors" class="md-nav__link">
+    Sensors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disclaimer" class="md-nav__link">
+    Disclaimer
   </a>
   
 </li>
@@ -716,12 +812,45 @@
                 
                 
                 <h1 id="another-self-built-home-automation-system">another, self-built, home automation system<a class="headerlink" href="#another-self-built-home-automation-system" title="Permanent link">&para;</a></h1>
+<h2 id="intention">Intention<a class="headerlink" href="#intention" title="Permanent link">&para;</a></h2>
+<p>In the following I present my home automation solution. Originally I wanted to have a documentation for myself.</p>
+<p>In the meantime, the system has proven itself and maybe you want to replicate parts of it.</p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>My main focus was a robust, self-sufficient control system with which I could not depend on a proprietary system from a single manufacturer but could expand with hardware / software from different manufacturers.</p>
 <p>Here my choice fell on Simatic CPUs. The sensors and actuators are wired to these and they process the control program.</p>
-<p>Via the LAN interface, the CPUs communicate with a NAS running a data logger script. Here various data are stored in a mySQL database for later evaluation.</p>
+<p>Via the LAN interface, the CPUs communicate with the other home automation parts like:</p>
+<ul>
+<li>
+<p>A NAS where the data logger server is running. Here various data are stored in a mySQL database for later evaluation.</p>
+</li>
+<li>
+<p>Several Raspberry Pi's are used for multimedia purpose and to run docker containers.</p>
+</li>
+<li>
 <p>As a central control system I use NodeRed which provides a webserver for operation (and a lot of help during development).</p>
+</li>
+</ul>
 <h2 id="business-view">Business view<a class="headerlink" href="#business-view" title="Permanent link">&para;</a></h2>
 <p><img alt="business_view.svg" src="drawio/business_view.svg" /></p>
+<p>This picture shows the allocation of the components in 3 levels.</p>
+<h3 id="levels">Levels<a class="headerlink" href="#levels" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>The end-user can control and observe the system with web services / web based applications.</p>
+</li>
+<li>
+<p>The process level devices are mainly housed in control cabinets and a server cabinet.</p>
+</li>
+<li>
+<p>The field level components are the sensors and actuators of the system with which the end user mainly interacts.</p>
+</li>
+</ol>
+<h3 id="actuators">Actuators<a class="headerlink" href="#actuators" title="Permanent link">&para;</a></h3>
+<p>Actuators include lights, blinds, sockets, heaters and other powered devices.</p>
+<h3 id="sensors">Sensors<a class="headerlink" href="#sensors" title="Permanent link">&para;</a></h3>
+<p>Actively used sensors are mainly switches and buttons as in a traditional house installation.</p>
+<p>Additional sensors measure among other things: movement, temperature, humidity, brightness, noise, sunlight per direction, wind speed, rain, indoor air quality and any amount of data from the heating control system</p>
+<h2 id="disclaimer">Disclaimer<a class="headerlink" href="#disclaimer" title="Permanent link">&para;</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>Of course I am not liable for any damage caused by replicas ;-)</p>
