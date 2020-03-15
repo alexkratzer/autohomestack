@@ -32,12 +32,12 @@ import json
 def ReadConfigValues(filepath = 'config.json'):
     """
     read config value from config file
-{
-    "password" : "",
-    "username" : "auto_home",
-    "host" : "192.168.1.200",
-    "database" : "auto_home" 
-} 
+    {
+        "password" : "",
+        "username" : "auto_home",
+        "host" : "192.168.1.200",
+        "database" : "auto_home" 
+    } 
     :param filepath: json config file where the key id and value are stored
     :return dict: with all config data
     """
@@ -72,7 +72,7 @@ def __exec_query(query, args):
                 print(f'EXCEPTION executing [{query}] {e}')
 
     except Error as e:
-        print(f'EXCEPTION connecting to testsystemdb: {e}')
+        print(f'EXCEPTION connecting to db: {e}')
         return False
     finally:
         if conn is not None and conn.is_connected():
@@ -86,13 +86,13 @@ def __exec_query(query, args):
 
 def insert_into(args):
     """
-        insert_testrun_info
+        insert_into database
     """
 
     table = 'node_log'
 
-    if args.verbose:
-        print(f"insert_into args: {args}")
+    if args['verbose']:
+        print(f"insert_into with args: {args}")
 
     q = f"INSERT INTO " + args.database + "." + table + f" (ID, testcase_total, ) VALUES('{args.blie}', {args.bla}, ')"
 
@@ -100,57 +100,73 @@ def insert_into(args):
         print(f"execute query [{q}]")
     return __exec_query(q, args)
 
+
 def select_from(args):
+    if args['verbose']:
+        print(f"select_from args: {args}")
+        
+    table = 'node_log'
     conn = None
     try:
-        conn = mysql.connector.connect(host='test-system-db.cjjgx9h6x7d1.eu-central-1.rds.amazonaws.com',database='testsystemdb',user='testUsername_XYZ',password='testPassword_XYZ')
+        conn = mysql.connector.connect(host=args['host'], database=args['database'], user=args['username'], password=args['password'])
 
         if not conn.is_connected():
-            print('NOT connecting to testsystem database')
+            print('NOT connecting to database')
             return False
         else:
             cursor = conn.cursor()
             try:
-                print('executing select from testrun db')
-                cursor.execute(f"SELECT * FROM testsystemdb.testrun")
+                if args['verbose']:
+                    print('executing select')
+                cursor.execute(f"SELECT * FROM " + args['database'] + "." + table + " ORDER BY timestamp DESC LIMIT " + args['query_limit'])
                 records = cursor.fetchall()
                 for row in records:
                     print(f"record: {row}")
             except Exception as e:
                 print(f'EXCEPTION executing query {e}')
-
     except Error as e:
-        print(f'EXCEPTION connecting to testsystemdb: {e}')
+        print(f'EXCEPTION connecting to db: {e}')
         return False
     finally:
-        if conn is not None and conn.is_connected():    
-            print('closing connection to DB')
+        if conn is not None and conn.is_connected():
+            if args['verbose']:
+                print('closing connection to DB')
             cursor.close()
             conn.close()
         else:
-            print('__exec_query finally: no connection to close...')
-
-
-
+            if args['verbose']:
+                print('__exec_query finally: no connection to close...')
+  
 def main():
     """
-     database adapter
+    database adapter
+    variables are taken from config.json
+    if passed by argument this values are taken
     """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("-c", "--config_file", default="config.json", help="path to config file")
     parser.add_argument("-x", "--xx", help="xx")
+    parser.add_argument("-l", "--query_limit", help="how many rows from database are returned")
     parser.add_argument("-v", '--verbose', help="set verbose", action='store_true')
     
 
     args = parser.parse_args()
 
     config = ReadConfigValues(args.config_file)
+
     if args.verbose:
         print(f"args: {args}")
+        for arg in vars(args):
+            print(f"for arg: {arg} -> {getattr(args, arg)}")
         print(f"config: {config}")
 
-    for key, value in args.items():
-        config[key] = value
+    for arg in vars(args):
+        attr = getattr(args, arg, None)
+        if attr is not None:
+            config[arg] = getattr(args, arg)
+    #for key, value in args:
+    #    config[key] = value
+    # config['verbose'] = args.verbose
 
     if args.verbose:
         print(f"merged config: {config}")

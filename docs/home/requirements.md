@@ -6,7 +6,7 @@
 
     In order to gain acceptance among stakeholders, it is absolutely necessary to guarantee the basic functions that are also available with a conventional installation.
 
-These basic functions are:
+This means that if the control level or process level devices fail, the following basic functions are retained:
 
 * Switching the light on / off with conventional switches
 
@@ -14,7 +14,7 @@ These basic functions are:
 
 * Sockets must be switched on moderately by default
 
-* The heater must heat automatically up to the last set temperature
+* The heater must maintain the last specified temperature.
 
 ## Some more
 

@@ -48,9 +48,7 @@ docker run -d -p 3000:3000 -v grafana-storage:/var/lib/grafana --name=grafana_ah
 
 * setup pi hole
 
-The network ad blocking / monitoring software [pi-hole.net](https://pi-hole.net)
-
-is not really connected to the home automation system but it is always a good idear to have control over your network.
+The network ad blocking / monitoring software [pi-hole.net](https://pi-hole.net) is not really connected to the home automation system, but it is always a good idear to have control over your network.
 
 ## Script device_status.py
 
