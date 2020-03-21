@@ -3,7 +3,7 @@
     adapter mysql database
 
     example call:
-    python3 testrun_statistic.py -i SYST-XXXX -r output.xml -ref https://s3.console.aws.amazon.com/s3/buckets/applicati_usw --git_branch SYST-1785 --trigger_source myself -v -s
+
 """
 
 #
@@ -11,6 +11,7 @@
 #
 import argparse
 import os.path
+import json
 
 
 # mariaDB libs 
@@ -20,9 +21,6 @@ from mysql.connector import Error
 # read stack outputs
 import boto3
 
-# read aws env
-import requests
-import json
 
 #
 # Code
