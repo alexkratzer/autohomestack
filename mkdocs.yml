@@ -26,10 +26,14 @@ nav:
     - About:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'
-        - My wiki:              'about/wiki.md'
         - Plantuml code:        'images/readme_plantuml.md'
-        - node topics:          'about/topics_node.md'
-        - plc lib:              'about/plc_lib_interface.md'
+        - My wiki:              'about/wiki.md'
+        - master data config:
+            - plc lib:              'about/plc_lib_interface.md'                 
+            - node topics:          'about/topics_node.md'
+            - plc tag eg:           'about/plcVarToDB_eg.md'
+            - plc tag og:           'about/plcVarToDB_og.md'
+            - plc tag car:          'about/plcVarToDB_car.md'
 
 # theme: readthedocs
 # theme: 'windmill-dark'
