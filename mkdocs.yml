@@ -23,17 +23,19 @@ nav:
         - devices:              level_field/field_level.md
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
+    - mds:
+        - master data service:  'mds/mds.md'
+        - plc lib:              'mds/plc_lib_interface.md'                 
+        - node topics:          'mds/topics_node.md'
+        - plc tag eg:           'mds/plcVarToDB_eg.md'
+        - plc tag og:           'mds/plcVarToDB_og.md'
+        - plc tag car:          'mds/plcVarToDB_car.md'
     - About:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'
         - Plantuml code:        'images/readme_plantuml.md'
         - My wiki:              'about/wiki.md'
-        - master data config:
-            - plc lib:              'about/plc_lib_interface.md'                 
-            - node topics:          'about/topics_node.md'
-            - plc tag eg:           'about/plcVarToDB_eg.md'
-            - plc tag og:           'about/plcVarToDB_og.md'
-            - plc tag car:          'about/plcVarToDB_car.md'
+
 
 # theme: readthedocs
 # theme: 'windmill-dark'
