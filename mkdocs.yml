@@ -23,13 +23,15 @@ nav:
         - devices:              level_field/field_level.md
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
-    - mds:
-        - master data service:  'mds/mds.md'
-        - plc lib:              'mds/plc_lib_interface.md'                 
+    - Configuration:
+        - master data:          'mds/mds.md'               
         - node topics:          'mds/topics_node.md'
         - plc tag eg:           'mds/plcVarToDB_eg.md'
         - plc tag og:           'mds/plcVarToDB_og.md'
         - plc tag car:          'mds/plcVarToDB_car.md'
+        - Patch-Panel:          'mds/patch-panel.md'
+        - heating circuit:      'mds/heating_circuit_distributor.md'
+        - plc lib:              'mds/plc_lib_interface.md'        
     - About:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'

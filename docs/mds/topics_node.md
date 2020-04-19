@@ -1,5 +1,15 @@
 # topics
 
+## overview
+
+This is an overview of the communication protocol of the different network components.
+
+Where possible, the participants communicate via mqtt.
+
+For the modules which have not (yet) implemented a mqtt client I have nevertheless oriented myself to the protocol.
+
+This means that each message consists of a **topic** and the actual **content**.
+
 device-type|device-value
 -|-
 plc|eg, og, car,
