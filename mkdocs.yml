@@ -30,6 +30,7 @@ nav:
         - plc tag og:           'mds/plcVarToDB_og.md'
         - plc tag car:          'mds/plcVarToDB_car.md'
         - Patch-Panel:          'mds/patch-panel.md'
+        - switch_cabinet:       'mds/switch_cabinet.md'
         - heating circuit:      'mds/heating_circuit_distributor.md'
         - plc lib:              'mds/plc_lib_interface.md'        
     - About:
