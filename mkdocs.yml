@@ -24,12 +24,12 @@ nav:
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
     - Configuration:
-        - master data:          'mds/mds.md'               
-        - node topics:          'mds/topics_node.md'
+        - Master data:          'mds/mds.md'               
+        - Node topics:          'mds/topics_node.md'
+        - Network wiring:       'mds/network_wiring.md'
         - plc tag eg:           'mds/plcVarToDB_eg.md'
         - plc tag og:           'mds/plcVarToDB_og.md'
         - plc tag car:          'mds/plcVarToDB_car.md'
-        - Patch-Panel:          'mds/patch-panel.md'
         - switch_cabinet:       'mds/switch_cabinet.md'
         - heating circuit:      'mds/heating_circuit_distributor.md'
         - plc lib:              'mds/plc_lib_interface.md'        
