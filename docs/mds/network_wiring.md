@@ -12,6 +12,7 @@ Short|Floor|Place|Description
 **plc_u**|upper|plc box upper floor|2 ports
 **upp?**|upper|upper floor patch panel|not yet installed
 **plc_car**|outside|plc box carport|2 ports
+**nsb**|basement|network socket basement|connection sockets
 
 * * *
 <div style="page-break-after: always; break-after: page;"></div>
@@ -55,7 +56,7 @@ n/a|reserved|-
 n/a|reserved|-
 21|nsu|child-east west|right
 22|plc_car|PLC carport|
-n/a|reserved|-
+23|nsb|basement hobby-west|1Port wall
 n/a|reserved|-
 
 * * *
