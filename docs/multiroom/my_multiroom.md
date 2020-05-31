@@ -57,6 +57,16 @@ In the living room I installed the IKON in the bathroom ceiling the PHANTOM-E-60
 
 In the kitchen there was little space in the wall and so the wall unit was the perfect place to put the compact box ZENSOR-3 on it.
 
-## Synology server
+## Synology Logitech Media Server
 
-hosting the Logitech Media Server LMS
+As media server I am using the Logitech Media Server ***LMS*** which is provided by the Synology DSM as Package.
+
+For the connection to Spottify I use a plugin which requires LSM version > 7.9. This is currently (May 2020) only available as a beta package in DSM.
+
+![LMS beta](LMS_beta.png)
+
+Follow this instructions [forums.slimdevices.com](https://forums.slimdevices.com/showthread.php?107418-The-Spotty-Spotify-implementation) to setup the Spotty Plugin.
+
+At the LMS `Settings` go to tab `Plugins` and add `Additional Repositories`: [http://www.herger.net/slim-plugins/test.xml](http://www.herger.net/slim-plugins/test.xml)
+
+![LMS add repo](LMS_add_repo.png)
