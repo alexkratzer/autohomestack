@@ -1,0 +1,50 @@
+Kl,Kabel,ORT,Bedeutung,Relais,IN,OUT,SPS-Name
+K01,N01_sw,Jalousie,Eltern Jal hoch,R01_El_h,,A5.4,OELTERN_jal_hoch
+K02,N01_br,,Eltern Jal runter,R02_El_r,,A2.5,OELTERN_jal_runter
+K03,N02_sw,,Bad Jal hoch,R03_Bad_h,,A3.5,OBAD_jal_hoch
+K02,N02_br,,Bad Jal runter,R04_Bad_r,,A2.3,OBAD_jal_runter
+K04,N03_sw,,KZ Ost Jal Ost hoch,R05_KZO_O_h,,A3.4,OKZO_jalO_hoch
+K05,N03_br,,KZ Ost Jal Ost runter,R06_KZO_O_r,,A3.3,OKZO_jalO_runter
+K06,N04_sw,,KZ Ost Jal Süd hoch,R07_KZO_S_h,,A5.3,OKZO_jalS_hoch
+K05,N04_br,,KZ Ost Jal Süd runter,R08_KZO_S_r,,A3.7,OKZO_jalS_runter
+K07,N05_sw,,KZ West Jal West hoch,R09_KZW_W_h,,A3.1,OKZW_jalW_hoch
+K08,N05_br,,KZ West Jal West runter,R10_KZW_W_r,,A3.0,OKZW_jalW_runter
+K09,N06_sw,,KZ West Jal Süd hoch,R11_KZW_S_h,,A2.1,OKZW_jalS_hoch
+K08,N06_br,,KZ West Jal Süd runter,R12_KZW_S_r,,A2.0,OKZW_jalS_runter
+K10,N07_sw,,Flur Jal hoch,R13_Fl_h,,A2.2,OFLUR_jal_hoch
+K11,N07_br,,Flur Jal runter,R14_Fl_r,,A3.6,OFLUR_jal_runter
+K12,N08,Steckdosen,Eltern Steckdose,R15_El_SD,,A2.6,OELTERN_steckdose
+K13,N09,,Bad Steckdose,R16_Bad_SD,,A3.2,OBAD_steckdose
+K14,N10,,KZ Ost Steckdose,R17_KZO_SD,,A5.0,OKZO_steckdose
+K15,N11,,KZ West Steckdose,R18_KZW_SD,,A2.7,OKZW_steckdose
+K16,N12,,Flur Steckdose,R19_Fl_SD,,A2.4,OFLUR_steckdose
+K17,N13,Licht,Eltern Licht Decke,R20_EL_L1,,A4.3,OELTERN_decke_licht
+K18,N14,,Eltern Licht West,R21_EL_L2,,A4.4,OELTERN_west_licht
+K19,N15,,Eltern Licht Ost,R22_EL_L3,,A1.0,OELTERN_ost_licht
+K20,N16,,Bad Licht Hauptlicht,R23_Bad_L1,,A1.1,OBAD_decke_licht
+K21,N17,,Bad Licht Spiegel,R24_Bad_L2,,A4.1,OBAD_spiegel_licht
+K22,N18,,Bad Licht Badewanne,R25_Bad_L3,,A4.0,OBAD_badewanne_licht
+K23,N19,,Bad Licht Dusche (12V),R26_Bad_L4,,A0.7,OBAD_dusche_licht
+K24,N20,,KZ Ost Licht Decke,R27_KZO_L1,,A0.6,OKZO_decke_licht
+K25,N21,,KZ Ost Licht Galerie,R28_KZO_L2,,A0.5,OKZO_galerie_licht
+K26,N22,,KZ West Licht Decke,R29_KZW_L1,,A0.4,OKZW_decke_licht
+K27,N23,,KZ West Licht Galerie,R30_KZW_L2,,A0.1,OKZW_galerie_licht
+K28,N24,,Flur Licht Süd,R31_Fl_L1,,A0.0,OFLUR_süd_licht
+K29,N25,,Flur Licht Mitte,R32_Fl_L2,,A0.3,OFLUR_mitte_licht
+K30,N26,,Treppe Licht West,R33_Fl_TR_W,,A0.2,OTREPPEW_licht
+K31,N27,,Treppe Licht Ost,R34_Fl_TR_O,,A4.2,OTREPPEO_licht
+K32,N28,Dauerstrom,Flur (Kamin) Dauerstrom (Tablet),,,,
+K33,N29,,Eltern (Wand-Süd) Dauerstrom (Switch),,,,
+K34,N30,,KZ Ost (Wand-Galerie) Dauerstrom (IP-Cam),,,,
+K35,N31,Stellantrieb,Stellantrieb Bad Boden,R34_Hz_BadBoden,,A5.1,OBAD_boden_heizung
+K36,N32,,Stellantrieb Bad Wand,R35_Hz_BadWand,,A5.6,OBAD_wand_heizung
+K37,N33,,Stellantrieb Eltern,R36_Hz_Eltern,,A5.7,OELTERN_heizung
+K38,N34,,Stellantrieb KZ West,R37_Hz_KZWest,,A5.5,OKZW_heizung
+K39,N35,,Stellantrieb KZ Ost,R38_Hz_KZOst,,A5.2,OKZO_heizung
+K85,N36,Treppe Decke,schwarz,24 V+,,,
+K86,N36,,braun,0-10V Licht,,,AITREPPE_decke_lux
+K87,N36,,blau,24V -,,,
+K88,N36,,grau,BM,x,,ITREPPE_decke_bm
+K89,N36,,gr/ge,res,,,
+K40,,,Reserve,,,,
+,,,,,1,39,

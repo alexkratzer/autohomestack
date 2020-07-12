@@ -24,15 +24,16 @@ nav:
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
     - Configuration:
-        - Master data:          'mds/mds.md'               
-        - Node topics:          'mds/topics_node.md'
-        - Network wiring:       'mds/network_wiring.md'
-        - plc tag eg:           'mds/plcVarToDB_eg.md'
-        - plc tag og:           'mds/plcVarToDB_og.md'
-        - plc tag car:          'mds/plcVarToDB_car.md'
-        - switch_cabinet:       'mds/switch_cabinet.md'
-        - heating circuit:      'mds/heating_circuit_distributor.md'
-        - plc lib:              'mds/plc_lib_interface.md'        
+        - Master data:                      'mds/mds.md'               
+        - Node topics:                      'mds/topics_node.md'
+        - Network wiring:                   'mds/network_wiring.md'
+        - plc tag eg:                       'mds/plcVarToDB_eg.md'
+        - plc tag og:                       'mds/plcVarToDB_og.md'
+        - plc tag car:                      'mds/plcVarToDB_car.md'
+        - switch cabinet:                   'mds/switch_cabinet.md'
+        - cable plan:                       'mds/cable_plan.md'
+        - heating circuit:                  'mds/heating_circuit_distributor.md'
+        - plc lib:                          'mds/plc_lib_interface.md'        
     - About:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'

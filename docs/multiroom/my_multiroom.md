@@ -95,9 +95,15 @@ And I can manage the playlist and synchronize the players if necessary
 
 ![set name piCorePlayer](piCorePlayer_set_name.png)
 
+default SSH login
+
+* user: `tc`
+
+* password: `piCore`
+
 ## Amplifier
 
-After a long time of informing myself I ordered a refurbished Russound M850MC 8-channel amplifier from America via e-bay.
+After a long time of informing myself I ordered a refurbished Russound M850MC 8-channel amplifier.
 
 ![Russound amplifier](Russound_amplifier.png)
 ***R850MC_connections***
