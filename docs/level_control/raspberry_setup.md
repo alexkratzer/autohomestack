@@ -17,9 +17,16 @@ cat ~/.ssh/id_rsa.pub | ssh pi_name@192.168.xxx.xxx -p 22 'mkdir -p ~/.ssh && ca
 * get docker
 
 ```bash
-`sudo apt-get update && sudo apt-get upgrade -y`
-`curl -sSL https://get.docker.com | sh`
-`sudo usermod -aG docker $USER`
+sudo apt-get update && sudo apt-get upgrade -y
+curl -sSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+```
+
+* start existing containers
+
+```bash
+docker ps -a
+docker start <container NAMES>
 ```
 
 ### container **mqtt mosquitto**
