@@ -1,5 +1,9 @@
 # some useful hints
 
+## ESP8266
+
+* To program the ESP module -> ground GPIO0 before downloading a code.
+
 ## documentation
 
 ### usage MkDocs

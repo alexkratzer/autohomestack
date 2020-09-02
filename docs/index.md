@@ -1,7 +1,5 @@
 # another, self-built, home automation system
 
-## Intention
-
 In the following I present my home automation solution. Originally I wanted to have a documentation for myself.
 
 In the meantime, the system has proven itself and maybe you want to replicate parts of it.

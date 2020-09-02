@@ -1,5 +1,11 @@
 # IoT multisensor
 
+## Parts list
+
+Through the control network, 24V is available throughout the house. 
+
+To operate the ESP's I used a DC-DC switching regulator MP1584EN.
+
 ## Install Arduino IDE
 
 The Arduino IDE from my debian package repository is very old.
@@ -18,6 +24,8 @@ Now, you have to add the Debian 10 login user to the dialout, tty, uucp and plug
 
 ## ESP8266
 
+### LIBs
+
 To enable the esp8266 libs at Arduino IDE
 
 * Go to File > Preferences -> Additional Board Manager URLs: http://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -30,14 +38,6 @@ Dependency libs:
 * git clone https://github.com/adafruit/DHT-sensor-library.git
 
 * copy to ~/Arduino/libraries
-
-Features:
-
-* read temperatur / humility and publish cyclic
-
-* read light lux and publish cyclic
-
-* detect motion and publish at detection (on rising edge)
 
 MQTT Interface
 
@@ -54,7 +54,24 @@ topic|meaning
 /config/send_intervall_status|watchdog with status information
 /config/reset [dht, setup, vars]|
 
-## NodeMCU GPIO
+### GPIO
+
+-|-|-|-
+-|-|-|-
+VCC|RST|CH_PD|TXD
+RXD|GPIO0|GPIO2|GND
+
+## NodeMCU - multisensor
+
+### Features
+
+* read temperatur / humility and publish cyclic
+
+* read light lux and publish cyclic
+
+* detect motion and publish at detection (on rising edge)
+
+### Pinout
 
 [node gpio pinout](https://www.instructables.com/id/NodeMCU-ESP8266-Details-and-Pinout/)
 
@@ -109,7 +126,7 @@ G||G|DHT22 4 [red]
 VIN||3V|DHT22 1 [brown]
 -|===|===|-
 
-## 3D case
+## 3D Case
 
 This is the 3D model of the case
 
