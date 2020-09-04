@@ -34,7 +34,8 @@ nav:
         - switch cabinet:                   'mds/switch_cabinet.md'
         - cable plan:                       'mds/cable_plan.md'
         - heating circuit:                  'mds/heating_circuit_distributor.md'
-        - plc lib:                          'mds/plc_lib_interface.md'        
+        - plc lib:                          'mds/plc_lib_interface.md'      
+        - databaseStructure:                'mds/databaseStructure.md'  
     - About:
         - Imprint:              'about/imprint.md'
         - References:           'about/references.md'
