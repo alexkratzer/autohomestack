@@ -95,11 +95,13 @@ wellness-area|ceiling/white|15,54m|2x7m
 
 The aluminium profile mounting design.
 
+I used `tinkercad` which is for free, runs in browser and is easy to use.
+
 ![light_control_paulmann_duo_holder](light_control_paulmann_duo_holder.png)
 
-Now the slicing.
+If you want to download the stl file [klick here](https://github.com/alexkratzer/autohomestack/tree/master/stl_print)
 
-I used the following parameters:
+Now the slicing. There I used `Ultimaker Cura` with the following parameters:
 
 * Infill Density:           40%
 * Printing Temperature:     200C
@@ -109,3 +111,93 @@ I used the following parameters:
 
 ![light_control_paulmann_duo_holder_slicing](light_control_paulmann_duo_holder_slicing.png)
 
+### Node MCU controller
+
+As basis for the sketch I used the iot_multisensor.
+
+The biggest difference is that the light control also controls outputs.
+
+Hardware settings
+
+```c
+const int RELAIS1 = D2;
+const int RELAIS2 = D3;
+const int RELAIS3 = D8;
+const int RELAIS4 = D7;
+```
+
+```c
+void setup_sensor(){
+  pinMode(RELAIS1, OUTPUT);
+  ...
+  digitalWrite(RELAIS1, HIGH);
+  ...
+}
+```
+
+Now we can control the relais with the `digitalWrite()` function.
+
+```c
+// activate
+digitalWrite(RELAIS1, LOW)
+// and to disable again
+digitalWrite(RELAIS1, HIGH)
+```
+
+#### MQTT interface
+
+To control the relais from remote we use a new the `/set_ch/` endpoint.
+
+`v01/esp/basement_light/set_ch/` + `<RELAIS>`
+
+```c
+void setDefaultTopics(){
+  topic_sub_set_ch =      default_prefix + esp_name + "/set_ch/#";
+}
+
+client.subscribe(topic_sub_set_ch.c_str());
+```
+
+The callback function gets expanded
+
+```javascript
+void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+    String topic_set_ch = default_prefix + esp_name + "/set_ch/";
+
+    if(t == topic_set_ch + "1"){
+        set_ch(t, (char*)payload);
+    }
+}
+
+void set_ch(String t, String p){
+  if (p == "on") {digitalWrite(RELAIS1, LOW); sendResponse("set_ch1: on"); }
+  else if (p == "off") {digitalWrite(RELAIS1, HIGH); sendResponse("set_ch1: off");}
+  else sendResponse("set_out ERROR: " + p);
+}
+```
+
+#### Set RELAIS from NodeRed
+
+Internaly at NodeRed the following topic is used:
+
+`v01/node_red_cmd/esp/<ESP_NAME>/set_ch/<RELAIS>`
+
+* ESP_NAME example: control_light
+* RELAIS: 1, 2, 3, 4
+
+Payload: on, off, switch
+
+This code is added to the `rule engine` function
+
+```javascript
+
+if(t.startsWith('v01/node_red_cmd')){
+    ...
+    if(t.startsWith('v01/node_red_cmd/esp/set_ch')){
+
+        mqtt_msg.push({ topic: 'v01/esp/basement_light/set_ch/1', payload: p });
+    }
+    ...
+}
+
+```

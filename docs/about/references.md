@@ -8,3 +8,4 @@ repo|this repository at github||[github.com/alexkratzer/autohomestack](https://g
 tool|home automation pc-tool (outdated)|dotNet|[github.com/alexkratzer/ahGUI](https://github.com/alexkratzer/ahGUI)
 tool|pc - plc adapter|dotNet|[github.com/alexkratzer/CpuPcStack](https://github.com/alexkratzer/CpuPcStack)
 config|node-RED flows|json|[github.com/ ... /node_red_flows](https://github.com/alexkratzer/autohomestack/tree/master/node_red_flows)
+repo|3D print|stl/gcode|[github.com/alexkratzer/autohomestack/stl_print](https://github.com/alexkratzer/autohomestack/tree/master/stl_print)
