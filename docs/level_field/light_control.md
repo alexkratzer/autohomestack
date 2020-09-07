@@ -18,11 +18,13 @@ Each area should be indirectly illuminated in the wall/ceiling corners through l
 
 * NodeMCU as mqtt gateway
 
-* 4x Relais to controll the power supplys
+* 4x 5V relays to controll the power supplys
 
 * 4x 24V LED power supply
 
-* LED Stripes
+* LED Stripes white, warm white, and blue
+
+* Cabel 2x0,75mm²
 
 ## The first prototype
 
@@ -32,6 +34,14 @@ To find out what it might look like and check if the `self-printed corner profil
 
 ## Room with LED planning
 
+* The ceiling of both areas should be illuminated with neutral white light
+
+* In the wellness area the walls should be illuminated with a warm white light
+
+* and in the office the wall light should be blue
+
+* Vertical lighting is installed in selected corners and passages
+
 ![room_plan_downstair_led](room_plan_downstair_led.svg)
 
 ### Length calculation LED-stripes
@@ -40,35 +50,28 @@ Distance profile to wall ~2cm
 
 Area|calculation|result|total
 -|-|-|-
-**Office** ceiling/white|(2,65 - 0,04) x 2|5,22m|
-**Office** ceiling/white|(3,69 - 0,04) x 2 |7,3m|
-**Office** ceiling/white|4 x 0,66 |2,64m|
-**Office** ceiling/white|5,22m + 7,3m + 2,64m | | **15,16m**
-
-* **Office** wall/blue
-
-(2,65 - 0,04) x 2 = **5,22** / 3,69 - 0,04 = **3,65** / 4 x 0,66 = **2,64**
-
-5,22m + 3,65m + 2,64m = **11,51m**
-
-* **wellness-area** ceiling/white
-
-(3,5 - 0,04) x 2 = **6,92** / (3,69 - 0,04) x 2 = **7,3** / 2 x 0,66 = **1,32**
-
-6,92m + 7,3m + 1,32m = **15,54m**
-
-* **wellness-area** wall/blue
-
-(3,5 - 0,04) x 2 = **6,92** / 3,69 - 0,04 = **3,65** / 2 x 0,66 = **1,32**
-
-6,92m + 3,65m + 1,32m = **11,89m**
+Office ceiling|(2,65 - 0,04) x 2|5,22m|
+Office ceiling|(3,69 - 0,04) x 2 |7,3m|
+Office ceiling|4 x 0,66 |2,64m|
+Office ceiling|5,22m + 7,3m + 2,64m | | **15,16m**
+Office wall|(2,65 - 0,04) x 2|5,22|
+Office wall|3,69 - 0,04|3,65|
+Office wall|4 x 0,66|2,64|
+Office wall|5,22m + 3,65m + 2,64m||**11,51m**
+wellness-area ceiling|(3,5 - 0,04) x 2|6,92|
+wellness-area ceiling|(3,69 - 0,04) x 2|7,3|
+wellness-area ceiling|2 x 0,66|1,32
+wellness-area ceiling|6,92m + 7,3m + 1,32m||**15,54m**
+wellness-area wall|(3,5 - 0,04) x 2|6,92|
+wellness-area wall|3,69 - 0,04|3,65|
+wellness-area wall|2 x 0,66|1,32|
+wellness-area wall|6,92m + 3,65m + 1,32m||**11,89m**
 
 ### Length calculation power
 
 The longest supply line is about 6,5 meters.
 
-In total (16m office + 28m wellness-area about  = 44m 0,75mm²
-
+In total (16m office + 28m wellness-area about  = 44m
 
 ![room_plan_downstair_power](room_plan_downstair_power.svg)
 
@@ -82,24 +85,32 @@ With cable cross section 0,75mm² leads to ~5% voltage drop (which is ok).
 
 ### Summary
 
-Area|Direction|Length LED|Length power
--|-|-|-
-Office|wall/blue|11,51m|2x4
-Office|ceiling/white|15,16m|2x4
-wellness-area|wall/blue|11,89m|2x7m
-wellness-area|ceiling/white|15,54m|2x7m
+Area|Direction|Color|Length LED|Length power
+-|-|-|-|-
+Office|wall|blue|11,51m|2x4m
+Office|ceiling|neutral white|15,16m|2x4m
+wellness-area|wall|warm white|11,89m|2x7m
+wellness-area|ceiling|neutral white|15,54m|2x7m
 
-## Components in detail
+## Component corner profile holder
 
-### Corner profile holder
+To design the aluminium profile mounting I used `tinkercad`.
 
-The aluminium profile mounting design.
-
-I used `tinkercad` which is for free, runs in browser and is easy to use.
+It is for free, runs in browser and is easy to use.
 
 ![light_control_paulmann_duo_holder](light_control_paulmann_duo_holder.png)
 
+Requirements:
+
+* Compatible with Paulmann Duo Profil 2m (70267)
+
+* Fits for Plasterboard screws 3.9 X 45mm
+
+* Should act as cable fixation
+
 If you want to download the stl file [klick here](https://github.com/alexkratzer/autohomestack/tree/master/stl_print)
+
+![light_control_paulmann_duo_holder_slicing](light_control_paulmann_duo_holder_slicing.png)
 
 Now the slicing. There I used `Ultimaker Cura` with the following parameters:
 
@@ -109,46 +120,77 @@ Now the slicing. There I used `Ultimaker Cura` with the following parameters:
 * Print Speed:              60mm/s
 * Support:                  No
 
-![light_control_paulmann_duo_holder_slicing](light_control_paulmann_duo_holder_slicing.png)
+The series production has started.
 
-### Node MCU controller
+![light_control_holder_series](light_control_holder_series.jpg)
+
+## Component Node MCU
 
 As basis for the sketch I used the iot_multisensor.
 
-The biggest difference is that the light control also controls outputs.
+The biggest difference is that the `light control` also controls outputs.
 
-Hardware settings
+### Hardware settings
 
 ```c
-const int RELAIS1 = D2;
-const int RELAIS2 = D3;
-const int RELAIS3 = D8;
-const int RELAIS4 = D7;
+const int RELAYS1 = D2;
+const int RELAYS2 = D3;
+const int RELAYS3 = D8;
+const int RELAYS4 = D7;
 ```
 
 ```c
 void setup_sensor(){
-  pinMode(RELAIS1, OUTPUT);
+  pinMode(RELAYS1, OUTPUT);
   ...
-  digitalWrite(RELAIS1, HIGH);
+  digitalWrite(RELAYS1, HIGH);
   ...
 }
 ```
 
-Now we can control the relais with the `digitalWrite()` function.
+Now we can control the relays with the `digitalWrite()` function.
 
 ```c
 // activate
-digitalWrite(RELAIS1, LOW)
+digitalWrite(RELAYS1, LOW)
 // and to disable again
-digitalWrite(RELAIS1, HIGH)
+digitalWrite(RELAYS1, HIGH)
 ```
 
-#### MQTT interface
+### Pinout
 
-To control the relais from remote we use a new the `/set_ch/` endpoint.
+NodeMCU
 
-`v01/esp/basement_light/set_ch/` + `<RELAIS>`
+GPIO|device|GPIO|device
+-|-|-|-
+A0||D0|
+G||D1|
+VV|[red] 5V out |D2|[green] CH1
+S3|             |D3|[orange] CH2
+S2||D4|
+S1||3V|
+SC||G|[blue] GND
+S0||D5|
+SK||D6|
+G||D7|[brown] CH4
+3V||D8|[yellow] CH3
+EN||RX|
+RST||TX|
+G||G|
+VIN||3V|
+-|===|===|-
+
+4-Relais Modul 5V
+
+GND|IN1|IN2|IN3|IN4|VCC
+-|-|-|-|-|-
+blue|green|orange|yellow|brown|red
+
+### MQTT interface
+
+To control the relays from remote we use a new `/set_ch/` endpoint.
+
+`v01/esp/basement_light/set_ch/` + `<RELAYS>`
 
 ```c
 void setDefaultTopics(){
@@ -170,20 +212,20 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 }
 
 void set_ch(String t, String p){
-  if (p == "on") {digitalWrite(RELAIS1, LOW); sendResponse("set_ch1: on"); }
-  else if (p == "off") {digitalWrite(RELAIS1, HIGH); sendResponse("set_ch1: off");}
+  if (p == "on") {digitalWrite(RELAYS1, LOW); sendResponse("set_ch1: on"); }
+  else if (p == "off") {digitalWrite(RELAYS1, HIGH); sendResponse("set_ch1: off");}
   else sendResponse("set_out ERROR: " + p);
 }
 ```
 
-#### Set RELAIS from NodeRed
+## Set RELAYS from NodeRed
 
 Internaly at NodeRed the following topic is used:
 
-`v01/node_red_cmd/esp/<ESP_NAME>/set_ch/<RELAIS>`
+`v01/node_red_cmd/esp/<ESP_NAME>/set_ch/<RELAYS>`
 
 * ESP_NAME example: control_light
-* RELAIS: 1, 2, 3, 4
+* RELAYS: 1, 2, 3, 4
 
 Payload: on, off, switch
 
@@ -194,10 +236,16 @@ This code is added to the `rule engine` function
 if(t.startsWith('v01/node_red_cmd')){
     ...
     if(t.startsWith('v01/node_red_cmd/esp/set_ch')){
-
-        mqtt_msg.push({ topic: 'v01/esp/basement_light/set_ch/1', payload: p });
+        mqtt_msg.push({ topic: t.replace("/node_red_cmd", ""), payload: p });
     }
     ...
 }
-
 ```
+
+Now the relays can be set by this mqtt message:
+
+* topic `v01/node_red_cmd/esp/basement_light/set_ch/1`
+
+* payload `off` or `on`
+
+![NodeRed_button_relays](NodeRed_button_relays.png)

@@ -30,7 +30,6 @@
  Hardware Settings
 *****************************************************************************************/
 //NodeMcu (esp8266-12)
-const int PIRPIN = D4;
 
 //light control
 const int RELAIS1 = D2;
@@ -46,7 +45,7 @@ const char* password = wlan_pwd;
 const char* mqtt_server = mqtt_server_ip;
 String esp_name = esp_name_default;
 
-const String pir1_name = "pir"; 
+
 /*****************************************************************************************
  mqtt staff
 *****************************************************************************************/
@@ -67,9 +66,6 @@ int send_intervall_status = send_intervall_status_DEFAULT;
 /*****************************************************************************************
  sensor staff
 *****************************************************************************************/
-
-bool oldPIR1State;
-int motion_counter = 0;
 int ch1_change_counter = 0;
 int ch2_change_counter = 0;
 int ch3_change_counter = 0;
@@ -79,16 +75,12 @@ int ch4_change_counter = 0;
  init / setup
 *****************************************************************************************/
 
-String topic_pub_pir;
 String topic_pub_response;
-String topic_sub;
 String topic_sub_set_ch;
 String topic_pup_status_log;
 
 void setDefaultTopics(){
-  topic_sub =             default_prefix + esp_name + "/cmd/#";
   topic_sub_set_ch =      default_prefix + esp_name + "/set_ch/#";
-  topic_pub_pir =         default_prefix + esp_name + "/i/";
   topic_pub_response =    default_prefix + esp_name + "/msg/";
   topic_pup_status_log =  default_prefix + esp_name + "/status/log/";
 }
@@ -169,10 +161,6 @@ void setup_sensor(){
   pinMode(RELAIS2, OUTPUT);
   pinMode(RELAIS3, OUTPUT);
   pinMode(RELAIS4, OUTPUT);
-  
-  pinMode(PIRPIN, INPUT);
-  
-  oldPIR1State = !digitalRead(PIRPIN);
 
   digitalWrite(RELAIS1, HIGH);
   digitalWrite(RELAIS2, HIGH);
@@ -188,7 +176,6 @@ void reconnect() {
     if (client.connect(clientId.c_str())) {
       ++reconnect_success;
       sendResponse("mqtt reconnect (success=" + String(reconnect_success) + " error=" + String(reconnect_error) + ")" );
-      client.subscribe(topic_sub.c_str());
       client.subscribe(topic_sub_set_ch.c_str());
     } else {
       ++reconnect_error;
@@ -199,7 +186,6 @@ void reconnect() {
 
 void setup() {
   setup_sensor();
-  // Serial.begin(115200);
   setup_wifi();
   setup_mqtt();
   setup_ota();
@@ -208,13 +194,6 @@ void setup() {
 /*****************************************************************************************
  CODE publish
 *****************************************************************************************/
-void sendMotionDetected(String pir)
-{  
-  String mqttMessage = "motion " + String(pir) + " ("+pir1_name+"=" + String(motion_counter) + ")";
-  String topic = topic_pub_pir + pir;
-  client.publish(topic.c_str(), mqttMessage.c_str());
-}
-
 void sendResponse(String rmsg)
 {  
   client.publish(topic_pub_response.c_str(), rmsg.c_str());
@@ -223,15 +202,16 @@ void sendResponse(String rmsg)
 void sendStatus(String cmd){
     uint32_t free_heap = ESP.getFreeHeap();
     
-    snprintf (mqtt_msg, 510, "motion %d, reconnect ok=%d, err=%d, free_heap=%u, ch1_change_counter=%d, ch2_change_counter=%d,  ch3_change_counter=%d,  ch4_change_counter=%d",
-    motion_counter, reconnect_success, reconnect_error, free_heap, ch1_change_counter, ch2_change_counter, ch3_change_counter, ch4_change_counter);
+    snprintf (mqtt_msg, 510, "reconnect ok=%d, err=%d, free_heap=%u, ch1_change_counter=%d, ch2_change_counter=%d,  ch3_change_counter=%d,  ch4_change_counter=%d",
+    reconnect_success, reconnect_error, free_heap, ch1_change_counter, ch2_change_counter, ch3_change_counter, ch4_change_counter);
+    //snprintf (mqtt_msg, 510, "reconnect ok=%d, err=%d, free_heap=%u",
+    //reconnect_success, reconnect_error, free_heap);
     client.publish(topic_pup_status_log.c_str(), mqtt_msg);    
 }
 
 /*****************************************************************************************
  CODE callback
 *****************************************************************************************/ 
-int ERR_MSG_count = 0;
 void set_ch(String t, String p){
   if (p == "on") {digitalWrite(RELAIS1, LOW); sendResponse("set_channel 1: on"); }
   else if (p == "off") {digitalWrite(RELAIS1, HIGH); sendResponse("set_channel1: off");}
@@ -243,60 +223,11 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   payload[length] = '\0'; // Make payload a string by NULL terminating it.
   String t = String(topic);
 
-  String topic_prefix = default_prefix + esp_name + "/cmd/";
   String topic_set_ch = default_prefix + esp_name + "/set_ch/";
 
   if(t == topic_set_ch + "1"){
     set_ch(t, (char*)payload);
   }
-
-  
-  else if(t == (topic_prefix + "echo")){
-    sendResponse("hello from= " + String(esp_name) + " echo: " + (char*)payload);     
-  }
-  else if(t == topic_prefix +"set_name"){
-    String new_name = (char*)payload;
-    sendResponse("change esp_name from [" + String(esp_name) + "] to= [" + new_name + "]");
-    client.unsubscribe(topic_sub.c_str());
-    client.unsubscribe(topic_sub_set_ch.c_str());
-    esp_name = new_name;
-    setDefaultTopics();
-    client.subscribe(topic_sub.c_str());
-    client.subscribe(topic_sub_set_ch.c_str());
-    
-  }else if(t == topic_prefix + "send_intervall_status"){
-    int tmp = atoi((char *)payload);
-    sendResponse("change send_intervall_status from " + String(send_intervall_status) + " to " + String(tmp) );
-    send_intervall_status = tmp;
-    
-  }else if(t == topic_prefix + "reset"){
-    String reset_modul = (char*)payload;
-    if(reset_modul=="setup"){
-      sendResponse("reset esp (setup())");
-      setup();
-    }else if(reset_modul=="vars"){
-      sendResponse("reset counter variables");
-      reconnect_success = 0;
-      reconnect_error = 0;
-      motion_counter = 0;
-      send_intervall_status = send_intervall_status_DEFAULT;
-      ERR_MSG_count = 0;
-      }else{
-      if(ERR_MSG_count < 10){
-        sendResponse("received unknown msg at topic " + topic_prefix +"reset= " + reset_modul); 
-        ERR_MSG_count = ERR_MSG_count + 1;
-        }
-      }
-    }else if (t == topic_prefix + "status"){
-      sendResponse("try to send status"); 
-      sendStatus("dbg");    
-      // String cmd = (char*)payload;
-    }else{ 
-    if(ERR_MSG_count < 10){
-      sendResponse("received unknown topic= " + t); 
-      ERR_MSG_count = ERR_MSG_count + 1;
-      }
-    }
 }
 
 
@@ -349,17 +280,7 @@ void loop() {
     }
     
   /****************************************************/
-  // pir
-  
-  int inputState = digitalRead(PIRPIN);
-  if (inputState != oldPIR1State)
-  {
-    oldPIR1State = inputState;
-    if(inputState){
-        ++motion_counter;
-        sendMotionDetected(pir1_name);
-    }
-  }
+
   
   /****************************************************/
   // environment sensors

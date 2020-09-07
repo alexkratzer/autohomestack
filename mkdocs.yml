@@ -20,8 +20,8 @@ nav:
         - Data logger:          'level_process/dataLoggerServer.md'
     - Field level:          
         - IoT Multisensor:      level_field/iot_multisensor.md
-        - Devices:              level_field/field_level.md
         - Light control:        level_field/light_control.md
+        - More devices:         level_field/field_level.md
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
     - Configuration:

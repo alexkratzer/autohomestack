@@ -75,10 +75,6 @@ RXD|GPIO0|GPIO2|GND
 
 [node gpio pinout](https://www.instructables.com/id/NodeMCU-ESP8266-Details-and-Pinout/)
 
-digitalWrite did NOT work with GPIOs 6, 7, 8, 11, and ADC (A0)
-
-digitalRead did NOT work with GPIOs 1, 3, 6, 7, 8, 11, and the ADC (A0)
-
 ### GPIO sensoric
 
 pin|DHT22|AM312|KY-018
@@ -87,6 +83,8 @@ pin|DHT22|AM312|KY-018
 2|DATA=D7|OUT=D2/D5|VCC
 3|nc|GND|DATA=A0
 4|GND||
+
+![AM312_pinout.jpg](AM312_pinout.jpg)
 
 ### NODE mcu platine soldered
 
