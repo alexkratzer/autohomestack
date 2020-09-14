@@ -132,13 +132,14 @@ This is the 3D model of the case
 
 ## Natural environment
 
-Here you can see the sensor in the wild
+<img src="https://autohomestack.de/level_field/multisensor_from_stairs.jpg" align="left" width="48%" />
 
-![multisensor natural](multisensor_from_stairs.jpg)
+<!-- ![multisensor natural](multisensor_from_stairs.jpg) -->
 
-and here the inside of it
+<img src="https://autohomestack.de/level_field/multisensor_inside.jpg" align="right" width="48%" />
 
-![multisensor inside](multisensor_inside.jpg)
+<!-- ![multisensor inside](multisensor_inside.jpg) -->
+Here you can see the sensor in the wild and the inside of it.
 
 ## Downloads
 

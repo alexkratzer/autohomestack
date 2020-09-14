@@ -48,24 +48,14 @@ To find out what it might look like and check if the `self-printed corner profil
 
 Distance profile to wall ~2cm
 
-Area|calculation|result|total
+Led stripe separable every 5cm
+
+Area|calculation|Alu profile|LED Stripe
 -|-|-|-
-Office ceiling|(2,65 - 0,04) x 2|5,22m|
-Office ceiling|(3,69 - 0,04) x 2 |7,3m|
-Office ceiling|4 x 0,66 |2,64m|
-Office ceiling|5,22m + 7,3m + 2,64m | | **15,16m**
-Office wall|(2,65 - 0,04) x 2|5,22|
-Office wall|3,69 - 0,04|3,65|
-Office wall|4 x 0,66|2,64|
-Office wall|5,22m + 3,65m + 2,64m||**11,51m**
-wellness-area ceiling|(3,5 - 0,04) x 2|6,92|
-wellness-area ceiling|(3,69 - 0,04) x 2|7,3|
-wellness-area ceiling|2 x 0,66|1,32
-wellness-area ceiling|6,92m + 7,3m + 1,32m||**15,54m**
-wellness-area wall|(3,5 - 0,04) x 2|6,92|
-wellness-area wall|3,69 - 0,04|3,65|
-wellness-area wall|2 x 0,66|1,32|
-wellness-area wall|6,92m + 3,65m + 1,32m||**11,89m**
+Office ceiling|5,22m + 7,3m + 2,64m |**15,16m**|13,3m
+Office wall|5,22m + 3,65m + 2,64m|**11,51m**|
+wellness-area ceiling|6,92m + 7,3m + 1,32m|**15,54m**|15m
+wellness-area wall|6,92m + 3,65m + 1,32m|**11,89m**|
 
 ### Length calculation power
 
@@ -77,11 +67,23 @@ In total (16m office + 28m wellness-area about  = 44m
 
 Since there are long distances we use 24V.
 
-Assumption the wellness-area white leds have 9,6 watt per meter: 9,6w/m * 16m = ~150 watt total.
+Assumption the wellness-area white leds have 19,2 watt per meter: 19,2w * 15m = ~300 watt total.
 
-The power supply is divided between two cables = ~75 watt + about 20% reserve = ~90 watt.
+The power supply is divided between two cables = ~150 watt.
 
-With cable cross section 0,75mm² leads to ~5% voltage drop (which is ok).
+With a cable cross section of 1.00mm² this leads to ~5% voltage drop (which is okay).
+
+### Led Stripe
+
+For the ceiling I have selected a Stripe with white and warm-white LEDs:
+
+* 240 SMD LEDs / meter
+
+* Chipsatz 2216
+
+* Power per meter: 19,2 Watt (7,9 W / Chip)
+
+* Light flux: 1680 Lumen/m
 
 ### Summary
 
