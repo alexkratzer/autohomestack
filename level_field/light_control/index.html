@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/level_field/iot_multisensor/">
+        <link rel="canonical" href="https://alexkratzer.github.io/autohomestack/level_field/light_control/">
       
       
         <meta name="author" content="alexander kratzer">
@@ -40,7 +40,7 @@
     
     
       
-        <title>IoT Multisensor - Auto Home Stack</title>
+        <title>Light control - Auto Home Stack</title>
       
     
     
@@ -87,7 +87,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#iot-multisensor" tabindex="0" class="md-skip">
+      <a href="#light-control-officewellness-area" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -113,7 +113,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                IoT Multisensor
+                Light control
               
             </span>
           
@@ -209,7 +209,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="./" class="md-tabs__link md-tabs__link--active">
+        <a href="../iot_multisensor/" class="md-tabs__link md-tabs__link--active">
           Field level
         </a>
       
@@ -496,6 +496,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../iot_multisensor/" title="IoT Multisensor" class="md-nav__link">
+      IoT Multisensor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -507,11 +519,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        IoT Multisensor
+        Light control
       </label>
     
-    <a href="./" title="IoT Multisensor" class="md-nav__link md-nav__link--active">
-      IoT Multisensor
+    <a href="./" title="Light control" class="md-nav__link md-nav__link--active">
+      Light control
     </a>
     
       
@@ -525,37 +537,58 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#parts-list" class="md-nav__link">
-    Parts list
+  <a href="#the-idea" class="md-nav__link">
+    The idea
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-arduino-ide" class="md-nav__link">
-    Install Arduino IDE
+  <a href="#components" class="md-nav__link">
+    Components
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#esp8266" class="md-nav__link">
-    ESP8266
+  <a href="#the-first-prototype" class="md-nav__link">
+    The first prototype
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#room-with-led-planning" class="md-nav__link">
+    Room with LED planning
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#libs" class="md-nav__link">
-    LIBs
+  <a href="#led-stripe" class="md-nav__link">
+    Led Stripe
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#gpio" class="md-nav__link">
-    GPIO
+  <a href="#length-calculation-led-stripes" class="md-nav__link">
+    Length calculation LED-stripes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#length-calculation-power" class="md-nav__link">
+    Length calculation power
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-supply" class="md-nav__link">
+    Power supply
   </a>
   
 </li>
@@ -566,16 +599,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#nodemcu-multisensor" class="md-nav__link">
-    NodeMCU - multisensor
+  <a href="#component-corner-profile-holder" class="md-nav__link">
+    Component corner profile holder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-node-mcu" class="md-nav__link">
+    Component Node MCU
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    Features
+  <a href="#hardware-settings" class="md-nav__link">
+    Hardware settings
   </a>
   
 </li>
@@ -588,22 +628,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gpio-sensoric" class="md-nav__link">
-    GPIO sensoric
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-mcu-platine-soldered" class="md-nav__link">
-    NODE mcu platine soldered
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-mcu-general" class="md-nav__link">
-    NODE mcu general
+  <a href="#mqtt-interface" class="md-nav__link">
+    MQTT interface
   </a>
   
 </li>
@@ -614,22 +640,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3d-case" class="md-nav__link">
-    3D Case
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#natural-environment" class="md-nav__link">
-    Natural environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#downloads" class="md-nav__link">
-    Downloads
+  <a href="#set-relays-from-nodered" class="md-nav__link">
+    Set RELAYS from NodeRed
   </a>
   
 </li>
@@ -642,18 +654,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../light_control/" title="Light control" class="md-nav__link">
-      Light control
-    </a>
   </li>
 
         
@@ -959,37 +959,58 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#parts-list" class="md-nav__link">
-    Parts list
+  <a href="#the-idea" class="md-nav__link">
+    The idea
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-arduino-ide" class="md-nav__link">
-    Install Arduino IDE
+  <a href="#components" class="md-nav__link">
+    Components
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#esp8266" class="md-nav__link">
-    ESP8266
+  <a href="#the-first-prototype" class="md-nav__link">
+    The first prototype
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#room-with-led-planning" class="md-nav__link">
+    Room with LED planning
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#libs" class="md-nav__link">
-    LIBs
+  <a href="#led-stripe" class="md-nav__link">
+    Led Stripe
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#gpio" class="md-nav__link">
-    GPIO
+  <a href="#length-calculation-led-stripes" class="md-nav__link">
+    Length calculation LED-stripes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#length-calculation-power" class="md-nav__link">
+    Length calculation power
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-supply" class="md-nav__link">
+    Power supply
   </a>
   
 </li>
@@ -1000,16 +1021,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#nodemcu-multisensor" class="md-nav__link">
-    NodeMCU - multisensor
+  <a href="#component-corner-profile-holder" class="md-nav__link">
+    Component corner profile holder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-node-mcu" class="md-nav__link">
+    Component Node MCU
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    Features
+  <a href="#hardware-settings" class="md-nav__link">
+    Hardware settings
   </a>
   
 </li>
@@ -1022,22 +1050,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gpio-sensoric" class="md-nav__link">
-    GPIO sensoric
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-mcu-platine-soldered" class="md-nav__link">
-    NODE mcu platine soldered
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-mcu-general" class="md-nav__link">
-    NODE mcu general
+  <a href="#mqtt-interface" class="md-nav__link">
+    MQTT interface
   </a>
   
 </li>
@@ -1048,22 +1062,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3d-case" class="md-nav__link">
-    3D Case
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#natural-environment" class="md-nav__link">
-    Natural environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#downloads" class="md-nav__link">
-    Downloads
+  <a href="#set-relays-from-nodered" class="md-nav__link">
+    Set RELAYS from NodeRed
   </a>
   
 </li>
@@ -1085,235 +1085,239 @@
               
                 
                 
-                <h1 id="iot-multisensor">IoT multisensor<a class="headerlink" href="#iot-multisensor" title="Permanent link">&para;</a></h1>
-<h2 id="parts-list">Parts list<a class="headerlink" href="#parts-list" title="Permanent link">&para;</a></h2>
-<p>Through the control network, 24V is available throughout the house. </p>
-<p>To operate the ESP's I used a DC-DC switching regulator MP1584EN.</p>
-<h2 id="install-arduino-ide">Install Arduino IDE<a class="headerlink" href="#install-arduino-ide" title="Permanent link">&para;</a></h2>
-<p>The Arduino IDE from my debian package repository is very old.</p>
-<p>To get a newer version of the Arduino IDE got to the <a href="https://www.arduino.cc/en/Main/software">Official Website</a> and download your package.</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> ./Downloads
-sudo tar xvJf arduino-1.8.12-linux64.tar.xz -C /opt
-ls -lh /opt/
-sudo -E /opt/arduino-1.8.12/install.sh
+                <h1 id="light-control-officewellness-area">Light control office/wellness-area<a class="headerlink" href="#light-control-officewellness-area" title="Permanent link">&para;</a></h1>
+<h2 id="the-idea">The idea<a class="headerlink" href="#the-idea" title="Permanent link">&para;</a></h2>
+<p>Install indirect lighting in a large basement room.</p>
+<p><img alt="room_plan_downstair_living" src="../room_plan_downstair_living.svg" /></p>
+<p>The room is divided into a working and a wellness-area.</p>
+<p>Each area should be indirectly illuminated in the wall/ceiling corners through led stripes.</p>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Paulmann Duo Profil 2m (70267)</p>
+</li>
+<li>
+<p>Self-printed corner profile holder</p>
+</li>
+<li>
+<p>NodeMCU as mqtt gateway</p>
+</li>
+<li>
+<p>4x 5V relays to controll the power supplys</p>
+</li>
+<li>
+<p>4x 24V LED power supply</p>
+</li>
+<li>
+<p>LED Stripes white, warm white, and blue</p>
+</li>
+<li>
+<p>Cabel 2x0,75mm²</p>
+</li>
+</ul>
+<h2 id="the-first-prototype">The first prototype<a class="headerlink" href="#the-first-prototype" title="Permanent link">&para;</a></h2>
+<p>To find out what it might look like and check if the <code>self-printed corner profile holders</code> work.</p>
+<p><img alt="light_control_prototype" src="../light_control_prototype.jpg" /></p>
+<h2 id="room-with-led-planning">Room with LED planning<a class="headerlink" href="#room-with-led-planning" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>The ceiling of both areas should be illuminated with neutral white light</p>
+</li>
+<li>
+<p>In the wellness area the walls should be illuminated with a warm white light</p>
+</li>
+<li>
+<p>and in the office the wall light should be blue</p>
+</li>
+<li>
+<p>Vertical lighting is installed in selected corners and passages</p>
+</li>
+</ul>
+<p><img alt="room_plan_downstair_led" src="../room_plan_downstair_led.svg" /></p>
+<h3 id="led-stripe">Led Stripe<a class="headerlink" href="#led-stripe" title="Permanent link">&para;</a></h3>
+<p>For the ceiling I have selected a Stripe with white and warm-white LEDs:</p>
+<ul>
+<li>
+<p>240 SMD LEDs / meter</p>
+</li>
+<li>
+<p>Chipsatz 2216</p>
+</li>
+<li>
+<p>Power per meter: 19,2 Watt (7,9 W / Chip)</p>
+</li>
+<li>
+<p>Light flux: 1680 Lumen/m</p>
+</li>
+</ul>
+<h3 id="length-calculation-led-stripes">Length calculation LED-stripes<a class="headerlink" href="#length-calculation-led-stripes" title="Permanent link">&para;</a></h3>
+<p>Distance profile to wall ~2cm</p>
+<p>Led stripe separable every 5cm</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>calculation</th>
+<th>Alu profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Office ceiling_up</td>
+<td>5,22m + 7,3m</td>
+<td>12,52m</td>
+</tr>
+<tr>
+<td>Office ceiling_down</td>
+<td>5,22m + 3,65m</td>
+<td>8,87m</td>
+</tr>
+<tr>
+<td>wellness-area ceiling_up</td>
+<td>6,92m + 7,3m + 1,32m</td>
+<td>14,22m</td>
+</tr>
+<tr>
+<td>wellness-area ceiling_down</td>
+<td>6,92m + 3,65m + 1,32m</td>
+<td>10,57</td>
+</tr>
+<tr>
+<td>both wall</td>
+<td>0,65m x 6</td>
+<td>4m</td>
+</tr>
+</tbody>
+</table>
+<h3 id="length-calculation-power">Length calculation power<a class="headerlink" href="#length-calculation-power" title="Permanent link">&para;</a></h3>
+<p>The longest supply line is about 6,5 meters.</p>
+<p>In total (16m office + 28m wellness-area about  = 44m</p>
+<p><img alt="room_plan_downstair_power" src="../room_plan_downstair_power.svg" /></p>
+<p>Since there are long distances we use 24V.</p>
+<p>Assumption the wellness-area white leds have 19,2 watt per meter: 19,2w * 15m = ~300 watt total.</p>
+<p>The power supply is divided between two cables = ~150 watt.</p>
+<p>With a cable cross section of 1.00mm² this leads to ~5% voltage drop (which is okay).</p>
+<h3 id="power-supply">Power supply<a class="headerlink" href="#power-supply" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Power per meter: 19,2 Watt (for ceiling_up and wall)</p>
+</li>
+<li>
+<p>Wall Stripe = 65cm ~12,5 Watt</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Direction</th>
+<th>Length LED</th>
+<th>Length cable</th>
+<th>Watt</th>
+<th>Ampere</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Office</td>
+<td>ceiling_up</td>
+<td>12,5m</td>
+<td>2x4m</td>
+<td>240w</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Office</td>
+<td>ceiling_down</td>
+<td>8,85m</td>
+<td>2x4m</td>
+<td>(170w)</td>
+<td></td>
+</tr>
+<tr>
+<td>wellness-area</td>
+<td>ceiling_up</td>
+<td>14,2m</td>
+<td>2x7m</td>
+<td>273w</td>
+<td>11,34</td>
+</tr>
+<tr>
+<td>wellness-area</td>
+<td>ceiling_down</td>
+<td>10,5m</td>
+<td>2x7m</td>
+<td>(201w)</td>
+<td></td>
+</tr>
+<tr>
+<td>both-areas</td>
+<td>wall</td>
+<td>7,8</td>
+<td></td>
+<td>150w</td>
+<td>6,25</td>
+</tr>
+</tbody>
+</table>
+<h2 id="component-corner-profile-holder">Component corner profile holder<a class="headerlink" href="#component-corner-profile-holder" title="Permanent link">&para;</a></h2>
+<p>To design the aluminium profile mounting I used <code>tinkercad</code>.</p>
+<p>It is for free, runs in browser and is easy to use.</p>
+<p><img alt="light_control_paulmann_duo_holder" src="../light_control_paulmann_duo_holder.png" /></p>
+<p>Requirements:</p>
+<ul>
+<li>
+<p>Compatible with Paulmann Duo Profil 2m (70267)</p>
+</li>
+<li>
+<p>Fits for Plasterboard screws 3.9 X 45mm</p>
+</li>
+<li>
+<p>Should act as cable fixation</p>
+</li>
+</ul>
+<p>If you want to download the stl file <a href="https://github.com/alexkratzer/autohomestack/tree/master/stl_print">klick here</a></p>
+<p><img alt="light_control_paulmann_duo_holder_slicing" src="../light_control_paulmann_duo_holder_slicing.png" /></p>
+<p>Now the slicing. There I used <code>Ultimaker Cura</code> with the following parameters:</p>
+<ul>
+<li>Infill Density:           40%</li>
+<li>Printing Temperature:     200C</li>
+<li>Build Plate Temperature:  60C</li>
+<li>Print Speed:              60mm/s</li>
+<li>Support:                  No</li>
+</ul>
+<p>The series production has started.</p>
+<p><img alt="light_control_holder_series" src="../light_control_holder_series.jpg" /></p>
+<h2 id="component-node-mcu">Component Node MCU<a class="headerlink" href="#component-node-mcu" title="Permanent link">&para;</a></h2>
+<p>As basis for the sketch I used the iot_multisensor.</p>
+<p>The biggest difference is that the <code>light control</code> also controls outputs.</p>
+<h3 id="hardware-settings">Hardware settings<a class="headerlink" href="#hardware-settings" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">const</span> <span class="kt">int</span> <span class="n">RELAYS1</span> <span class="o">=</span> <span class="n">D2</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">RELAYS2</span> <span class="o">=</span> <span class="n">D3</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">RELAYS3</span> <span class="o">=</span> <span class="n">D8</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">RELAYS4</span> <span class="o">=</span> <span class="n">D7</span><span class="p">;</span>
 </code></pre></div>
 
 
-<p>Now, you have to add the Debian 10 login user to the dialout, tty, uucp and plugdev group.
-<a href="https://linuxhint.com/install_arduino_ide_debian_10/">https://linuxhint.com/install_arduino_ide_debian_10/</a></p>
-<h2 id="esp8266">ESP8266<a class="headerlink" href="#esp8266" title="Permanent link">&para;</a></h2>
-<h3 id="libs">LIBs<a class="headerlink" href="#libs" title="Permanent link">&para;</a></h3>
-<p>To enable the esp8266 libs at Arduino IDE</p>
-<ul>
-<li>Go to File &gt; Preferences -&gt; Additional Board Manager URLs: http://arduino.esp8266.com/stable/package_esp8266com_index.json</li>
-<li>Tools &gt; Board -&gt; Boards Manager -&gt; Search for ESP8266 and install</li>
-</ul>
-<p>Dependency libs:</p>
-<ul>
-<li>
-<p>git clone https://github.com/knolleary/pubsubclient.git</p>
-</li>
-<li>
-<p>git clone https://github.com/adafruit/DHT-sensor-library.git</p>
-</li>
-<li>
-<p>copy to ~/Arduino/libraries</p>
-</li>
-</ul>
-<p>MQTT Interface</p>
-<ul>
-<li>
-<p>subscription topics (start with prefix(v01/esp/) + esp_name + topic_type)</p>
-</li>
-<li>
-<p>e.g. v01/esp/nodeMCUIBS/config/get_status</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>topic</th>
-<th>meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>/config/echo</td>
-<td>just send an reply</td>
-</tr>
-<tr>
-<td>/config/get_status[value: ""; status; prozess; heap]</td>
-<td></td>
-</tr>
-<tr>
-<td>/config/set_name [new name]</td>
-<td>change name of esp (with prefix for topics)</td>
-</tr>
-<tr>
-<td>/config/send_intervall_sensor [new time in ms]</td>
-<td>e.g. "10000" for 10s</td>
-</tr>
-<tr>
-<td>/config/send_intervall_status</td>
-<td>watchdog with status information</td>
-</tr>
-<tr>
-<td>/config/reset [dht, setup, vars]</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="gpio">GPIO<a class="headerlink" href="#gpio" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VCC</td>
-<td>RST</td>
-<td>CH_PD</td>
-<td>TXD</td>
-</tr>
-<tr>
-<td>RXD</td>
-<td>GPIO0</td>
-<td>GPIO2</td>
-<td>GND</td>
-</tr>
-</tbody>
-</table>
-<h2 id="nodemcu-multisensor">NodeMCU - multisensor<a class="headerlink" href="#nodemcu-multisensor" title="Permanent link">&para;</a></h2>
-<h3 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p>read temperatur / humility and publish cyclic</p>
-</li>
-<li>
-<p>read light lux and publish cyclic</p>
-</li>
-<li>
-<p>detect motion and publish at detection (on rising edge)</p>
-</li>
-</ul>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">setup_sensor</span><span class="p">(){</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">RELAYS1</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="p">...</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAYS1</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Now we can control the relays with the <code>digitalWrite()</code> function.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// activate</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAYS1</span><span class="p">,</span> <span class="n">LOW</span><span class="p">)</span>
+<span class="c1">// and to disable again</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAYS1</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h3 id="pinout">Pinout<a class="headerlink" href="#pinout" title="Permanent link">&para;</a></h3>
-<p><a href="https://www.instructables.com/id/NodeMCU-ESP8266-Details-and-Pinout/">node gpio pinout</a></p>
-<h3 id="gpio-sensoric">GPIO sensoric<a class="headerlink" href="#gpio-sensoric" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>pin</th>
-<th>DHT22</th>
-<th>AM312</th>
-<th>KY-018</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>VCC</td>
-<td>VCC</td>
-<td>GND</td>
-</tr>
-<tr>
-<td>2</td>
-<td>DATA=D7</td>
-<td>OUT=D2/D5</td>
-<td>VCC</td>
-</tr>
-<tr>
-<td>3</td>
-<td>nc</td>
-<td>GND</td>
-<td>DATA=A0</td>
-</tr>
-<tr>
-<td>4</td>
-<td>GND</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><img alt="AM312_pinout.jpg" src="../AM312_pinout.jpg" /></p>
-<h3 id="node-mcu-platine-soldered">NODE mcu platine soldered<a class="headerlink" href="#node-mcu-platine-soldered" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>GPIO</th>
-<th>platine-color</th>
-<th>device</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>D2</td>
-<td>orange</td>
-<td>pir 1 -&gt; pin_2 (stairs)</td>
-</tr>
-<tr>
-<td>D5</td>
-<td>yellow</td>
-<td>pir 2 -&gt; pin_2 (corridor)</td>
-</tr>
-<tr>
-<td>3V</td>
-<td>red</td>
-<td>pir1/2 -&gt; pin_1</td>
-</tr>
-<tr>
-<td>3V</td>
-<td>violett</td>
-<td>pir1/2 -&gt; pin_1</td>
-</tr>
-<tr>
-<td>gnd</td>
-<td>blue</td>
-<td>pir1/2 -&gt; pin_3</td>
-</tr>
-<tr>
-<td>gnd</td>
-<td>grey</td>
-<td>pir1/2 -&gt; pin_3</td>
-</tr>
-<tr>
-<td>A0</td>
-<td>green</td>
-<td>S</td>
-</tr>
-<tr>
-<td>g</td>
-<td>yellow</td>
-<td>middle</td>
-</tr>
-<tr>
-<td>VV</td>
-<td>orange</td>
-<td>-</td>
-</tr>
-<tr>
-<td>D7</td>
-<td>grey</td>
-<td>DHT_2</td>
-</tr>
-<tr>
-<td>3V</td>
-<td>black</td>
-<td>DHT_1</td>
-</tr>
-<tr>
-<td>g</td>
-<td>white</td>
-<td>DHT_4</td>
-</tr>
-</tbody>
-</table>
-<h3 id="node-mcu-general">NODE mcu general<a class="headerlink" href="#node-mcu-general" title="Permanent link">&para;</a></h3>
+<p>NodeMCU</p>
 <table>
 <thead>
 <tr>
@@ -1326,27 +1330,27 @@ sudo -E /opt/arduino-1.8.12/install.sh
 <tbody>
 <tr>
 <td>A0</td>
-<td>KY-S [black]</td>
+<td></td>
 <td>D0</td>
 <td></td>
 </tr>
 <tr>
 <td>G</td>
-<td>KY-middle [brown]</td>
+<td></td>
 <td>D1</td>
 <td></td>
 </tr>
 <tr>
 <td>VV</td>
-<td>KY - [red]</td>
+<td>[red] 5V out</td>
 <td>D2</td>
-<td>pir middle [orange]</td>
+<td>[green] CH1</td>
 </tr>
 <tr>
 <td>S3</td>
 <td></td>
 <td>D3</td>
-<td></td>
+<td>[orange] CH2</td>
 </tr>
 <tr>
 <td>S2</td>
@@ -1364,13 +1368,13 @@ sudo -E /opt/arduino-1.8.12/install.sh
 <td>SC</td>
 <td></td>
 <td>G</td>
-<td></td>
+<td>[blue] GND</td>
 </tr>
 <tr>
 <td>S0</td>
 <td></td>
 <td>D5</td>
-<td>pir middle [yellow]</td>
+<td></td>
 </tr>
 <tr>
 <td>SK</td>
@@ -1380,15 +1384,15 @@ sudo -E /opt/arduino-1.8.12/install.sh
 </tr>
 <tr>
 <td>G</td>
-<td>pir 3 [red/grey]</td>
+<td></td>
 <td>D7</td>
-<td>DHT22 2 (signal) [orange]</td>
+<td>[brown] CH4</td>
 </tr>
 <tr>
 <td>3V</td>
-<td>pir 1 [blue/green]</td>
-<td>D8</td>
 <td></td>
+<td>D8</td>
+<td>[yellow] CH3</td>
 </tr>
 <tr>
 <td>EN</td>
@@ -1406,13 +1410,13 @@ sudo -E /opt/arduino-1.8.12/install.sh
 <td>G</td>
 <td></td>
 <td>G</td>
-<td>DHT22 4 [red]</td>
+<td></td>
 </tr>
 <tr>
 <td>VIN</td>
 <td></td>
 <td>3V</td>
-<td>DHT22 1 [brown]</td>
+<td></td>
 </tr>
 <tr>
 <td>-</td>
@@ -1422,20 +1426,86 @@ sudo -E /opt/arduino-1.8.12/install.sh
 </tr>
 </tbody>
 </table>
-<h2 id="3d-case">3D Case<a class="headerlink" href="#3d-case" title="Permanent link">&para;</a></h2>
-<p>This is the 3D model of the case</p>
-<p><img alt="multisensor_case_3d_model" src="../multisensor_case_3d_model.png" /></p>
-<h2 id="natural-environment">Natural environment<a class="headerlink" href="#natural-environment" title="Permanent link">&para;</a></h2>
-<p><img src="https://autohomestack.de/level_field/multisensor_from_stairs.jpg" align="left" width="48%" /></p>
-<!-- ![multisensor natural](multisensor_from_stairs.jpg) -->
+<p>4-Relais Modul 5V</p>
+<table>
+<thead>
+<tr>
+<th>GND</th>
+<th>IN1</th>
+<th>IN2</th>
+<th>IN3</th>
+<th>IN4</th>
+<th>VCC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blue</td>
+<td>green</td>
+<td>orange</td>
+<td>yellow</td>
+<td>brown</td>
+<td>red</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mqtt-interface">MQTT interface<a class="headerlink" href="#mqtt-interface" title="Permanent link">&para;</a></h3>
+<p>To control the relays from remote we use a new <code>/set_ch/</code> endpoint.</p>
+<p><code>v01/esp/basement_light/set_ch/</code> + <code>&lt;RELAYS&gt;</code></p>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">setDefaultTopics</span><span class="p">(){</span>
+  <span class="n">topic_sub_set_ch</span> <span class="o">=</span>      <span class="n">default_prefix</span> <span class="o">+</span> <span class="n">esp_name</span> <span class="o">+</span> <span class="s">&quot;/set_ch/#&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p><img src="https://autohomestack.de/level_field/multisensor_inside.jpg" align="right" width="48%" /></p>
-<!-- ![multisensor inside](multisensor_inside.jpg) -->
+<span class="n">client</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic_sub_set_ch</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+</code></pre></div>
 
-<p>Here you can see the sensor in the wild and the inside of it.</p>
-<h2 id="downloads">Downloads<a class="headerlink" href="#downloads" title="Permanent link">&para;</a></h2>
-<p>You can download the STL file here: <a href="../new_multisensor_V0.1.stl">new_multisensor_V0.1</a></p>
-<p>The arduino sketch is stored here: <a href="ah_iot_multisensor_v06.ino">ah_iot_multisensor_v06</a></p>
+
+<p>The callback function gets expanded</p>
+<div class="codehilite"><pre><span></span><code><span class="k">void</span> <span class="nx">mqtt_callback</span><span class="p">(</span><span class="kr">char</span><span class="o">*</span> <span class="nx">topic</span><span class="p">,</span> <span class="kr">byte</span><span class="o">*</span> <span class="nx">payload</span><span class="p">,</span> <span class="nx">unsigned</span> <span class="kr">int</span> <span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">String</span> <span class="nx">topic_set_ch</span> <span class="o">=</span> <span class="nx">default_prefix</span> <span class="o">+</span> <span class="nx">esp_name</span> <span class="o">+</span> <span class="s2">&quot;/set_ch/&quot;</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">t</span> <span class="o">==</span> <span class="nx">topic_set_ch</span> <span class="o">+</span> <span class="s2">&quot;1&quot;</span><span class="p">){</span>
+        <span class="nx">set_ch</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="p">(</span><span class="kr">char</span><span class="o">*</span><span class="p">)</span><span class="nx">payload</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nx">set_ch</span><span class="p">(</span><span class="nb">String</span> <span class="nx">t</span><span class="p">,</span> <span class="nb">String</span> <span class="nx">p</span><span class="p">){</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">==</span> <span class="s2">&quot;on&quot;</span><span class="p">)</span> <span class="p">{</span><span class="nx">digitalWrite</span><span class="p">(</span><span class="nx">RELAYS1</span><span class="p">,</span> <span class="nx">LOW</span><span class="p">);</span> <span class="nx">sendResponse</span><span class="p">(</span><span class="s2">&quot;set_ch1: on&quot;</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">==</span> <span class="s2">&quot;off&quot;</span><span class="p">)</span> <span class="p">{</span><span class="nx">digitalWrite</span><span class="p">(</span><span class="nx">RELAYS1</span><span class="p">,</span> <span class="nx">HIGH</span><span class="p">);</span> <span class="nx">sendResponse</span><span class="p">(</span><span class="s2">&quot;set_ch1: off&quot;</span><span class="p">);}</span>
+  <span class="k">else</span> <span class="nx">sendResponse</span><span class="p">(</span><span class="s2">&quot;set_out ERROR: &quot;</span> <span class="o">+</span> <span class="nx">p</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h2 id="set-relays-from-nodered">Set RELAYS from NodeRed<a class="headerlink" href="#set-relays-from-nodered" title="Permanent link">&para;</a></h2>
+<p>Internaly at NodeRed the following topic is used:</p>
+<p><code>v01/node_red_cmd/esp/&lt;ESP_NAME&gt;/set_ch/&lt;RELAYS&gt;</code></p>
+<ul>
+<li>ESP_NAME example: control_light</li>
+<li>RELAYS: 1, 2, 3, 4</li>
+</ul>
+<p>Payload: on, off, switch</p>
+<p>This code is added to the <code>rule engine</code> function</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;v01/node_red_cmd&#39;</span><span class="p">)){</span>
+    <span class="p">...</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;v01/node_red_cmd/esp/set_ch&#39;</span><span class="p">)){</span>
+        <span class="nx">mqtt_msg</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">topic</span><span class="o">:</span> <span class="nx">t</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;/node_red_cmd&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="nx">payload</span><span class="o">:</span> <span class="nx">p</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Now the relays can be set by this mqtt message:</p>
+<ul>
+<li>
+<p>topic <code>v01/node_red_cmd/esp/basement_light/set_ch/1</code></p>
+</li>
+<li>
+<p>payload <code>off</code> or <code>on</code></p>
+</li>
+</ul>
+<p><img alt="NodeRed_button_relays" src="../NodeRed_button_relays.png" /></p>
                 
                   
                 
@@ -1457,7 +1527,7 @@ sudo -E /opt/arduino-1.8.12/install.sh
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../level_process/dataLoggerServer/" title="Data logger" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../iot_multisensor/" title="IoT Multisensor" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1466,19 +1536,19 @@ sudo -E /opt/arduino-1.8.12/install.sh
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Data logger
+                IoT Multisensor
               </span>
             </div>
           </a>
         
         
-          <a href="../light_control/" title="Light control" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../field_level/" title="More devices" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Light control
+                More devices
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -433,6 +433,47 @@
     Docker
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-mqtt-mosquitto" class="md-nav__link">
+    container mqtt mosquitto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-node-red" class="md-nav__link">
+    container node red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-grafana" class="md-nav__link">
+    container grafana
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-influxdb" class="md-nav__link">
+    container influxdb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-pi-hole" class="md-nav__link">
+    setup pi hole
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -582,8 +623,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../level_field/field_level/" title="devices" class="md-nav__link">
-      devices
+    <a href="../../level_field/light_control/" title="Light control" class="md-nav__link">
+      Light control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../level_field/field_level/" title="More devices" class="md-nav__link">
+      More devices
     </a>
   </li>
 
@@ -726,8 +779,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../mds/switch_cabinet/" title="switch_cabinet" class="md-nav__link">
-      switch_cabinet
+    <a href="../../mds/switch_cabinet/" title="switch cabinet" class="md-nav__link">
+      switch cabinet
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mds/cable_plan/" title="cable plan" class="md-nav__link">
+      cable plan
     </a>
   </li>
 
@@ -752,6 +817,18 @@
   <li class="md-nav__item">
     <a href="../../mds/plc_lib_interface/" title="plc lib" class="md-nav__link">
       plc lib
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../mds/databaseStructure/" title="databaseStructure" class="md-nav__link">
+      databaseStructure
     </a>
   </li>
 
@@ -858,6 +935,47 @@
     Docker
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-mqtt-mosquitto" class="md-nav__link">
+    container mqtt mosquitto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-node-red" class="md-nav__link">
+    container node red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-grafana" class="md-nav__link">
+    container grafana
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-influxdb" class="md-nav__link">
+    container influxdb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-pi-hole" class="md-nav__link">
+    setup pi hole
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -930,22 +1048,26 @@
 <ul>
 <li>get docker</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="sb">`</span>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade -y<span class="sb">`</span>
-<span class="sb">`</span>curl -sSL https://get.docker.com <span class="p">|</span> sh<span class="sb">`</span>
-<span class="sb">`</span>sudo usermod -aG docker <span class="nv">$USER</span><span class="sb">`</span>
+<div class="codehilite"><pre><span></span><code>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade -y
+curl -sSL https://get.docker.com <span class="p">|</span> sh
+sudo usermod -aG docker <span class="nv">$USER</span>
 </code></pre></div>
 
 
 <ul>
-<li>setup container <strong>mqtt mosquitto</strong></li>
+<li>start existing containers</li>
 </ul>
+<div class="codehilite"><pre><span></span><code>docker ps -a
+docker start &lt;container NAMES&gt;
+</code></pre></div>
+
+
+<h3 id="container-mqtt-mosquitto">container <strong>mqtt mosquitto</strong><a class="headerlink" href="#container-mqtt-mosquitto" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>docker run -itd -p <span class="m">1883</span>:1883 -p <span class="m">9001</span>:9001 --name mosquitto_ah eclipse-mosquitto
 </code></pre></div>
 
 
-<ul>
-<li>setup container <strong>node red</strong></li>
-</ul>
+<h3 id="container-node-red">container <strong>node red</strong><a class="headerlink" href="#container-node-red" title="Permanent link">&para;</a></h3>
 <p>Mind that as long as we run the mosquitto and node-red container at the same host the <code>--link mosquitto_ah:broker</code> is necessary.</p>
 <p>If changing the deployment to different machines update the node-red-mqtt-server from broker to the new ip address</p>
 <div class="codehilite"><pre><span></span><code>sudo chown -R <span class="m">1000</span>:1000 /home/pi/.node-red
@@ -953,17 +1075,40 @@ docker run -it -p <span class="m">1880</span>:1880 -p <span class="m">7724</span
 </code></pre></div>
 
 
-<ul>
-<li>setup container <strong>grafana</strong></li>
-</ul>
+<h3 id="container-grafana">container <strong>grafana</strong><a class="headerlink" href="#container-grafana" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>docker volume create grafana-storage
 docker run -d -p <span class="m">3000</span>:3000 -v grafana-storage:/var/lib/grafana --name<span class="o">=</span>grafana_ah grafana/grafana
 </code></pre></div>
 
 
-<ul>
-<li>setup pi hole</li>
-</ul>
+<h3 id="container-influxdb">container <strong>influxdb</strong><a class="headerlink" href="#container-influxdb" title="Permanent link">&para;</a></h3>
+<p>create config</p>
+<div class="codehilite"><pre><span></span><code>docker run --rm influxdb influxd config &gt; influxdb.conf
+</code></pre></div>
+
+
+<p>start</p>
+<div class="codehilite"><pre><span></span><code>docker run -p <span class="m">8086</span>:8086 -v <span class="nv">$PWD</span>/influxdb.conf:/etc/influxdb/influxdb.conf:ro influxdb -config /etc/influxdb/influxdb.conf
+</code></pre></div>
+
+
+<p>config image</p>
+<div class="codehilite"><pre><span></span><code>docker ps
+sudo docker <span class="nb">exec</span> -it ab0777327060 /usr/bin/influx
+&gt; create database ah
+&gt; create user root with password <span class="s1">&#39;xxx&#39;</span> with all privileges
+&gt; grant all privileges on ah to root
+&gt; show users
+</code></pre></div>
+
+
+<p>remote API</p>
+<div class="codehilite"><pre><span></span><code>curl -G http://192.168.1.211:8086/query --data-urlencode <span class="s2">&quot;q=CREATE DATABASE mydb&quot;</span>
+curl -i -XPOST <span class="s1">&#39;http://192.168.1.211:8086/write?db=mydb&#39;</span> --data-binary <span class="s1">&#39;cpu_load_short,host=server01,region=us-west value=0.64 1434055562000000000&#39;</span>
+</code></pre></div>
+
+
+<h2 id="setup-pi-hole">setup pi hole<a class="headerlink" href="#setup-pi-hole" title="Permanent link">&para;</a></h2>
 <p>The network ad blocking / monitoring software <a href="https://pi-hole.net">pi-hole.net</a> is not really connected to the home automation system, but it is always a good idear to have control over your network.</p>
 <h2 id="script-device_statuspy">Script device_status.py<a class="headerlink" href="#script-device_statuspy" title="Permanent link">&para;</a></h2>
 <h3 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h3>

@@ -1,0 +1,75 @@
+KL,Kabel,Ort,Bedeutung,IN,OUT
+K01,N01_sw,Jalousie,Büro Jalousie hoch,,A9.1
+K02_u,N01_br,,Büro Jalousie runter,,A9.2
+K03,N02_sw,,WHZ Jalousie hoch,,A8.1
+K02_o,N02_br,,WHZ Jalousie runter,,A8.0
+K04,N03_sw,,EZ sued hoch,,A8.6
+K05_u,N03_br,,EZ sued runter,,A7.0
+K06,N04_sw,,EZ west hoch,,A9.0
+K05_o,N04_br,,EZ west runter,,A6.5
+K07,N05_sw,,Küche hoch,,A8.5
+K08_u,N05_br,,Küche runter,,A6.3
+K09,N06,Steckdosen,Bad Steckdose,,
+K10,N07,,Flur Steckdose,,
+K11,N08,,Büro Steckdose,,A8.7
+K12,N09,,WHZ Steckdose,,A6.0
+K13,N10,,EZ Steckdose,,
+K14,N11,,Terrasse Steckdose,,A9.7
+K15,N12,,Küche Steckdose,,
+K16,N13,,Küche Herd Steckdose,,
+K17,N14,,Küche Dunstabzugshaube,,
+K18,N15,,Küche Geschirrspüler,,
+K19,N16,,Küche Ofen--> Herd Phase gr,,
+K20,N17,,Büro Verteiler,,
+K21,N18,Licht,Büro Licht Decke,,A9.5
+K22,N19,,WHZ Licht Wand Ost,,A9.3
+K23,N20,,WHZ Licht Wand Süd,,A8.2
+K24,N21,,EZ Licht Decke,,A6.7
+K25,N22,,EZ Licht Wand West,,A6.1
+K26,N23,,Küche Licht Wand West,,A8.4
+K27,N24,,Küche Licht Decke,,A8.3
+K28,N25,,Küche Licht Schrank,,A9.4
+K29,N26,,Speise Licht/GONG,,A9.6
+K30,N27,,Bad Licht Decke,,A7.1
+K31,N28,,Bad Licht Spiegel,,A6.4
+K32,N29,,Flur Licht Ost,,A6.2
+K33,N30,,Flur Licht Mitte,,A6.6
+K34,N31,,Keller Licht Kellertreppe,,A13.1
+K35,N32,,Keller Licht Flur unten,,A13.2
+K36,N33,,außen Licht West +BM,1,A10.2
+K37,,,,,
+K38,N34,,außen Licht Süd-Mitte,,A11.0
+K39,N35,,außen Licht Süd-Ost +BM,1,A12.0
+K40,,,,,
+K41,N36,,außen Licht Haustüre oben,,A11.3
+K42,N37,,außen Licht Haustüre Podest,,A11.4
+K43,N39,Licht,Keller Licht Heizraum,,A13.3
+K44,N40,,Keller Licht Waschraum,,A11.1
+K45,N41,,Keller Licht Hobbyraum 1,,A11.2
+K46,N42,,Keller Licht Hobbyraum 2,,A11.4
+K47,N43,,Keller Licht Abstellraum,,A13.0
+K48,,,Küche Herd Neutral bl,,
+K48,,,Küche Herd braun,,
+K49,,,Küche Herd grau,,
+K49,,,Küche Herd schwarz,,
+K50,N49,Stellantrieb,Stellantrieb Büro,,A10.5
+K51,br,,Stellantrieb WZ,,A10.0
+K51,br,,Stellantrieb EZ,,A11.5
+K52,br,,Stellantrieb Küche,,A11.3
+K52,br,,Stellantrieb Bad,,A11.6
+K53,br,,Stellantrieb Eingang,,A10.1
+K54,N50,,Licht Speise,,A10.7
+K55,N51,,Tablet Flur,,
+K56,,,Neutral,,
+K57,,,Neutral,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,2,45
