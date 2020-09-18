@@ -122,8 +122,8 @@
         "raw": false,
         "topic": "",
         "name": "",
-        "x": 1050,
-        "y": 960,
+        "x": 750,
+        "y": 920,
         "wires": []
     },
     {
@@ -196,179 +196,6 @@
         "wires": []
     },
     {
-        "id": "9d39b754.fae888",
-        "type": "udp out",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "addr": "192.168.1.202",
-        "iface": "",
-        "port": "7724",
-        "ipv": "udp4",
-        "outport": "",
-        "base64": false,
-        "multicast": "false",
-        "x": 1430,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "86a8d77e.745f08",
-        "type": "switch",
-        "z": "e3a2c1ac.72282",
-        "name": "dest",
-        "property": "topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "og",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "eg",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "car",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "net_plc",
-                "vt": "str"
-            },
-            {
-                "t": "nempty"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 5,
-        "x": 1210,
-        "y": 440,
-        "wires": [
-            [
-                "c1554c4.232beb"
-            ],
-            [
-                "9d39b754.fae888"
-            ],
-            [
-                "2727308b.a84d9"
-            ],
-            [
-                "f2e3e644.965e78"
-            ],
-            [
-                "a05707ed.6c9238"
-            ]
-        ]
-    },
-    {
-        "id": "eb2a15e1.8bc628",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "plc OG",
-        "info": "",
-        "x": 1598.5,
-        "y": 375,
-        "wires": []
-    },
-    {
-        "id": "c1554c4.232beb",
-        "type": "udp out",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "addr": "192.168.1.201",
-        "iface": "",
-        "port": "7724",
-        "ipv": "udp4",
-        "outport": "",
-        "base64": false,
-        "multicast": "false",
-        "x": 1432,
-        "y": 374,
-        "wires": []
-    },
-    {
-        "id": "6e55ef13.67656",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "plc EG",
-        "info": "",
-        "x": 1596.5,
-        "y": 421,
-        "wires": []
-    },
-    {
-        "id": "2727308b.a84d9",
-        "type": "udp out",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "addr": "192.168.1.203",
-        "iface": "",
-        "port": "7724",
-        "ipv": "udp4",
-        "outport": "",
-        "base64": false,
-        "multicast": "false",
-        "x": 1430,
-        "y": 461,
-        "wires": []
-    },
-    {
-        "id": "262170df.80f67",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "carport",
-        "info": "",
-        "x": 1598.5,
-        "y": 461,
-        "wires": []
-    },
-    {
-        "id": "a05707ed.6c9238",
-        "type": "debug",
-        "z": "e3a2c1ac.72282",
-        "name": "unknown plc",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "x": 1380,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "f2e3e644.965e78",
-        "type": "udp out",
-        "z": "e3a2c1ac.72282",
-        "name": "",
-        "addr": "192.168.1.206",
-        "iface": "",
-        "port": "7724",
-        "ipv": "udp4",
-        "outport": "",
-        "base64": false,
-        "multicast": "false",
-        "x": 1430,
-        "y": 501,
-        "wires": []
-    },
-    {
-        "id": "70f89245.27bc7c",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "net_plc",
-        "info": "",
-        "x": 1598.5,
-        "y": 501,
-        "wires": []
-    },
-    {
         "id": "c52c188e.a92f18",
         "type": "link in",
         "z": "e3a2c1ac.72282",
@@ -381,23 +208,13 @@
             "3575dcd6.b9bcc4",
             "f61e6716.a97ed8"
         ],
-        "x": 695,
-        "y": 520,
+        "x": 775,
+        "y": 480,
         "wires": [
             [
                 "42b9ed82.264494"
             ]
         ]
-    },
-    {
-        "id": "8569a061.f5774",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "send msg to remote",
-        "info": "",
-        "x": 1190,
-        "y": 300,
-        "wires": []
     },
     {
         "id": "77809f31.46c27",
@@ -417,20 +234,6 @@
         ]
     },
     {
-        "id": "ca6635d6.466a88",
-        "type": "function",
-        "z": "e3a2c1ac.72282",
-        "name": "log plc cmd",
-        "func": "\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"node_red/plc_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg\n\n/*\nif(global.get('ui_config.show_send_msg')){\n    return msg;\n}else{\n    return null;\n}\n*/",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 850,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "45f20bc5.8d9cf4",
         "type": "mysql",
         "z": "e3a2c1ac.72282",
@@ -447,14 +250,15 @@
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "node_log",
-        "func": "// default OUT1: writes all received messages to database\n// default OUT2: pass all received messages to rule_engine\n// default OUT3: log each topic and increase counter in DB for statics\n// with filtering the topic batch operations can be performed\n\nvar t = msg.topic;\nvar p = msg.payload;\n// node.warn(\"node_log [\" + t + \"] \" + p);\n\n\nvar esp_basement = 'v01/esp/basement/'\nvar esp_carport = 'v01/esp/carport/'\n\n/*\n//TODO remove if IBS is done\n// dont write\nif(t=='v01/esp/default/pd/' || t=='v01/esp/unwired/pd/'){\n    //node.warn('v01/esp/xxxx/pd/ ' + p )\n    return null;\n}*/\n\n\nif(t.includes('/status/log')){\n    set_status_log(t, p)\n    return [ { topic: \"INSERT INTO node_status_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\" }, null, { topic: log_all_topics(t) }];\n    \n}else if(t.startsWith(esp_basement + 'pd')){\n    // comes very often, dont write to standard node_log database table\n    //tmp=27.0, humid=41.4, lux=1024\n    var PD_ESP = 'PD.espbasement';\n    var PD_ESP_instance = global.get(PD_ESP)\n    set_var(msg.payload, PD_ESP)\n    \n    //TODO: database entry every second -> change global to influxDB\n    var q = \"INSERT INTO node_data_logger_esp_basement(temperature, humidity, lux) VALUES ( \\\"\"+\n    PD_ESP_instance.tmp.value + \n    \"\\\", \\\"\" + PD_ESP_instance.humid.value + \n    \"\\\", \\\"\" + PD_ESP_instance.lux.value + \"\\\")\";\n    return [ null, null, { topic: log_all_topics(t) } ];\n}\n\nelse if(t.startsWith(esp_carport + 'pd')){\n    //var PD_ESP_carport = 'PD.espcarport';\n    //var PD_ESP_instance_carport = global.get(PD_ESP_carport)\n    //set_var(msg.payload, PD_ESP_carport)\n    return [ null, null, { topic: log_all_topics(t) } ];\n}\n\n//### to add new rule add logic here ###\n// else if(t.startsWith(<YOUR SEARCH TOPIC>)){}\n//### to add new rule add logic here ###\n\nreturn [ \n        { topic: \"INSERT INTO node_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\"},\n        { topic: t, payload: p}, \n        { topic: log_all_topics(t) }\n        ];\n\n\n\n\n\n///\n// write current status from received message to local variable objects\n// msg including '/status/log' in topic are stored at another table \nfunction set_status_log(topic, log_msg){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    // node.warn(\"at set_status_log [\" + topic + \"] \" + log_msg);\n\n    //var global_var = global.get('status') || {};\n    \n    var topic_split = topic.split('/')\n    var s_name = 'status.' + topic_split[1] + '_' + topic_split[2];\n    // node.warn(\"s_name [\" + s_name + \" ]\");\n\n    if(s_name === undefined){\n        node.warn(\"s_name undefined [\" + s_name + \"] now global.set\");\n        global.set(s_name,{ init_object : getFormattedDate() });\n    }\n\n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===undefined){node.error(\"ds_key === undefined\");}\n            ds_key = ds_key.replace(' ', '_')\n            if(ds_value_tmp===undefined){node.error(\"ds_key === undefined\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global.set(s_name + '.' + ds_key, ds_value_tmp);\n            //global_dev[ds_key] = ds_value_tmp;\n        }\n    }\n\n    /*\n    if(global_dev == null){\n        var s_name_sub = 'status.' + topic_split[1]\n        if(global.get(s_name_sub) === null){\n            global.set(s_name_sub,{ var_parent_created : getFormattedDate() });\n            if(global.get(s_name_sub) === null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_child_created : getFormattedDate() });\n    }\n    \n    global_dev = global.get(s_name);\n    \n    if(global_dev == null){node.error(\"ERROR global_dev still undefined\");}\n    \n    global_dev['last_rcv_time'] = getFormattedDate();\n    \n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }\n    */\n    \n}\n\n// write current status from received message to local variable objects\n// this status is pushed to a global variable 'PD'\nfunction set_var(log_msg, PD_name){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            PD_ESP_instance[ds_key] = ds_value;\n            /*\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }*/\n        }\n    }\n}\n\n/*\nfunction set_var_only_if_exists(log_msg, PD_name){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_set_var_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }\n        }\n    }\n}\n*/\n\n// store all received topics in a list for later evaluation\nfunction log_all_topics(topic){\n    \n/* TODO: move javascript logic to database logic with this statement\nINSERT INTO subs\n  (subs_name, subs_email, subs_birthday)\nVALUES\n  (?, ?, ?)\nON DUPLICATE KEY UPDATE\n  subs_name     = VALUES(subs_name),\n  subs_birthday = VALUES(subs_birthday)\n*/\n    var all_topics = flow.get('all_topics');\n\n    for (var i = 0; i < all_topics.length; i++) {\n        if(topic===all_topics[i]){\n            // node.warn('topic: ' + topic + 'in list')\n            return \"UPDATE used_topics SET counter=counter+1 WHERE topic='\" + topic + \"'\"\n        }\n    }\n    //node.warn('topic: ' + topic + 'not in list, create entry')\n    all_topics.push(topic)\n    return \"INSERT INTO used_topics(topic, counter) VALUES ( \\\"\"+ topic + \"\\\", \\\"0\\\")\";\n}\n\n// get time for mysql database\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
+        "func": "// default OUT1: writes all received messages (if not filterd out) to database\n// default OUT2: pass all received messages to rule_engine\n// default OUT3: log each topic and increase counter in DB for statics\n// with filtering the topic batch operations can be performed\n\nvar t = msg.topic;\nvar p = msg.payload;\n\n\n\nvar esp_basement = 'v01/esp/basement/'\nvar esp_carport = 'v01/esp/carport/'\nvar esp_light = 'v01/esp/basement_light/'\n\n/*\n//TODO remove if IBS is done\n// dont write\nif(t=='v01/esp/default/pd/' || t=='v01/esp/unwired/pd/'){\n    //node.warn('v01/esp/xxxx/pd/ ' + p )\n    return null;\n}*/\n\n\nif(t.includes('/status/log')){\n    set_status_log(t, p)\n    return [ { topic: \"INSERT INTO node_status_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\" }, null, { topic: log_all_topics(t) }];\n    \n}else if(t.startsWith(esp_basement + 'pd')){\n    // comes very often, dont write to standard node_log database table\n    //tmp=27.0, humid=41.4, lux=1024\n    // node.warn(\"esp_basement [\" + t + \"] \" + p);\n    var PD_ESP = 'PD.esp_basement';\n    var PD_ESP_instance = global.get(PD_ESP)\n    set_var_old(PD_ESP, p)\n    \n    //TODO: database entry every second -> change global to influxDB\n    //var q = \"INSERT INTO node_data_logger_esp_basement(temperature, humidity, lux) VALUES ( \\\"\"+\n    //PD_ESP_instance.tmp.value + \n    //\"\\\", \\\"\" + PD_ESP_instance.humid.value + \n    //\"\\\", \\\"\" + PD_ESP_instance.lux.value + \"\\\")\";\n    return [ null, null, { topic: log_all_topics(t) } ];\n}\n\nelse if(t.startsWith(esp_carport + 'pd')){\n    // node.warn(\"esp_carport [\" + t + \"] \" + p);\n    var instance = global.get('PD.esp_carport')\n    set_var(instance, p)\n    return [ null, null, { topic: log_all_topics(t) } ];\n}\n\n//### to add new rule add logic here ###\n// else if(t.startsWith(<YOUR SEARCH TOPIC>)){}\n//### to add new rule add logic here ###\n\n\n//If you also want the PD log data move this to the beginning\nnode.warn(\"node_log [\" + t + \"] \" + p);\n\nreturn [ \n        { topic: \"INSERT INTO node_log(topic, message) VALUES ( \\\"\"+t+\"\\\", \\\"\"+p+\"\\\" )\"},\n        { topic: t, payload: p}, \n        { topic: log_all_topics(t) }\n        ];\n\n\n\n\n\n///\n// write current status from received message to local variable objects\n// msg including '/status/log' in topic are stored at another table \nfunction set_status_log(topic, log_msg){\n    //2020- 1- 10_ 21: 37: 24, send frames= 351, max_msg_NodeBuffer= 9, max_DL_Buffer= 3, verbose= 1, AtDayKeepLightOff= 0\n    // node.warn(\"at set_status_log [\" + topic + \"] \" + log_msg);\n\n    //var global_var = global.get('status') || {};\n    \n    var topic_split = topic.split('/')\n    var s_name = 'status.' + topic_split[1] + '_' + topic_split[2];\n    // node.warn(\"s_name [\" + s_name + \" ]\");\n\n    if(s_name === undefined){\n        node.warn(\"s_name undefined [\" + s_name + \"] now global.set\");\n        global.set(s_name,{ init_object : getFormattedDate() });\n    }\n\n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===undefined){node.error(\"ds_key === undefined\");}\n            ds_key = ds_key.replace(' ', '_')\n            if(ds_value_tmp===undefined){node.error(\"ds_key === undefined\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global.set(s_name + '.' + ds_key, ds_value_tmp);\n            //global_dev[ds_key] = ds_value_tmp;\n        }\n    }\n\n    /*\n    if(global_dev == null){\n        var s_name_sub = 'status.' + topic_split[1]\n        if(global.get(s_name_sub) === null){\n            global.set(s_name_sub,{ var_parent_created : getFormattedDate() });\n            if(global.get(s_name_sub) === null){\n                node.error(\"global.get(s_name_sub) == STILL null\");\n            }\n        }\n        global.set(s_name,{ var_child_created : getFormattedDate() });\n    }\n    \n    global_dev = global.get(s_name);\n    \n    if(global_dev == null){node.error(\"ERROR global_dev still undefined\");}\n    \n    global_dev['last_rcv_time'] = getFormattedDate();\n    \n    var log_msg_array = log_msg.split(',');\n\n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        //node.warn(\"loop datapoints\");\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            if(ds_key===null){node.error(\"ds_key ===null\");}\n            if(ds_value_tmp===null){node.error(\"ds_key ===null\");}\n            //node.warn(\"ds_value [ds_key, ds_value_tmp] \" + ds_key + '/' + ds_value_tmp);\n            //var ds_value = parseFloat(ds_value_tmp);\n            global_dev[ds_key] = ds_value_tmp;\n        }\n    }\n    */\n    \n}\n\n// write current status from received message to local variable objects\n// this status is pushed to a global variable 'PD'\nfunction set_var(PD_name, log_msg){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    //global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    PD_name['last_rcv_time'] = getFormattedDate()\n    PD_name['update'] = getFormattedDate()\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            PD_name[ds_key] = ds_value;\n            /*\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }*/\n        }\n    }\n}\n\n// write current status from received message to local variable objects\n// this status is pushed to a global variable 'PD'\nfunction set_var_old(PD_name, log_msg){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            PD_ESP_instance[ds_key] = ds_value;\n            /*\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }*/\n        }\n    }\n}\n\n/*\nfunction set_var_only_if_exists(log_msg, PD_name){\n    //org msg in this format: \\\"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \\\";\n    //tmp=27.0, humid=41.4, lux=1024\n    \n    global.set(PD_name + '.last_set_var_rcv_time', getFormattedDate());\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].trim().split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            //node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_object = global.get(PD_name);\n            \n            for (var data_object in parent_object) {\n                if (!parent_object.hasOwnProperty(data_object)) continue; // skip loop if the property is from prototype\n                if(data_object===ds_key){\n                    // node.warn(data_object + \" = found key [\" + ds_key + \"] set value to = \" + ds_value);\n                    parent_object[data_object]=ds_value;\n                    ds_value='found';\n                    continue;\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.error(\"key [\" + ds_key + \"] was not found at datalogger_object: \" + PD_name);\n            }\n        }\n    }\n}\n*/\n\n// store all received topics in a list for later evaluation\nfunction log_all_topics(topic){\n    \n/* TODO: move javascript logic to database logic with this statement\nINSERT INTO subs\n  (subs_name, subs_email, subs_birthday)\nVALUES\n  (?, ?, ?)\nON DUPLICATE KEY UPDATE\n  subs_name     = VALUES(subs_name),\n  subs_birthday = VALUES(subs_birthday)\n*/\n    var all_topics = flow.get('all_topics');\n\n    for (var i = 0; i < all_topics.length; i++) {\n        if(topic===all_topics[i]){\n            // node.warn('topic: ' + topic + 'in list')\n            return \"UPDATE used_topics SET counter=counter+1 WHERE topic='\" + topic + \"'\"\n        }\n    }\n    //node.warn('topic: ' + topic + 'not in list, create entry')\n    all_topics.push(topic)\n    return \"INSERT INTO used_topics(topic, counter) VALUES ( \\\"\"+ topic + \"\\\", \\\"0\\\")\";\n}\n\n// get time for mysql database\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
         "outputs": 3,
         "noerr": 0,
         "x": 500,
         "y": 380,
         "wires": [
             [
-                "45f20bc5.8d9cf4"
+                "45f20bc5.8d9cf4",
+                "115f4abb.db7af5"
             ],
             [
                 "e835ab5b.85b2e8"
@@ -469,20 +273,23 @@
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "rule engine",
-        "func": "var t = msg.topic;\nvar p = msg.payload;\n\nnode.warn(\"rule_engine [\" + t + \"] \" + p);\n\n//OUT1: should be for DB logs\n//OUT2: for cmds to plc\nvar plc_cmd = [];\nvar alarm_info = 'not_processed';\n\n\n//############ some debug code ###################\nif(t.startsWith('v01/rule_engine/dbg')){\n    alarm_info = 'create dbg alarm'\n    plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#toggle\", topic: \"eg\" });\n}\n\nelse if(t == 'v01/plc/eg/i/basement_serverroom'){\n    \n    let dbg_notify_on_input = global.get('ui_config.dbg_notify_on_input') || false;\n    node.warn(\"v01/plc/eg/i/basement_serverroom -> dbg_notify_on_input: \" + dbg_notify_on_input);\n    \n    if(dbg_notify_on_input===true){\n        plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#toggle\", topic: \"eg\" });\n        alarm_info = 'dbg_notify_pc===true'\n    }\n}\n\n\n//#############################################################################################\n// productiv rules\nif(t.startsWith('v01/rpi/4/status')){\n    alarm_info = 'redeployment of node_red'\n}\n\nelse if(t.startsWith('v01/plc/eg/i/Ichimney_rightUp')){\n    alarm_info = 'turn off light staires at OG'\n    plc_cmd.push({ payload: \"aktor/light/stairs_west/set_switch_value#off\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/light/stairs_east/set_switch_value#off\", topic: \"og\" });\n}\n\nelse if((t == 'v01/plc/og/i/parents_westRight') || (t == 'v01/rule_engine/go-to-bed')){\n    alarm_info = 'go to bed cmd'\n    \n    plc_cmd.push({ payload: \"aktor/jalousie/office/set_drive_down\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/kitchen/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/living/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningSouth/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningWest/set_drive_down#\", topic: \"eg\" });\n    \n    plc_cmd.push({ payload: \"aktor/light/bath_ceiling/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/bath_mirror/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/dining_ceiling/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/dining_west/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/living_east_north/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/living_east_south/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/living_south/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/living_ceiling_corner_led/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/floor_west/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/floor_east/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/kitchen_ceiling/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/kitchen_closet/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/kitchen_store/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/kitchen_wallboard/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_server/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_heater/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_hobby_west/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/basement_washroom/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/entry_door_up/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/terrace_south/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/terrace_west/set_switch_value#off\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/light/terrace_east/set_switch_value#off\", topic: \"eg\" });\n}\n\nelse if(t.startsWith('v01/esp/basement/i')){\n    var lux = global.get('PD.espbasement.lux');\n    //motion and dark, switch light on\n    if(lux<150){\n        alarm_info = 'esp/basement switch light on'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        alarm_info = 'esp/basement no light switch on; lux: ' + lux + ' > 150'\n    }\n}\n\nelse if(t.startsWith('v01/plc/car/sensor/event')){\n    var lux_weather = global.get('PD.plcog.weather.light_lux.value')\n    \n    //not a bug but a feature\n    //weather station sends never 0 value\n    //but 1 if no lux is detected\n    if(lux_weather===1){\n        alarm_info = 'car/sensor switch light on [lux: ' + lux_weather + '] = 1'\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n    }else{\n        alarm_info = 'car/sensor no light switch on; lux: ' + lux_weather + ' != 1'\n    }\n    \n    let dbg_notify_on_input = global.get('dbg_notify_on_input') || false\n    if(dbg_notify_on_input===true){\n        plc_cmd.push({ payload: \"v01/plc/eg/o/light/basement_hobby_east#toggle\", topic: \"eg\" });\n        alarm_info = 'dbg_notify_pc===true'\n    }\n}\n/*\nelse if(t.startsWith('v01/plc/og/i')){\n    alarm_info = 'input event OG'\n}\n\nelse if(t.startsWith('v01/plc/eg/i')){\n    alarm_info = 'input event EG'\n}\n*/\n\n//Post processing\nif(alarm_info !== 'not_processed'){\n    msg.alarm = {\n        topic : t,\n        status : 'created',\n        time_created : getFormattedDate(),\n        info : alarm_info\n    }\n    \n    msg.topic = \"INSERT INTO node_log(topic, message) VALUES ( \\\"rule_engine/\"+t+\"\\\", \\\"\"+ alarm_info +\"\\\" )\"\n    return [msg, plc_cmd];\n}\n\n\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}",
-        "outputs": 2,
+        "func": "/* #################### rule engine ############################\nIN -> any input \n\n//OUT1: DB logs and monitoring values\n//OUT2: for cmds to plc\n//OUT3: for MQTT messages\n*/\n\nvar t = msg.topic;\nvar p = msg.payload;\n\n// node.warn(\"rule_engine [\" + t + \"] \" + p);\n\nvar plc_cmd = [];\nvar mqtt_msg = [];\n\nvar alarm_info = 'not_processed';\n\nvar time_now = new Date();\n\n//name =context.get(\"name\"); //to retrieve a variable  \n//context.set(\"name\",name); // to store a variable\n\n\n//############ some debug code ###################\nif(t.startsWith('v01/rule_engine/dbg')){\n    alarm_info = 'create dbg alarm'\n    plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#toggle\", topic: \"eg\" });\n}\nelse if(t == 'trigger_light_basement_wellness_area'){\n    if(check_timewindow_stairlux(t, 2)){\n            alarm_info = t\n    }else{\n        alarm_info = t + 'not dark or time_now > time_window';\n    }\n\n    //plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#on\", topic: \"eg\" });\n}\n\n//#############################################################################################\n// productiv rules\nif(t.startsWith('v01/node_red_cmd')){\n    alarm_info = 'node_red_cmd'\n\n    if( t == 'v01/node_red_cmd/redeploy'){ alarm_info = p; } // redeployment of node_red\n    else if(t == 'v01/node_red_cmd/payload'){ \n        plc_cmd.push({ payload: p, topic: msg.destination_plc });\n    }\n    else if(t == 'v01/node_red_cmd/light_eg_off'){ set_light_eg('off'); }\n    else if(t == 'v01/node_red_cmd/light_og off'){ set_light_og('off'); }\n    else if(t == 'v01/node_red_cmd/jalousie_eg_down'){ set_jalouse_eg_down(); }\n    else if(t == 'v01/node_red_cmd/jalousie_og_down'){ set_jalouse_og_down(); }\n    \n    else if(t.startsWith('v01/node_red_cmd/esp/basement_light/set_ch')){ \n        //node.warn(\"RULE_ENGINE set_ch [\" + t + \"] \" + p);\n        mqtt_msg.push({ topic: t.replace(\"/node_red_cmd\", \"\"), payload: p });\n    }\n    else{alarm_info = 'topic [' + t + '] not further processed'}\n}\n\n// #################################################################\n// ## trigger from switch button\n// #################################################################\nelse if(t.startsWith('v01/plc/eg/i/Ichimney_rightUp')){\n    alarm_info = 'switch light staires at OG'\n    plc_cmd.push({ payload: \"aktor/light/stairs_west/set_switch_value#switch\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/light/stairs_east/set_switch_value#switch\", topic: \"og\" });\n}\n\nelse if(t == 'v01/plc/eg/i/office_right'){\n    alarm_info = 'go to bed cmd'\n    set_jalouse_eg_down();\n    set_jalouse_og_down();\n    set_light_eg('off');\n    set_light_og('off');\n}\n\nelse if(t == 'v01/plc/eg/i/wardrobe_leftDown'){\n    alarm_info = 'leave house cmd'\n    set_light_eg('off');\n    set_light_og('off');\n}\n\nelse if(t == 'v01/plc/eg/i/wardrobe_rightDown'){\n    alarm_info = 'basement turn light off'\n    set_light_basement('off');\n}\n\n// #################################################################\n// ## trigger from esp multisensor\n// #################################################################\nelse if(t.startsWith('v01/esp/basement/i/')){\n    let lux = global.get('PD.esp_basement.lux');\n    let switch_threshold = 150\n    if(lux<switch_threshold){\n        alarm_info = 'esp/basement switch light on'\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#on\", topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#on\", topic: \"eg\" });            \n    }else{\n        alarm_info = 'esp/basement motion but not dark [lux: ' + lux + '] > ' + switch_threshold;\n    }\n}\n\nelse if(t.startsWith('v01/esp/carport/i') ){\n    let lux = global.get('PD.esp_carport.lux');\n    let switch_threshold = 150\n    //motion and dark, switch light on\n    if(lux<switch_threshold){\n        alarm_info = 'esp/carport switch light on [lux: ' + lux + '] < ' + switch_threshold;\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n        if(t == 'v01/esp/carport/i/north') //v01/plc/eg/o/light/entry_door_up\t\n        {\n            alarm_info = alarm_info + ' + light/drive';\n            plc_cmd.push({ payload: \"aktor/light/entry_door_up/set_switch_value#on\", topic: \"eg\" });  \n        }\n    }else{\n        alarm_info = 'esp/carport motion but not dark [lux: ' + lux + '] > ' + switch_threshold;\n    }\n}\n\n// #################################################################\n// ## trigger from plc sensor\n// #################################################################\nelse if(t.startsWith('v01/plc/car/sensor/event')){\n    var lux_weather = global.get('PD.plcog.weather.light_lux.value')\n    \n    //weather station sends never 0 value but 1 if no lux is detected\n    if(lux_weather===1){\n        alarm_info = 'car/sensor switch light on [lux: ' + lux_weather + '] == 1'\n        plc_cmd.push({ payload: \"aktor/light/led_stripes/set_switch_value#on\", topic: \"car\" });\n        plc_cmd.push({ payload: \"aktor/light/drive/set_switch_value#on\", topic: \"car\" });  \n    }else{\n        alarm_info = 'car/sensor motion but not dark [lux_weather: ' + lux_weather + ' != 1'\n    }\n}\n\nelse if(t=='v01/plc/og/i/detector_corridor_north'){\n    if(check_timewindow_stairlux(t, 20)){\n        alarm_info = 'bath_mirror/set_switch_value#on (from detector_stairs_ceiling)';\n        plc_cmd.push({ payload: \"aktor/light/bath_mirror/set_switch_value#on\", topic: \"og\" });\n    }else{\n        alarm_info = t + 'not dark or time_now > time_window';\n    }\n}\nelse if(t=='v01/plc/og/i/detector_stairs_ceiling'){\n    if(check_timewindow_stairlux(t, 20)){\n        alarm_info = 'stairs_WestAndEast/set_switch_value#on (from detector_stairs_ceiling)';\n        plc_cmd.push({ payload: \"aktor/light/stairs_west/set_switch_value#on\", topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/stairs_east/set_switch_value#on\", topic: \"og\" });\n    }else{\n        alarm_info = t + 'not dark or time_now > time_window';\n    }\n}\n\n//TODO: t.startsWith('v01/*/*/i/')\nif(t.startsWith('v01/plc/eg/i') || t.startsWith('v01/plc/og/i') || t.startsWith('v01/plc/car/sensor') || t.startsWith('v01/esp/basement/i') || t.startsWith('v01/esp/carport/i')){\n    let dbg_notify_on_input = global.get('ui_config.dbg_notify_on_input') || false\n    if(dbg_notify_on_input===true){\n        plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#toggle\", topic: \"eg\" });\n        alarm_info = '## dbg_notify_pc===true # ' + p\n    }\n}\n\n// #################################################################\n// for logging or later use a new alarm is generated\n// and stored at the database\n// #################################################################\n\nif(alarm_info !== 'not_processed'){\n    msg.alarm = {\n        topic : t,\n        payload : p,\n        status : 'created',\n        time_created : getFormattedDate(),\n        info : alarm_info\n    }\n    let ret = t.replace('v01','re');\n    \n    // the alarm and commands for the PLC s are returned for further processing\n    msg.topic = \"INSERT INTO node_log(topic, message) VALUES ( \\\"\" + ret +\"\\\", \\\"\"+ alarm_info + \" [\" + p + \"]\\\" )\"\n    return [msg, plc_cmd, mqtt_msg];\n}\n\nreturn null\n\n// #################################################################\n// ###### helper functions\n// #################################################################\n\nfunction getFormattedDate(){\n    var d = new Date();\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}\n\n\nfunction getFormattedFromDate(d){\n    d = d.getFullYear() + \"-\" + ('0' + (d.getMonth() + 1)).slice(-2) + \"-\" + ('0' + d.getDate()).slice(-2) + \" \" + ('0' + d.getHours()).slice(-2) + \":\" + ('0' + d.getMinutes()).slice(-2) + \":\" + ('0' + d.getSeconds()).slice(-2);\n    return d;\n}\n\n\nfunction check_timewindow_stairlux(contextvar, lux_threshold){\n    //true if last function call not longer than 5 minutes \n    //or if lux < threshold\n    \n    let lux = global.get('PD.plcog.sensor.lux_stairs.value');\n    node.warn(contextvar + \" now [\" + getFormattedFromDate(time_now) + \"] \");\n\n    let tmp_time_window = context.get(contextvar) || new Date();\n    node.warn(\"time_window switch value [\" + getFormattedFromDate(tmp_time_window) + \"] \");\n    \n    if((time_now < tmp_time_window) || (lux < lux_threshold)){\n        let d = new Date(); \n        d.setMinutes(d.getMinutes() + 5);\n        context.set(contextvar, d);\n        return true;\n    }else{\n        return false;\n    }\n}\n\n// #################################################################\n// ###### cluster functions\n// #################################################################\nfunction set_mqtt_message(){\n    plc_cmd.push({ payload: \"aktor/jalousie/office/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/kitchen/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/living/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningSouth/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningWest/set_drive_down#\", topic: \"eg\" });    \n}\n\nfunction set_light_eg(set_switch_value){\n    if(set_switch_value=='off' || set_switch_value=='on'){\n        plc_cmd.push({ payload: \"aktor/light/bath_ceiling/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/bath_mirror/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/dining_ceiling/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/dining_west/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/living_east_north/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/living_east_south/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/living_south/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/living_ceiling_corner_led/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/floor_west/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/floor_east/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/kitchen_ceiling/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/kitchen_closet/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/kitchen_store/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/kitchen_wallboard/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/entry_door_up/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/terrace_south/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/terrace_west/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/terrace_east/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        set_light_basement(set_switch_value);\n    }else{\n        node.error('rule engine set_light_eg() set to unknown value ' + set_switch_value );\n    }\n}\n\nfunction set_light_basement(set_switch_value){\n    if(set_switch_value=='off' || set_switch_value=='on'){\n        plc_cmd.push({ payload: \"aktor/light/basement_stairs/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_floor/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_server/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_heater/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_hobby_east/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_hobby_west/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n        plc_cmd.push({ payload: \"aktor/light/basement_washroom/set_switch_value#\" + set_switch_value, topic: \"eg\" });\n    }else{\n        node.error('rule engine set_light_basement() set to unknown value ' + set_switch_value );\n    }\n}\n\nfunction set_jalouse_eg_down(){\n    plc_cmd.push({ payload: \"aktor/jalousie/office/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/kitchen/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/living/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningSouth/set_drive_down#\", topic: \"eg\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/diningWest/set_drive_down#\", topic: \"eg\" });    \n}\n\nfunction set_light_og(set_switch_value){\n    if(set_switch_value=='off' || set_switch_value=='on'){\n        plc_cmd.push({ payload: \"aktor/light/stairs_west/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/stairs_east/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/parents_ceiling/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/parents_bed/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/floor_south/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/floor_north/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/childWest_gallery/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/childWest_ceiling/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/childEast_gallery/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/childEast_ceiling/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/bath_starrysky/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/bath_mirror/set_switch_value#\" + set_switch_value, topic: \"og\" });\n        plc_cmd.push({ payload: \"aktor/light/bath_ceiling/set_switch_value#\" + set_switch_value, topic: \"og\" });\n    }else{\n        node.error('rule engine set_light_og() set to unknown value ' + set_switch_value );\n    }\n}\n\nfunction set_jalouse_og_down(){\n    plc_cmd.push({ payload: \"aktor/jalousie/parents/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/floor/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/childWestWest/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/childWestSouth/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/childEastSouth/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/childEastEast/set_drive_down\", topic: \"og\" });\n    plc_cmd.push({ payload: \"aktor/jalousie/bath/set_drive_down\", topic: \"og\" });\n}\n",
+        "outputs": 3,
         "noerr": 0,
-        "x": 651.1166687011719,
+        "x": 671.1166687011719,
         "y": 429.1166687011719,
         "wires": [
             [
                 "78c02aad.e9c034",
                 "45f20bc5.8d9cf4",
                 "5964ac3d.3f1884",
-                "b367b089.6c189"
+                "5e7807b9.0792f8"
             ],
             [
                 "42b9ed82.264494"
+            ],
+            [
+                "a1f779f1.8802c8"
             ]
         ]
     },
@@ -533,26 +340,9 @@
         "y": 560,
         "wires": [
             [
-                "5177f674.c5ec58",
                 "717615.32c139ec"
             ]
         ]
-    },
-    {
-        "id": "5177f674.c5ec58",
-        "type": "ui_text",
-        "z": "e3a2c1ac.72282",
-        "group": "168c65c2.ece29a",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "plc resp:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "x": 360,
-        "y": 560,
-        "wires": []
     },
     {
         "id": "e32df7ae.b64cd8",
@@ -570,8 +360,8 @@
         "z": "e3a2c1ac.72282",
         "name": "dbg fill PD object",
         "info": "var log_msg = \"ks= 4.2E+1,ag= -4.2E+1,pz= 42, \";\nfill_datalogger(log_msg);\n\nfunction fill_datalogger(log_msg){\n    //log_msg e.g. in this format: \"ks= 4.020000E+1,ag= 3.480000E+1,pz= 42, \";\n    var log_msg_array = log_msg.split(',');\n    \n    for (var i = 0; i < log_msg_array.length; i++){ //loop through all received datapoints\n        if(log_msg_array[i].includes('=')){ //last split element is empty \n            var [ds_key, ds_value_tmp] = log_msg_array[i].split('=');\n            var ds_value = parseFloat(ds_value_tmp);\n            node.warn('ds_key: ' + ds_key + ' / ds_value: ' + ds_value);    \n            \n            //loop through local datalogger object with all sub-objects\n            var parent_obj = flow.get('dl');\n            for (var eta_ds in parent_obj) {\n                // skip loop if the property is from prototype\n                if (!parent_obj.hasOwnProperty(eta_ds)) continue;\n            \n                var obj = parent_obj[eta_ds];\n            \n                for (var prop in obj) {\n                    //node.error(\"check DS: \" + prop );\n                    // skip loop if the property is from prototype\n                    if(!obj.hasOwnProperty(prop)) continue;\n                    \n                    if(obj[prop].key==ds_key){\n                        obj[prop].value=ds_value;\n                        node.warn(prop + \" = found key: \" + ds_key + \" set value to = \" + ds_value);\n                        ds_value='found';\n                        continue;\n                    }\n                }\n            }\n            //check if key was found\n            if(ds_value!=='found'){\n                node.warn(\"key was not found: \" + ds_key);\n            }\n        }\n    }\n}",
-        "x": 260,
-        "y": 620,
+        "x": 200,
+        "y": 680,
         "wires": []
     },
     {
@@ -599,11 +389,11 @@
         "type": "function",
         "z": "e3a2c1ac.72282",
         "name": "init global root object",
-        "func": "//at global val status all devices status with topic containing /status/log are stored\nglobal.set('status',{});\nglobal.set('device_status',[]);\nglobal.set('master_data_v2',[]);\nglobal.set('master_data_dic',{});\nflow.set('all_topics',[\"v01/rpi/4/status\"]);\n\nglobal.set('PD.plceg.eta',\n{   \n    last_rcv_time : 'none',\n    kessel: {key:'ks',value:'none'},\n    abgas: {key:'ag',value:'none'},\n    pufferladezustand : {key:'pz',value:'none'},\n    puffer_oben: {key:'po',value:'none'},\n    puffer_mitte: {key:'pm',value:'none'},\n    puffer_unten: {key:'pu',value:'none'},\n    kesselruecklauf: {key:'kr',value:'none'},\n    kollektor: {key:'kt',value:'none'},\n    boiler_unten_solar: {key:'bu',value:'none'},\n    aussentemperatur: {key:'at',value:'none'},\n    vorlauf: {key:'vl',value:'none'}\n} );\n\nglobal.set('PD.plceg.sensor',\n{\n    last_rcv_time : 'none',\n    temperature_floor: {key:'tf',value:'none'},\n    humidity_floor: {key:'hf',value:'none'},\n    temperature_kitchen: {key:'tk',value:'none'},\n    temperature_office: {key:'to',value:'none'},\n    temperature_distributionbox: {key:'tdb',value:'none'},\n    temperature_dungeon: {key:'td',value:'none'}\n} );\n\nglobal.set('PD.plcog.weather',\n{   \n    last_rcv_time : 'none',\n    temperatur: {value:'none'},\n    sun_south:{value:'none'},\n    sun_west:{value:'none'},\n    sun_east:{value:'none'},\n    light_lux:{value:'none'},\n    wind:{value:'none'},\n    rain:{value:'none'},\n    wind_max:{value:'none'}\n} );\n\nglobal.set('PD.plcog.sensor',\n{\n    last_rcv_time : 'none',\n    lux_stairs: {value:'none'},\n    temperature_stairs:{value:'none'},\n    temperature_bath:{value:'none'},\n    temperature_child_east:{value:'none'},\n    temperature_child_west:{value:'none'},\n    temperature_DistributionBoxOg:{value:'none'}\n} );\n\nglobal.set('PD.espbasement',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.carport',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.netatmo',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'}\n} );",
+        "func": "//let time_window = flow.set('time_window', '0');\n\n//at global val status all devices status with topic containing /status/log are stored\nglobal.set('status',{});\nglobal.set('device_status',[]);\nglobal.set('master_data_v2',[]);\nglobal.set('master_data_dic',{});\nflow.set('all_topics',[\"v01/rpi/4/status\"]);\n\nglobal.set('PD.plceg.eta',\n{   \n    last_rcv_time : 'none',\n    kessel: {key:'ks',value:'none'},\n    abgas: {key:'ag',value:'none'},\n    pufferladezustand : {key:'pz',value:'none'},\n    puffer_oben: {key:'po',value:'none'},\n    puffer_mitte: {key:'pm',value:'none'},\n    puffer_unten: {key:'pu',value:'none'},\n    kesselruecklauf: {key:'kr',value:'none'},\n    kollektor: {key:'kt',value:'none'},\n    boiler_unten_solar: {key:'bu',value:'none'},\n    aussentemperatur: {key:'at',value:'none'},\n    vorlauf: {key:'vl',value:'none'}\n} );\n\nglobal.set('PD.plceg.sensor',\n{\n    last_rcv_time : 'none',\n    temperature_floor: {key:'tf',value:'none'},\n    humidity_floor: {key:'hf',value:'none'},\n    temperature_kitchen: {key:'tk',value:'none'},\n    temperature_office: {key:'to',value:'none'},\n    temperature_distributionbox: {key:'tdb',value:'none'},\n    temperature_dungeon: {key:'td',value:'none'}\n} );\n\nglobal.set('PD.plcog.weather',\n{   \n    last_rcv_time : 'none',\n    temperatur: {value:'none'},\n    sun_south:{value:'none'},\n    sun_west:{value:'none'},\n    sun_east:{value:'none'},\n    light_lux:{value:'none'},\n    wind:{value:'none'},\n    rain:{value:'none'},\n    wind_max:{value:'none'}\n} );\n\nglobal.set('PD.plcog.sensor',\n{\n    last_rcv_time : 'none',\n    lux_stairs: {value:'none'},\n    temperature_stairs:{value:'none'},\n    temperature_bath:{value:'none'},\n    temperature_child_east:{value:'none'},\n    temperature_child_west:{value:'none'},\n    temperature_DistributionBoxOg:{value:'none'}\n} );\n\nglobal.set('PD.esp_basement',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'},\n    tmp:{value:'none'},\n    humid:{value:'none'}\n} );\n\nglobal.set('PD.esp_carport',\n{\n    last_rcv_time : 'none',\n    lux: '_none_',\n    tmp: '_none_',\n    humid: '_none_'\n} );\n\nglobal.set('PD.netatmo',\n{\n    last_rcv_time : 'none',\n    lux: {value:'none'}\n} );",
         "outputs": 1,
         "noerr": 0,
         "x": 700,
-        "y": 40,
+        "y": 60,
         "wires": [
             []
         ]
@@ -612,15 +402,15 @@
         "id": "feae7cfe.ff9c7",
         "type": "inject",
         "z": "e3a2c1ac.72282",
-        "name": "v01/rpi/4/status",
-        "topic": "v01/rpi/4/status",
+        "name": "v01/node_red_cmd/redeploy",
+        "topic": "v01/node_red_cmd/redeploy",
         "payload": "redeploy node-RED",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": true,
         "onceDelay": "0.2",
-        "x": 220,
+        "x": 200,
         "y": 260,
         "wires": [
             [
@@ -628,16 +418,6 @@
                 "717615.32c139ec"
             ]
         ]
-    },
-    {
-        "id": "eaf3c522.5982b8",
-        "type": "comment",
-        "z": "e3a2c1ac.72282",
-        "name": "MAC LIST",
-        "info": "TODO: add to Master Data Table\n\nesp unwired = DC:4F:22:66:CB:BD",
-        "x": 340,
-        "y": 780,
-        "wires": []
     },
     {
         "id": "cfe0f33d.1bd4b",
@@ -864,12 +644,12 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<h1>topic: {{msg.alarm.topic}}</h1>\n<h3>info: {{msg.alarm.info}}</h3>\n\n<p>payload: {{msg.payload}}</p>\n<p>time: {{msg.alarm.time_created}}</p>",
+        "format": "<h1>{{msg.alarm.topic}}</h1>\n<h3>{{msg.alarm.info}}</h3>\n\n<p>{{msg.payload}}</p>\n<p>{{msg.alarm.time_created}}</p>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 890,
-        "y": 360,
+        "y": 320,
         "wires": [
             []
         ]
@@ -879,7 +659,7 @@
         "type": "ui_toast",
         "z": "e3a2c1ac.72282",
         "position": "top right",
-        "displayTime": "3",
+        "displayTime": "6",
         "highlight": "",
         "sendall": true,
         "outputs": 0,
@@ -888,8 +668,8 @@
         "raw": false,
         "topic": "",
         "name": "",
-        "x": 890,
-        "y": 320,
+        "x": 1070,
+        "y": 360,
         "wires": []
     },
     {
@@ -943,12 +723,12 @@
         "id": "42b9ed82.264494",
         "type": "function",
         "z": "e3a2c1ac.72282",
-        "name": "convert to send",
-        "func": "/*\n{\"payload\":\"aktor/light/basement_hobby_east/set_switch_value#off\",\n\"socketid\":\"U48wVSmIv9xwOpDEAABl\",\n\"_msgid\":\"77041d9e.fe3674\",\n\"topic\":\"eg\",\n\"_event\":\"node:f61e6716.a97ed8\"}\n*/\n\n\n//get master data\n//find ip to name (topic)\n//send msg to udp receiver\n\nlet data_dic = global.get('master_data_dic') || {};\n\nif (data_dic===undefined){\n    node.error('try to access undefined master_data_dic')\n}\n\nmsg.ip = global.get('master_data_dic.plc.' + msg.topic + '.meta.ip_address')\n\nif (msg.ip===undefined){\n    node.error('try to access undefined master_data_dic msg.ip')\n}\n\n\n//for logging to database\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"node_red/plc_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg",
+        "name": "plc_cmd",
+        "func": "/*\n{\"payload\":\"aktor/light/basement_hobby_east/set_switch_value#off\",\n\"socketid\":\"U48wVSmIv9xwOpDEAABl\",\n\"_msgid\":\"77041d9e.fe3674\",\n\"topic\":\"eg\",\n\"_event\":\"node:f61e6716.a97ed8\"}\n*/\n\n\n//get master data\n//find ip to name (topic)\n//send msg to udp receiver\n\nlet data_dic = global.get('master_data_dic') || {};\n\nif (data_dic===undefined){\n    node.error('try to access undefined master_data_dic')\n}\n\nmsg.ip = global.get('master_data_dic.plc.' + msg.topic + '.meta.ip_address')\n\nif (msg.ip===undefined){\n    node.error('try to access undefined master_data_dic msg.ip')\n}\n\n\n//for logging to database\nmsg.topic =  \n\"INSERT INTO node_log(topic, message) VALUES ( \\\"re/plc_cmd/\" + \nmsg.topic + \"\\\", \\\"\"+ msg.payload + \"\\\" )\"\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
-        "x": 860,
-        "y": 460,
+        "x": 840,
+        "y": 420,
         "wires": [
             [
                 "2b033f12.5601d",
@@ -1034,15 +814,15 @@
         "id": "fe10970f.9ef148",
         "type": "inject",
         "z": "e3a2c1ac.72282",
-        "name": "",
-        "topic": "v01/plc/car/sensor/event",
+        "name": "inject dbg topic",
+        "topic": "v01/plc/og/i/detector_corridor_north",
         "payload": "",
         "payloadType": "date",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 340,
+        "x": 320,
         "y": 420,
         "wires": [
             [
@@ -1076,19 +856,212 @@
         "width": "6",
         "height": "1",
         "passthru": false,
-        "label": "dbg go-to-bed",
+        "label": "light_eg_off",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "icon": "",
-        "payload": "turn off lights and drive down jalousie (current only at EG)",
+        "payload": "switch light eg off",
         "payloadType": "str",
-        "topic": "v01/rule_engine/go-to-bed",
-        "x": 500,
+        "topic": "v01/node_red_cmd/light_eg_off",
+        "x": 490,
         "y": 500,
         "wires": [
             [
                 "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "fb390dc9.fe301",
+        "type": "ui_button",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "group": "720145b.5088cbc",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "light_og_off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "switch light og off",
+        "payloadType": "str",
+        "topic": "v01/node_red_cmd/light_og_off",
+        "x": 490,
+        "y": 540,
+        "wires": [
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "44e9723c.e2c99c",
+        "type": "ui_button",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "group": "720145b.5088cbc",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "jalousie_eg_down",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "drive jalousie eg down",
+        "payloadType": "str",
+        "topic": "v01/node_red_cmd/jalousie_eg_down",
+        "x": 510,
+        "y": 580,
+        "wires": [
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "f7ae278a.c4c6d8",
+        "type": "ui_button",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "group": "720145b.5088cbc",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "jalousie_og_down",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "drive jalousie og down",
+        "payloadType": "str",
+        "topic": "v01/node_red_cmd/jalousie_og_down",
+        "x": 510,
+        "y": 620,
+        "wires": [
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "8a0605b3.3ca988",
+        "type": "mysql",
+        "z": "e3a2c1ac.72282",
+        "mydb": "f37c9046.4fbf4",
+        "name": "auto home DB",
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "87ff927.457707"
+            ]
+        ]
+    },
+    {
+        "id": "115f4abb.db7af5",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "query",
+        "func": "var dataset_count = 10;\n\nreturn {topic:\"SELECT * from node_log WHERE topic LIKE \\\"re%\\\" ORDER BY id DESC LIMIT \" + dataset_count};\n// WHERE message LIKE \\'\" + display_message_from_input + \"%\\' ORDER",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 160,
+        "wires": [
+            [
+                "8a0605b3.3ca988"
+            ]
+        ]
+    },
+    {
+        "id": "87ff927.457707",
+        "type": "ui_template",
+        "z": "e3a2c1ac.72282",
+        "group": "2ad4860c.8533ba",
+        "name": "table node_log",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "format": "\n<table id=\"table\" border=\"1\">\n    <tr>\n        <th width=\"180px\">time</th>\n        <th>topic</th>\n        <th>message</th>\n    </tr>\n    <tbody>\n        <tr ng-repeat=\"item in msg.payload\">\n            <td>{{item.timestamp}}</td>\n            <td>{{item.topic}}</td>\n            <td>{{item.message}}</td>\n        </tr>\n    </tbody>\n</table>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1102,
+        "y": 161,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e7807b9.0792f8",
+        "type": "function",
+        "z": "e3a2c1ac.72282",
+        "name": "show_node_log",
+        "func": "\nlet show_node_log = global.get('ui_config.show_node_log') || false\nif(show_node_log===true){\n    return {payload: msg.alarm.info + ' # ' + msg.alarm.payload, topic:msg.alarm.topic};\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 880,
+        "y": 360,
+        "wires": [
+            [
+                "b367b089.6c189"
+            ]
+        ]
+    },
+    {
+        "id": "db1af9e.4853108",
+        "type": "link in",
+        "z": "e3a2c1ac.72282",
+        "name": "to_rule_engine",
+        "links": [
+            "d553aad6.8628e8",
+            "6b7b3af4.89b904"
+        ],
+        "x": 515,
+        "y": 420,
+        "wires": [
+            [
+                "e835ab5b.85b2e8"
+            ]
+        ]
+    },
+    {
+        "id": "a1f779f1.8802c8",
+        "type": "mqtt out",
+        "z": "e3a2c1ac.72282",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "60f7dc17.961d94",
+        "x": 790,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8ede54eb.e319b8",
+        "type": "inject",
+        "z": "e3a2c1ac.72282",
+        "name": "trigger_light_basement_wellness_area",
+        "topic": "trigger_light_basement_wellness_area",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 600,
+        "wires": [
+            [
+                "717615.32c139ec"
             ]
         ]
     },
@@ -1133,43 +1106,34 @@
         "willPayload": ""
     },
     {
-        "id": "168c65c2.ece29a",
-        "type": "ui_group",
-        "z": "",
-        "name": "frames",
-        "tab": "f5ad8d49.0cdf1",
-        "order": 6,
-        "disp": false,
-        "width": "18",
-        "collapse": false
-    },
-    {
         "id": "720145b.5088cbc",
         "type": "ui_group",
         "z": "",
         "name": "alarm",
-        "tab": "4e0c8ed6.89c15",
-        "disp": true,
+        "tab": "967dccae.d50f1",
+        "order": 2,
+        "disp": false,
         "width": "12",
-        "collapse": true
+        "collapse": false
     },
     {
-        "id": "f5ad8d49.0cdf1",
+        "id": "2ad4860c.8533ba",
+        "type": "ui_group",
+        "z": "",
+        "name": "node log rule engine",
+        "tab": "967dccae.d50f1",
+        "order": 3,
+        "disp": false,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "967dccae.d50f1",
         "type": "ui_tab",
         "z": "",
-        "name": "control",
+        "name": "quick cmd",
         "icon": "dashboard",
         "order": 2,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "4e0c8ed6.89c15",
-        "type": "ui_tab",
-        "z": "",
-        "name": "status",
-        "icon": "dashboard",
-        "order": 1,
         "disabled": false,
         "hidden": false
     }

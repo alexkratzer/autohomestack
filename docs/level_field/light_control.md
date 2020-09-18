@@ -44,18 +44,31 @@ To find out what it might look like and check if the `self-printed corner profil
 
 ![room_plan_downstair_led](room_plan_downstair_led.svg)
 
+### Led Stripe
+
+For the ceiling I have selected a Stripe with white and warm-white LEDs:
+
+* 240 SMD LEDs / meter
+
+* Chipsatz 2216
+
+* Power per meter: 19,2 Watt (7,9 W / Chip)
+
+* Light flux: 1680 Lumen/m
+
 ### Length calculation LED-stripes
 
 Distance profile to wall ~2cm
 
 Led stripe separable every 5cm
 
-Area|calculation|Alu profile|LED Stripe
--|-|-|-
-Office ceiling|5,22m + 7,3m + 2,64m |**15,16m**|13,3m
-Office wall|5,22m + 3,65m + 2,64m|**11,51m**|
-wellness-area ceiling|6,92m + 7,3m + 1,32m|**15,54m**|15m
-wellness-area wall|6,92m + 3,65m + 1,32m|**11,89m**|
+Area|calculation|Alu profile
+-|-|-
+Office ceiling_up|5,22m + 7,3m |12,52m
+Office ceiling_down|5,22m + 3,65m |8,87m
+wellness-area ceiling_up|6,92m + 7,3m + 1,32m|14,22m
+wellness-area ceiling_down|6,92m + 3,65m + 1,32m|10,57
+both wall|0,65m x 6|4m
 
 ### Length calculation power
 
@@ -73,26 +86,19 @@ The power supply is divided between two cables = ~150 watt.
 
 With a cable cross section of 1.00mm² this leads to ~5% voltage drop (which is okay).
 
-### Led Stripe
+### Power supply
 
-For the ceiling I have selected a Stripe with white and warm-white LEDs:
+* Power per meter: 19,2 Watt (for ceiling_up and wall)
 
-* 240 SMD LEDs / meter
+* Wall Stripe = 65cm ~12,5 Watt
 
-* Chipsatz 2216
-
-* Power per meter: 19,2 Watt (7,9 W / Chip)
-
-* Light flux: 1680 Lumen/m
-
-### Summary
-
-Area|Direction|Color|Length LED|Length power
--|-|-|-|-
-Office|wall|blue|11,51m|2x4m
-Office|ceiling|neutral white|15,16m|2x4m
-wellness-area|wall|warm white|11,89m|2x7m
-wellness-area|ceiling|neutral white|15,54m|2x7m
+Area|Direction|Length LED|Length cable|Watt|Ampere
+-|-|-|-|-|-
+Office|ceiling_up|12,5m|2x4m|240w|10
+Office|ceiling_down|8,85m|2x4m|(170w)
+wellness-area|ceiling_up|14,2m|2x7m|273w|11,34
+wellness-area|ceiling_down|10,5m|2x7m|(201w)
+both-areas|wall|7,8||150w|6,25
 
 ## Component corner profile holder
 
