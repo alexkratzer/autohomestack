@@ -140,9 +140,3 @@ This is the 3D model of the case
 
 <!-- ![multisensor inside](multisensor_inside.jpg) -->
 Here you can see the sensor in the wild and the inside of it.
-
-## Downloads
-
-You can download the STL file here: [new_multisensor_V0.1](new_multisensor_V0.1.stl)
-
-The arduino sketch is stored here: [ah_iot_multisensor_v06](ah_iot_multisensor_v06.ino)
