@@ -21,7 +21,7 @@
  local settings (edit to fit at your own setup)
 *****************************************************************************************/
 #define wlan_ssid "sandman_V2"
-#define wlan_pwd "XXX"
+#define wlan_pwd "xxx"
 #define mqtt_server_ip "192.168.1.211"
 #define esp_name_default "basement_light"
 
