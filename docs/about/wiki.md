@@ -32,10 +32,10 @@
 @enduml
 ```
 
-* [plantuml examples](http://ogom.github.io/draw_uml/plantuml/)
-* [plantuml examples](http://plantuml.com/sitemap-language-specification)
-* [plantuml examples](https://real-world-plantuml.com)
-* [online editor](https://www.planttext.com)
+* [http://ogom.github.io/draw_uml/plantuml/](http://ogom.github.io/draw_uml/plantuml/)
+* [http://plantuml.com/sitemap-language-specification](http://plantuml.com/sitemap-language-specification)
+* [https://real-world-plantuml.com](https://real-world-plantuml.com)
+* [https://www.planttext.com](https://www.planttext.com)
 
 open **preview at VSC**
 
