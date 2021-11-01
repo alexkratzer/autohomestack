@@ -21,6 +21,7 @@ nav:
     - Field level:          
         - IoT Multisensor:      level_field/iot_multisensor.md
         - Light control:        level_field/light_control.md
+        - Iot relay:            level_field/iot_relay.md
         - More devices:         level_field/field_level.md
     - Multiroom:
         - multiroom:            multiroom/my_multiroom.md
