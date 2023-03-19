@@ -2,13 +2,21 @@
 
 [autohomestack.de](http://autohomestack.de)
 
-## TODO
+this repo: [https://github.com/alexkratzer/autohomestack](https://github.com/alexkratzer/autohomestack)
 
-add Architecture views to index.html
+## usage MkDocs
 
-Development view: illustrates a system from a programmers perspective and is concerned with software management.
+* install poetry, than `poetry install`
+* `poetry run mkdocs serve` - Start the live-reloading docs server.
+* `poetry run mkdocs build` - Build the documentation site.
+* [http://127.0.0.1:8000/autohomestack/](http://127.0.0.1:8000/autohomestack/) to view it in browser
 
-Process view: deals with the dynamic aspect of the system, explains the system processes and how they communicate, and focuses on the runtime behavior of the system.
-rule engine
+## Deploy to Github pages
 
-Physical view: network / topology of software components on the physical layer, as well as communication between these components
+* `mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
+* [https://autohomestack.github.io/website/](https://autohomestack.github.io/website/)
+
+## Deploy to s3 bucket
+
+* `aws s3 sync ./site s3://autohomestack.de`
+* [autohomestack.de](http://autohomestack.de)

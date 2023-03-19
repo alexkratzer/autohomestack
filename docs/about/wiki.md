@@ -6,15 +6,6 @@
 
 ## documentation
 
-### usage MkDocs
-
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `aws s3 sync ./site s3://autohomestack.de` Deploy to s3 bucket
-* `mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
-* `localhost:8000` to view it in browser
-* [https://autohomestack.github.io/website/](https://autohomestack.github.io/website/)
-
 ### draw.io
 
 1. Open the XML (or create new one) with [https://www.draw.io/](https://www.draw.io/)
