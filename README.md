@@ -13,8 +13,9 @@ this repo: [https://github.com/alexkratzer/autohomestack](https://github.com/ale
 
 ## Deploy to Github pages
 
-* `mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
-* [https://autohomestack.github.io/website/](https://autohomestack.github.io/website/)
+* `poetry run mkdocs gh-deploy`  Deploy your documentation to GitHub Pages
+* [https://alexkratzer.github.io/autohomestack/](https://alexkratzer.github.io/autohomestack/)
+~~[https://autohomestack.github.io/website/](https://autohomestack.github.io/website/)~~
 
 ## Deploy to s3 bucket
 
