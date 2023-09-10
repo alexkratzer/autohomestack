@@ -2,6 +2,8 @@
 
 ## Ground Floor 24 volt
 
+> Verteiler UG_V0.14_24V_export.csv
+
 |Term|Color|Place|Meaning|addr|Note|Interface|Block|
 |-|-|-|-|-|-|-|-|
 | 1   | red     | Büro               | +24 Volt              |                              |                         |           | 1             | 
@@ -185,6 +187,8 @@
 
 ## Ground Floor 230 Volt
 
+> Verteiler UG_V0.14_230V_export.csv
+
 | KL    | Kabel  | Ort          | Bedeutung                   | IN | OUT   | 
 |-------|--------|--------------|-----------------------------|----|-------| 
 | K01   | N01_sw | Jalousie     | Büro Jalousie hoch          |    | A9.1  | 
@@ -253,6 +257,8 @@
 |       |        |              |                             |    |       | 
 
 ## Upper floor 24 Volt
+
+> Verteiler UG_V0.14_24V_export.csv
 
 |     | Farbe   | Ort                | Bedeutung             | IN                    | OUT   | bemerkung               | Interface | Klemmen Block | 
 |-----|---------|--------------------|-----------------------|-----------------------|-------|-------------------------|-----------|---------------| 
@@ -436,6 +442,8 @@
 |     | gelb    |                    | Verteiler OG2         |                       |       |                         |           |               | 
 
 ## Upper Floor 230 Volt
+
+> Verteiler OG_V0.10_230V_export.csv
 
 | Kl  | Kabel  | ORT          | Bedeutung                                 | Relais          | IN | OUT  | SPS-Name             | 
 |-----|--------|--------------|-------------------------------------------|-----------------|----|------|----------------------| 
